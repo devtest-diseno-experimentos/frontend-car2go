@@ -1,1 +1,74 @@
-<p>toolbar works!</p>
+
+<header [ngClass]="{'scrolled-header': isScrolled}" class="site-header">
+  <!-- Navbar para Seller -->
+  <header *ngIf="userRole === 'seller'" class="site-header">
+    <nav class="navbar">
+      <div class="logo">
+        <a href="#"><img src="assets/logo.png" alt="Car 2 Go"></a>
+      </div>
+      <ul class="nav-links">
+        <li><a routerLink="/login">Home</a></li>
+        <li><a routerLink="/car-listing">Car Listing</a></li>
+        <li><a routerLink="/my-cars">My Cars</a></li>
+        <li class="profile-link"><a routerLink="/profile">Profile</a></li>
+      </ul>
+      <div class="profile-icon">
+        <i class="material-icons">account_circle</i>
+      </div>
+      <div class="hamburger" (click)="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Navbar para Buyer -->
+  <header *ngIf="userRole === 'buyer'" class="site-header">
+    <nav class="navbar">
+      <div class="logo">
+        <a href="#"><img src="assets/logo.png" alt="Car 2 Go"></a>
+      </div>
+      <ul class="nav-links">
+        <li><a routerLink="/login">Home</a></li>
+        <li><a routerLink="/favorites">My Favorites</a></li>
+        <li><a routerLink="/car-listing">Car Listing</a></li>
+        <li class="profile-link"><a routerLink="/profile">Profile</a></li>
+      </ul>
+      <div class="profile-icon">
+        <i class="material-icons">account_circle</i>
+      </div>
+      <div class="hamburger" (click)="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Navbar para Mechanic -->
+  <header *ngIf="userRole === 'mechanic'" class="site-header">
+    <nav class="navbar">
+      <div class="logo">
+        <a href="#"><img src="assets/logo.png" alt="Car 2 Go"></a>
+      </div>
+      <ul class="nav-links">
+        <li><a routerLink="/login">Home</a></li>
+        <li><a routerLink="/uninspected-cars">Uninspected Cars</a></li>
+        <li><a routerLink="/reviewed-cars">Reviewed Cars</a></li>
+        <li class="profile-link"><a routerLink="/profile">Profile</a></li>
+      </ul>
+      <div class="profile-icon">
+        <i class="material-icons">account_circle</i>
+      </div>
+      <div class="hamburger" (click)="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+  </header>
+</header>
+  <section>
+  <div class="space"></div>
+</section>
