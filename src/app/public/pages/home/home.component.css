@@ -1,0 +1,101 @@
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Sticky Navbar */
+header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition:background-color 0.5s ease, height 0.5s ease;
+
+
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-image: url('../../../../../assets/page_heading_bg.jpg'); /* Imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  height: 100px;
+  transition: background-image 0.5s ease, padding 0.5s ease;
+}
+
+/* Scrolled Navbar */
+.scrolled-header .navbar {
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.8); /* Cambia el fondo al hacer scroll */
+
+}
+
+.scrolled-header .logo img {
+  height: 50px; /* Reduce el tamaño del logo al hacer scroll */
+}
+
+/* Logo */
+.logo img {
+  height: 60px;
+  transition: height 0.5s ease;
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-links li {
+  margin: 0 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease, font-size 0.3s ease;
+}
+
+.scrolled-header .nav-links a {
+  font-size: 14px;
+}
+.profile-icon i {
+  font-size: 40px; /* Tamaño del icono */
+  color: white;    /* Color del icono */
+  transition: color 0.3s ease;
+}
+
+.profile-icon i:hover {
+  color: #f4c23d; /* Cambia el color al pasar el mouse */
+}
+
+.nav-links a:hover {
+  color: #f4c23d; /* Cambia de color al pasar el mouse */
+}
+
+/* Profile Icon */
+.profile-icon img {
+  height: 40px;
+}
+
+/* Efectos de animación en scroll */
+.scrolled-header .profile-icon img {
+  height: 30px;
+  transition: height 0.5s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    display: none; /* Cambia a menú desplegable para pantallas pequeñas */
+  }
+}
