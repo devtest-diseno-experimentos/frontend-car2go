@@ -1,7 +1,9 @@
-<header [ngClass]="{'scrolled-header': isScrolled}" class="site-header wow fadeIn" data-wow-duration="1s">
+<header [ngClass]="{'scrolled-header': isScrolled}" class="site-header">
   <nav class="navbar">
-
-    <ul class="nav-links">
+    <div class="logo">
+      <a href="#"><img src="assets/logo.png" alt="Car 2 Go"></a>
+    </div>
+    <ul #navLinks class="nav-links"> <!-- Agregamos #navLinks -->
       <li><a routerLink="/home">Home</a></li>
       <li><a routerLink="/plans">Plans</a></li>
       <li><a routerLink="/car-listing">Car Listing</a></li>
@@ -9,19 +11,16 @@
       <li><a routerLink="/profile">Profile</a></li>
     </ul>
     <div class="profile-icon">
-      <i class="material-icons">account_circle</i> <!-- Ícono de perfil de Material Design -->
+      <i class="material-icons">account_circle</i>
     </div>
-
+    <!-- Menu Hamburguesa -->
+    <div class="hamburger" (click)="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </nav>
 </header>
 <section>
-  <div class="hero">
-    <div class="hero-content">
-      <h1>Find your dream car</h1>
-      <p>Search for the best cars in the market</p>
-    </div>
-  </div>
-  <div class="logo">
-  <a><img src="/assets/page_heading_bg.jpg" alt="Car 2 Go"></a>
-</div>
+  <div class="space"></div>
 </section>
