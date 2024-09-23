@@ -35,6 +35,9 @@ import { HomeComponent } from './public/pages/home/home.component';
 import { PageNotFoundComponent } from './public/pages/page-not-found/page-not-found.component';
 import { FooterComponent } from './public/components/footer/footer.component';
 import { ToolbarComponent } from './public/components/toolbar/toolbar.component';
+import { LoginComponent } from './register/components/login/login.component';
+import { RegisterComponent } from './register/components/register/register.component';
+import { ForgotPasswordComponent } from './register/components/forgot-password/forgot-password.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,9 @@ import { ToolbarComponent } from './public/components/toolbar/toolbar.component'
     PageNotFoundComponent,
     FooterComponent,
     ToolbarComponent,
+    RegisterComponent,
+    ForgotPasswordComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -71,7 +77,8 @@ import { ToolbarComponent } from './public/components/toolbar/toolbar.component'
     MatCheckboxModule,
     ReactiveFormsModule,
     MatExpansionModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    LoginComponent
   ],
   providers: [
     provideAnimationsAsync(),
