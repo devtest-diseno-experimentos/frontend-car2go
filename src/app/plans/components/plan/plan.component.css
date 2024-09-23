@@ -1,0 +1,92 @@
+h1 {
+  text-align: center;
+}
+
+.highlight {
+  color: #F4C23DFF;
+}
+
+.card-header {
+  background-color: rgba(200, 200, 200, 0.38);
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+  /*opacity: 0.75; /* Aplica un degradado del 25% */
+}
+
+.card h5, .card h4 {
+  margin: 0;
+}
+
+.card h4 {
+  color: #F4C23DFF;
+  font-weight: bold; /* Hace que la letra sea más negrita */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex: 1 1 30%;
+  max-width: 30%;
+  box-sizing: border-box;
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+.card h4 {
+  color: #F4C23DFF;
+}
+
+.card ul {
+  list-style-type: disc;
+
+  text-align: left;
+}
+
+.card ul li {
+  margin: 8px 0;
+}
+
+.card button {
+  background-color: #f4c23d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: auto;
+  width: auto; /* Ajusta el ancho del botón */
+  align-self: center; /* Centra el botón dentro de la tarjeta */
+}
+
+.card button:hover {
+  background-color: #bd9e3f;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .card {
+    flex: 1 1 45%;
+    max-width: 45%;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}

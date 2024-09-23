@@ -38,6 +38,7 @@ import { ToolbarComponent } from './public/components/toolbar/toolbar.component'
 import { LoginComponent } from './register/components/login/login.component';
 import { RegisterComponent } from './register/components/register/register.component';
 import { ForgotPasswordComponent } from './register/components/forgot-password/forgot-password.component';
+import { PlanComponent } from './plans/components/plan/plan.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ForgotPasswordComponent } from './register/components/forgot-password/f
     ToolbarComponent,
     RegisterComponent,
     ForgotPasswordComponent,
+    PlanComponent,
 
   ],
   imports: [
