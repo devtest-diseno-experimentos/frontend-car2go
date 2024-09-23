@@ -11,9 +11,7 @@ header {
   top: 0;
   width: 100%;
   z-index: 1000;
-  transition:background-color 0.5s ease, height 0.5s ease;
-
-
+  transition: background-color 0.5s ease, height 0.5s ease;
 }
 
 /* Navbar */
@@ -21,8 +19,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  background-image: url('../../../../../assets/page_heading_bg.jpg'); /* Imagen de fondo */
+  padding: 15px 50px;
+  background-image: url('/assets/page_heading_bg.jpg');
   background-size: cover;
   background-position: center;
   height: 100px;
@@ -31,18 +29,17 @@ header {
 
 /* Scrolled Navbar */
 .scrolled-header .navbar {
-  padding: 10px 20px;
-  background-color: rgba(0, 0, 0, 0.8); /* Cambia el fondo al hacer scroll */
-
+  padding: 10px 30px;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .scrolled-header .logo img {
-  height: 50px; /* Reduce el tamaño del logo al hacer scroll */
+  height: 60px;
 }
 
 /* Logo */
 .logo img {
-  height: 60px;
+  height: 80px;
   transition: height 0.5s ease;
 }
 
@@ -50,10 +47,11 @@ header {
 .nav-links {
   display: flex;
   list-style: none;
+  margin-left: auto;
 }
 
 .nav-links li {
-  margin: 0 20px;
+  margin: 0 30px;
 }
 
 .nav-links a {
@@ -67,23 +65,20 @@ header {
 .scrolled-header .nav-links a {
   font-size: 14px;
 }
+
+/* Profile Icon */
 .profile-icon i {
-  font-size: 40px; /* Tamaño del icono */
-  color: white;    /* Color del icono */
+  font-size: 40px;
+  color: white;
   transition: color 0.3s ease;
 }
 
 .profile-icon i:hover {
-  color: #f4c23d; /* Cambia el color al pasar el mouse */
+  color: #f4c23d;
 }
 
 .nav-links a:hover {
-  color: #f4c23d; /* Cambia de color al pasar el mouse */
-}
-
-/* Profile Icon */
-.profile-icon img {
-  height: 40px;
+  color: #f4c23d;
 }
 
 /* Efectos de animación en scroll */
@@ -91,11 +86,65 @@ header {
   height: 30px;
   transition: height 0.5s ease;
 }
+.space{
+  height: 100vh;
+}
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  margin: 5px;
+  transition: 0.4s;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .nav-links {
     flex-direction: column;
-    display: none; /* Cambia a menú desplegable para pantallas pequeñas */
+    position: absolute;
+    top: 100px;
+    right: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo negro cuando se abre */
+    max-height: 0;
+  }
+
+  .nav-links.active {
+    max-height: 300px; /* Altura máxima cuando se despliega el menú */
+  }
+
+  .nav-links li {
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  .hamburger {
+    display: block; /* Mostrar el ícono de hamburguesa */
+  }
+
+  .navbar {
+    padding: 15px 20px;
   }
 }
+
+/* Animación del menú */
+.nav-links.active li {
+  animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
