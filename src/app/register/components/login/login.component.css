@@ -17,7 +17,7 @@ body, html {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  min-height: 100vh; /* Ajuste para pantallas pequeñas */
+  min-height: 100vh;
 }
 
 /* Form Container */
@@ -30,6 +30,27 @@ body, html {
   height: 100%;
   padding: 20px;
 
+}
+
+.password-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+
+.forgot-password-link {
+  font-size: 14px;
+  color: #2959ad;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+
+.forgot-password-link:hover {
+  color: #f4c23d;
+  text-decoration: underline;
 }
 
 .form-container h1 {
@@ -137,7 +158,7 @@ input:focus {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  gap: 10px; /* Añadir espacio entre los botones */
+  gap: 10px;
 }
 .separator {
   display: flex;
