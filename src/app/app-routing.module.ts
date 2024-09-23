@@ -8,7 +8,7 @@ import {RegisterComponent} from "./register/components/register/register.compone
 import {ForgotPasswordComponent} from "./register/components/forgot-password/forgot-password.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {path: 'home', component:HomeComponent },
   {path: 'footer', component:FooterComponent },
   { path: 'login', component: LoginComponent },
