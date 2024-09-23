@@ -1,3 +1,12 @@
+.plan-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+  text-align: center;
+}
+
 h1 {
   text-align: center;
 }
