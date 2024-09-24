@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -7,22 +7,17 @@ import {Component, OnInit} from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   userRole: string = '';
-
-  ngOnInit() {
-
-    this.userRole = localStorage.getItem('userRole') || '';
-  }
+  showForm: boolean = false;
 
   cars = [
     {
       id: 1,
       title: 'Perfect Sport Car',
       price: 1200,
-      status: 'For Rent',
       description: 'Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.',
       year: 2018,
       speed: '160p/h',
-      distance: '26.00km',
+      mileage: '26.00km',
       fuel: 'Petrol',
       image: 'assets/car_item_1.jpg',
       link: 'home'
@@ -30,67 +25,51 @@ export class HomeComponent implements OnInit {
     {
       id: 2,
       title: 'Perfect Sport Car',
-      price: 49950,
-      status: 'For Sale',
+      price: 1200,
       description: 'Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.',
       year: 2018,
       speed: '160p/h',
-      distance: '26.00km',
+      mileage: '26.00km',
       fuel: 'Petrol',
-      image: 'assets/car_item_2.jpg',
-      link: 'home'
-    },
-    {
-      id: 3,
-      title: 'Luxury Sedan',
-      price: 75000,
-      status: 'For Sale',
-      description: 'A luxurious sedan with premium leather seats and a high-performance engine.',
-      year: 2020,
-      speed: '200p/h',
-      distance: '15.00km',
-      fuel: 'Diesel',
-      image: 'assets/car_item_3.jpg',
-      link: 'home'
-    },
-    {
-      id: 4,
-      title: 'Luxury Sedan',
-      price: 75000,
-      status: 'For Sale',
-      description: 'A luxurious sedan with premium leather seats and a high-performance engine.',
-      year: 2020,
-      speed: '200p/h',
-      distance: '15.00km',
-      fuel: 'Diesel',
-      image: 'assets/car_item_4.jpg',
-      link: 'home'
-    },
-    {
-      id: 5,
-      title: 'Luxury Sedan',
-      price: 75000,
-      status: 'For Sale',
-      description: 'A luxurious sedan with premium leather seats and a high-performance engine.',
-      year: 2020,
-      speed: '200p/h',
-      distance: '15.00km',
-      fuel: 'Diesel',
-      image: 'assets/car_item_5.jpg',
-      link: 'home'
-    },
-    {
-      id: 6,
-      title: 'Luxury Sedan',
-      price: 75000,
-      status: 'For Sale',
-      description: 'A luxurious sedan with premium leather seats and a high-performance engine.',
-      year: 2020,
-      speed: '200p/h',
-      distance: '15.00km',
-      fuel: 'Diesel',
-      image: 'assets/car_item_6.jpg',
+      image: 'assets/default_image.jpg',
       link: 'home'
     }
   ];
+
+  constructor() {}
+
+  ngOnInit() {
+    this.userRole = localStorage.getItem('userRole') || '';
+  }
+
+
+  openModal() {
+    this.showForm = true;
+  }
+
+
+  closeModal() {
+    this.showForm = false;
+  }
+
+  addCar(newCar: any) {
+    if (newCar) {
+      const carData = {
+        id: newCar.id,
+        title: `${newCar.brand} ${newCar.model}`,
+        price: newCar.price,
+        description: newCar.description || 'No description provided',
+        year: newCar.year,
+        speed: newCar.speed,
+        mileage: newCar.mileage,
+        fuel: newCar.fuel,
+        image: newCar.image ,
+        link: newCar.link
+      };
+
+      this.cars.push(carData);
+      this.cars = [...this.cars];
+      this.showForm = false;
+    }
+  }
 }
