@@ -136,7 +136,7 @@
       </div>
     </div>
 
-    <!-- Modal para la imagen ampliada -->
+
     <div class="modal-overlay" *ngIf="showImageModal" (click)="closeImageModal()">
       <div class="modal-content" (click)="$event.stopPropagation()">
         <span class="close-button" (click)="closeImageModal()">&times;</span>
@@ -145,26 +145,91 @@
     </div>
 
 
-    <!-- Submit Button -->
-    <div class="submit-button">
-      <button type="submit" class="btn btn-warning btn-block">Publish Car</button>
-    </div>
   </form>
 
 
+  <div class="submit-button">
+    <button type="button" class="btn btn-info btn-block" (click)="openPreviewModal()">Preview</button>
+    <button [disabled]="carForm.invalid" type="submit" class="btn btn-warning btn-block">Publish Car</button>
+  </div>
 
-<!-- Preview Section -->
-  <div class="card mt-5">
-    <div class="card-header bg-info text-white">Preview of Your Car Listing</div>
-    <div class="card-body">
-      <h4>{{ carForm.value.brand }} {{ carForm.value.model }} ({{ carForm.value.year }})</h4>
-      <p><strong>Price:</strong> {{ carForm.value.price | currency }}</p>
-      <p><strong>Description:</strong> {{ carForm.value.description }}</p>
-      <p><strong>Fuel:</strong> {{ carForm.value.fuel }}</p>
-      <p><strong>Speed:</strong> {{ carForm.value.speed }}</p>
-      <p><strong>Distance:</strong> {{ carForm.value.mileage }}</p>
 
+  <!-- Preview Modal -->
+  <div class="modal-overlay" *ngIf="showPreviewModal" (click)="closePreviewModal()">
+    <div class="modal-preview-content" (click)="$event.stopPropagation()">
+      <span class="close-button" (click)="closePreviewModal()">&times;</span>
+
+
+      <div class="preview-columns">
+
+
+        <div class="preview-card-wrapper">
+          <div class="car-item">
+            <div class="thumb-content">
+              <div class="car-banner">
+                <a href="#"></a>
+              </div>
+              <div class="thumb-inner">
+                <div class="image-wrapper">
+                  <a href="#">
+                    <img [src]="photoPreviews[0] || 'assets/default_image.jpg'" alt="{{ carForm.value.brand }} {{ carForm.value.model }}" class="img-thumbnail" width="150">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="down-content">
+              <a href="#"><h4>{{ carForm.value.brand || 'Brand' }} {{ carForm.value.model || 'Model' }}</h4></a>
+              <span>{{ carForm.value.price | currency }}</span>
+              <p>{{ carForm.value.description || 'No description provided' }}</p>
+              <ul class="car-info">
+                <li>
+                  <div class="item">
+                    <i class="fas fa-calendar"></i>
+                    <p>{{ carForm.value.year || 'Year' }}</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="item">
+                    <i class="fas fa-road"></i>
+                    <p>{{ carForm.value.speed || 'Speed' }}</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="item">
+                    <i class="fas fa-gas-pump"></i>
+                    <p>{{ carForm.value.mileage || 'Mileage' }}</p>
+                  </div>
+                </li>
+                <li>
+                  <div class="item">
+                    <i class="fas fa-gas-pump"></i>
+                    <p>{{ carForm.value.fuel || 'Fuel Type' }}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Information (right column) -->
+        <div class="additional-info-column">
+          <h3 class="additional-title">Additional Information</h3>
+          <ul class="additional-info-list">
+            <li><strong>Name:</strong> {{ carForm.value.name || 'N/A' }}</li>
+            <li><strong>Phone:</strong> {{ carForm.value.phone || 'N/A' }}</li>
+            <li><strong>Email:</strong> {{ carForm.value.email || 'N/A' }}</li>
+            <li><strong>Transmission:</strong> {{ carForm.value.transmission || 'N/A' }}</li>
+            <li><strong>Engine Capacity:</strong> {{ carForm.value.engine || 'N/A' }}</li>
+            <li><strong>Number of Doors:</strong> {{ carForm.value.doors || 'N/A' }}</li>
+            <li><strong>Plate:</strong> {{ carForm.value.plate || 'N/A' }}</li>
+            <li><strong>Location:</strong> {{ carForm.value.location || 'N/A' }}</li>
+          </ul>
+        </div>
+
+      </div>
 
     </div>
   </div>
+
+
 </div>

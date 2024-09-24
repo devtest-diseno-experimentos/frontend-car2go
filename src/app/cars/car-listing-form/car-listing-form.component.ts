@@ -13,6 +13,7 @@ export class CarListingFormComponent {
   photoPreviews: string[] = [];
   selectedImage: string = '';
   showImageModal: boolean = false;
+  showPreviewModal: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.carForm = this.fb.group({
@@ -60,6 +61,14 @@ export class CarListingFormComponent {
 
   closeImageModal() {
     this.showImageModal = false;
+  }
+  openPreviewModal() {
+    this.showPreviewModal = true;
+  }
+
+
+  closePreviewModal() {
+    this.showPreviewModal = false;
   }
 
   removeImage(index: number) {
