@@ -43,6 +43,12 @@ h1 {
   flex: 1 1 30%;
   max-width: 30%;
   box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px); /* Eleva la tarjeta */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta la sombra */
 }
 
 .card-container {
