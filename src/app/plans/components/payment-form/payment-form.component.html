@@ -1,0 +1,75 @@
+<div class="container">
+  <header>
+    <img ngSrc="assets/navbar-logo.png" alt="Logo" class="logo" height="100" width="125">
+  </header>
+  <hr>
+  <h2>Datos de la tarjeta</h2>
+  <form>
+    <!-- Datos de la tarjeta -->
+    <div class="form-group">
+      <label for="card-number">Número de la tarjeta</label>
+      <input type="text" id="card-number" placeholder="Ej: 9999 9999 9999 9999" required>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="card-name">Nombre del titular</label>
+        <input type="text" id="card-name" placeholder="Ej: Emiliano" required>
+      </div>
+      <div class="form-group">
+        <label for="card-lastname">Apellido del titular</label>
+        <input type="text" id="card-lastname" placeholder="Ej: Perez" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="expiry-date">Fecha de vencimiento</label>
+        <input type="text" id="expiry-date" placeholder="MM/AA" required>
+      </div>
+      <div class="form-group">
+        <label for="cvv">Código de seguridad (CVV)</label>
+        <input type="text" id="cvv" placeholder="CVV" required>
+      </div>
+    </div>
+    <hr>
+    <!-- Datos de facturación y usuario -->
+    <h2>Datos de facturación y usuario</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="first-name">Nombre</label>
+        <input type="text" id="first-name" placeholder="Nombre" required>
+      </div>
+      <div class="form-group">
+        <label for="last-name">Apellido</label>
+        <input type="text" id="last-name" placeholder="Apellido" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+      <label for="confirm-email">Confirmar email</label>
+      <input type="email" id="confirm-email" placeholder="Confirmar email" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">Teléfono</label>
+      <input type="tel" id="phone" placeholder="Ej: 155382299" required>
+    </div>
+    <div class="form-group">
+      <label for="document-number">Número de documento</label>
+      <input type="text" id="document-number" placeholder="CI Ej: 47639410" required>
+    </div>
+    <div class="form-group">
+      <label for="province">Provincia</label>
+      <select id="province" required>
+        <option value="">Seleccionar</option>
+        <option value="lima">Lima</option>
+        <option value="arequipa">Arequipa</option>
+        <option value="cusco">Cusco</option>
+      </select>
+    </div>
+
+    <!-- Botón de envío -->
+    <button type="submit">Realizar pago</button>
+  </form>
+</div>

@@ -39,6 +39,7 @@ import { LoginComponent } from './register/components/login/login.component';
 import { RegisterComponent } from './register/components/register/register.component';
 import { ForgotPasswordComponent } from './register/components/forgot-password/forgot-password.component';
 import { PlanComponent } from './plans/components/plan/plan.component';
+import { PaymentFormComponent } from './plans/components/payment-form/payment-form.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { PlanComponent } from './plans/components/plan/plan.component';
     RegisterComponent,
     ForgotPasswordComponent,
     PlanComponent,
+    PaymentFormComponent,
 
   ],
   imports: [
