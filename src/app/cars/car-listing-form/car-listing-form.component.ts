@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CarService } from '../services/car.service'; // Importa el servicio
 
 @Component({
   selector: 'app-car-listing-form',
@@ -7,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./car-listing-form.component.css']
 })
 export class CarListingFormComponent {
-  @Output() carAdded = new EventEmitter<any>();
+  @Output() formClosed = new EventEmitter<void>();
   carForm: FormGroup;
   photos: File[] = [];
   photoPreviews: string[] = [];
@@ -15,7 +16,7 @@ export class CarListingFormComponent {
   showImageModal: boolean = false;
   showPreviewModal: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private carService: CarService) {
     this.carForm = this.fb.group({
       name: ['Juan Pérez', Validators.required],
       phone: ['5551234567', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
@@ -37,8 +38,6 @@ export class CarListingFormComponent {
       speed: [180, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
     });
   }
-
-
 
   onFileSelected(event: any) {
     const selectedFiles = event.target.files;
@@ -64,10 +63,10 @@ export class CarListingFormComponent {
   closeImageModal() {
     this.showImageModal = false;
   }
+
   openPreviewModal() {
     this.showPreviewModal = true;
   }
-
 
   closePreviewModal() {
     this.showPreviewModal = false;
@@ -82,7 +81,8 @@ export class CarListingFormComponent {
     if (this.carForm.valid) {
       const newCar = this.carForm.value;
       newCar.id = Date.now();
-      newCar.photos = this.photos;
+
+      newCar.title = `${newCar.brand} ${newCar.model}`;
 
       if (this.photoPreviews.length > 0) {
         newCar.image = this.photoPreviews[0];
@@ -90,10 +90,13 @@ export class CarListingFormComponent {
         newCar.image = 'assets/default_image.jpg';
       }
 
-      this.carAdded.emit(newCar);
+      this.carService.addCar(newCar);
       this.carForm.reset();
       this.photos = [];
       this.photoPreviews = [];
+
+
+      this.formClosed.emit();
     }
   }
 }
