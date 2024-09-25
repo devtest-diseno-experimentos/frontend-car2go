@@ -2,56 +2,18 @@
   <h1>Choose a <span class="highlight">Plan</span></h1>
 
   <div class="plan-container">
-
-    <div class="plan-card basic-plan">
+    <div *ngFor="let plan of plans" class="plan-card">
       <div class="plan-header">
-        <h5>Basic Plan</h5>
-        <h4>S/ 179 / month</h4>
+        <h5>{{ plan.name }}</h5>
+        <h4>S/ {{ plan.price }} / month</h4>
       </div>
       <ul class="plan-features">
-        <li><i class="fas fa-check-circle"></i> Access to all listings</li>
-        <li><i class="fas fa-check-circle"></i> Customer support</li>
-        <li class="unavailable"><i class="fas fa-times-circle unavailable"></i> 24/7 customer support</li>
-        <li><i class="fas fa-check-circle"></i> Increased visibility in ads</li>
-        <li class="unavailable"><i class="fas fa-times-circle unavailable"></i> Discounts on featured listings</li>
-        <li class="unavailable"><i class="fas fa-times-circle unavailable"></i> Advanced technical review</li>
-        <li class="unavailable"><i class="fas fa-times-circle unavailable"></i> Commission discount</li>
+        <li *ngFor="let feature of plan.features"
+            [ngClass]="{'unavailable': feature.startsWith('❌')}">
+          {{ feature }}
+        </li>
       </ul>
-      <button class="choose-plan" (click)="redirectToPaymentForm()">Choose Plan</button>
-    </div>
-
-    <div class="plan-card standard-plan">
-      <div class="plan-header">
-        <h5>Standard Plan</h5>
-        <h4>S/ 179 / month</h4>
-      </div>
-      <ul class="plan-features">
-        <li><i class="fas fa-check-circle"></i> Access to all listings</li>
-        <li><i class="fas fa-check-circle"></i> Customer support</li>
-        <li class="unavailable"><i class="fas fa-times-circle unavailable"></i> 24/7 customer support</li>
-        <li><i class="fas fa-check-circle"></i> Increased visibility in ads</li>
-        <li><i class="fas fa-check-circle"></i> Discounts on featured listings</li>
-        <li><i class="fas fa-check-circle"></i> Advanced technical review</li>
-        <li class="unavailable"><i class="fas fa-times-circle unavailable"></i> Commission discount</li>
-      </ul>
-      <button class="choose-plan" (click)="redirectToPaymentForm()">Choose Plan</button>
-    </div>
-
-    <div class="plan-card premium-plan">
-      <div class="plan-header">
-        <h5>Premium Plan</h5>
-        <h4>S/ 259 / month</h4>
-      </div>
-      <ul class="plan-features">
-        <li><i class="fas fa-check-circle"></i> Access to all listings</li>
-        <li><i class="fas fa-check-circle"></i> Customer support</li>
-        <li><i class="fas fa-check-circle"></i> 24/7 customer support</li>
-        <li><i class="fas fa-check-circle"></i> Increased visibility in ads</li>
-        <li><i class="fas fa-check-circle"></i> Discounts on featured listings</li>
-        <li><i class="fas fa-check-circle"></i> Advanced technical review</li>
-        <li><i class="fas fa-check-circle"></i> Commission discount</li>
-      </ul>
-      <button class="choose-plan" (click)="redirectToPaymentForm()">Choose Plan</button>
+      <button class="choose-plan" (click)="selectPlan(plan)">Choose Plan</button>
     </div>
   </div>
 </section>
