@@ -38,6 +38,8 @@ import { ToolbarComponent } from './public/components/toolbar/toolbar.component'
 import { LoginComponent } from './register/components/login/login.component';
 import { RegisterComponent } from './register/components/register/register.component';
 import { ForgotPasswordComponent } from './register/components/forgot-password/forgot-password.component';
+import { CarDetailsComponent } from './public/pages/car-details/car-details.component';
+import { CardInformationComponent } from './public/components/card-information/card-information.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { ForgotPasswordComponent } from './register/components/forgot-password/f
     ToolbarComponent,
     RegisterComponent,
     ForgotPasswordComponent,
+    CarDetailsComponent,
+    CardInformationComponent,
 
   ],
   imports: [

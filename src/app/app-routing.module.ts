@@ -6,6 +6,7 @@ import {FooterComponent} from "./public/components/footer/footer.component";
 import {LoginComponent} from "./register/components/login/login.component";
 import {RegisterComponent} from "./register/components/register/register.component";
 import {ForgotPasswordComponent} from "./register/components/forgot-password/forgot-password.component";
+import {CarDetailsComponent} from "./public/pages/car-details/car-details.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {path: 'register', component: RegisterComponent },
   {path: 'forgot-password', component: ForgotPasswordComponent },
+  {path: 'car-details', component: CarDetailsComponent },
   {path: '**', component: PageNotFoundComponent }
 ];
 
