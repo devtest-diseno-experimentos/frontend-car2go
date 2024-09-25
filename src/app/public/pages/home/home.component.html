@@ -23,29 +23,24 @@
     <!-- Formulario en ventana modal -->
     <div class="modal-overlay" *ngIf="showForm" (click)="closeModal()">
       <div class="modal-content" (click)="$event.stopPropagation()">
-
-
-        <app-car-listing-form (carAdded)="addCar($event)"></app-car-listing-form>
+        <app-car-listing-form (formClosed)="onFormClosed()" *ngIf="showForm"></app-car-listing-form>
       </div>
     </div>
 
-
     <div class="car-container">
-      <div class="car-item" *ngFor="let car of cars | slice:0:6">
+      <div class="car-item" *ngFor="let car of cars | slice:0:6" (click)="viewCarDetails(car.id)">
         <div class="thumb-content">
-          <div class="car-banner">
-            <a href="{{ car.link }}"></a>
-          </div>
+          <div class="car-banner"></div>
           <div class="thumb-inner">
             <div class="image-wrapper">
-              <a href="{{ car.link }}">
+              <a>
                 <img [src]="car.image" alt="{{ car.title }}" class="img-thumbnail" width="150">
               </a>
             </div>
           </div>
         </div>
         <div class="down-content">
-          <a href="{{ car.link }}"><h4>{{ car.title }}</h4></a>
+          <a><h4>{{ car.title }}</h4></a>
           <span>{{ car.price | currency }}</span>
           <p>{{ car.description }}</p>
           <ul class="car-info">
