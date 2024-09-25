@@ -1,66 +1,105 @@
-<div class="container">
-  <header class="header">
-    <img ngSrc="assets/navbar-logo.png" alt="Logo" class="logo" height="100" width="125">
-  </header>
-  <hr>
-  <h2>Datos de la tarjeta</h2>
-  <form>
-    <!-- Datos de la tarjeta -->
-    <div class="form-group">
-      <label for="card-number">Número de la tarjeta</label>
-      <input type="text" id="card-number" placeholder="Ej: 9999 9999 9999 9999" required>
-    </div>
-    <div class="form-row">
+<app-toolbar></app-toolbar>
+<div class="grid-container">
+  <!-- Left column: Payment details -->
+  <div class="scrollable-content">
+    <h2>Card Details</h2>
+    <form>
+      <!-- Card details -->
       <div class="form-group">
-        <label for="card-name">Nombre del titular</label>
-        <input type="text" id="card-name" placeholder="Ej: Emiliano" required>
+        <label for="card-number">Card Number</label>
+        <input type="text" id="card-number" placeholder="E.g: 9999 9999 9999 9999" required>
       </div>
-      <div class="form-group">
-        <label for="card-lastname">Apellido del titular</label>
-        <input type="text" id="card-lastname" placeholder="Ej: Perez" required>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="expiry-date">Fecha de vencimiento</label>
-        <input type="text" id="expiry-date" placeholder="MM/AA" required>
-      </div>
-      <div class="form-group">
-        <label for="cvv">Código de seguridad (CVV)</label>
-        <input type="text" id="cvv" placeholder="CVV" required>
-      </div>
-    </div>
-    <hr>
-    <!-- Datos de facturación y usuario -->
-    <h2>Datos de facturación y usuario</h2>
-    <div class="form-row">
-      <div class="form-group">
-        <label for="first-name">Nombre</label>
-        <input type="text" id="first-name" placeholder="Nombre" required>
-      </div>
-      <div class="form-group">
-        <label for="last-name">Apellido</label>
-        <input type="text" id="last-name" placeholder="Apellido" required>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Email" required>
-    </div>
-    <div class="form-group">
-      <label for="confirm-email">Confirmar email</label>
-      <input type="email" id="confirm-email" placeholder="Confirmar email" required>
-    </div>
-    <div class="form-group">
-      <label for="phone">Teléfono</label>
-      <input type="tel" id="phone" placeholder="Ej: 155382299" required>
-    </div>
-    <div class="form-group">
-      <label for="document-number">Número de documento</label>
-      <input type="text" id="document-number" placeholder="CI Ej: 47639410" required>
-    </div>
 
-    <!-- Botón de envío -->
-    <button type="submit">Realizar pago</button>
-  </form>
+      <div class="form-group">
+        <label for="card-name">Cardholder's First Name</label>
+        <input type="text" id="card-name" placeholder="E.g: Emiliano" required>
+      </div>
+
+      <div class="form-group">
+        <label for="card-lastname">Cardholder's Last Name</label>
+        <input type="text" id="card-lastname" placeholder="E.g: Perez" required>
+      </div>
+
+      <!-- Expiry date and security code grouping -->
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="expiry-date">Expiry Date</label>
+          <input type="text" id="expiry-date" placeholder="MM/YY" required>
+        </div>
+        <div class="form-group half-width">
+          <label for="cvv">Security Code (CVV)</label>
+          <input type="text" id="cvv" placeholder="CVV" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="installments">Select Installments</label>
+        <select id="installments" required>
+          <option value="">Select</option>
+          <option value="3">3 Installments</option>
+          <option value="6">6 Installments</option>
+          <option value="12">12 Installments</option>
+        </select>
+      </div>
+
+      <hr>
+
+      <!-- Billing and user details -->
+      <h2>Billing and User Details</h2>
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="first-name">First Name</label>
+          <input type="text" id="first-name" placeholder="First Name" required>
+        </div>
+        <div class="form-group half-width">
+          <label for="last-name">Last Name</label>
+          <input type="text" id="last-name" placeholder="Last Name" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-email">Confirm Email</label>
+        <input type="email" id="confirm-email" placeholder="Confirm Email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" placeholder="E.g: 155382299" required>
+      </div>
+
+      <div class="form-group">
+        <label for="document-number">Document Number</label>
+        <input type="text" id="document-number" placeholder="ID E.g: 47639410" required>
+      </div>
+
+      <div class="form-group">
+        <label for="province">Province</label>
+        <select id="province" required>
+          <option value="">Select</option>
+          <option value="lima">Lima</option>
+          <option value="arequipa">Arequipa</option>
+          <option value="cusco">Cusco</option>
+        </select>
+      </div>
+    </form>
+  </div>
+
+  <div class="summary-column" *ngIf="selectedPlan">
+    <h2>Your Products</h2>
+    <div class="product-summary">
+      <p><strong>{{ selectedPlan.name }}</strong></p>
+      <ul>
+        <li *ngFor="let feature of selectedPlan.features">{{ feature }}</li>
+      </ul>
+      <hr>
+      <p><strong>Total to pay: S/.{{ selectedPlan.price }}</strong></p>
+
+      <button type="submit" (click)="onSubmit()">Make Payment</button>
+    </div>
+  </div>
 </div>
