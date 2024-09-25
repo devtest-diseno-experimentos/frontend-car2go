@@ -1,107 +1,118 @@
-.plan-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
-  text-align: center;
-}
-
+/* Título */
 h1 {
   text-align: center;
+  margin-bottom: 40px;
 }
 
 .highlight {
   color: #F4C23DFF;
 }
 
-.card-header {
-  background-color: rgba(200, 200, 200, 0.38);
-  padding: 10px;
-  border-radius: 8px 8px 0 0;
-  /*opacity: 0.75; /* Aplica un degradado del 25% */
+/* Contenedor principal */
+.plan-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.card h5, .card h4 {
-  margin: 0;
-}
-
-.card h4 {
-  color: #F4C23DFF;
-  font-weight: bold; /* Hace que la letra sea más negrita */
-}
-
-.card {
+/* Estilos de las tarjetas de planes */
+.plan-card {
+  background-color: #fff;
+  flex: 1 1 calc(33.333% - 40px);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px;
+  justify-content: space-between;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  text-align: left;
+  max-width: 400px;
+}
+
+.plan-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+}
+
+/* Cabecera de las tarjetas */
+.plan-header {
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  flex: 1 1 30%;
-  max-width: 30%;
-  box-sizing: border-box;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
-  transform: translateY(-10px); /* Eleva la tarjeta */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta la sombra */
+.plan-header h5 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.card-container {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.card h2 {
-  margin-top: 0;
-}
-
-.card h4 {
+.plan-header h4 {
+  font-size: 32px;
+  font-weight: 900;
   color: #F4C23DFF;
 }
 
-.card ul {
-  list-style-type: disc;
-
+/* Características del plan */
+.plan-features {
+  list-style: none;
+  padding: 0;
   text-align: left;
+  margin: 20px 0;
 }
 
-.card ul li {
-  margin: 8px 0;
+.plan-features li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
 }
 
-.card button {
-  background-color: #f4c23d;
+.plan-features i {
+  margin-right: 10px;
+  color: #f4c23d;
+}
+
+.plan-features i.unavailable {
+  color: #e74c3c;
+}
+
+.plan-features li.unavailable {
+  text-decoration: line-through;
+  color: #a0a0a0;
+}
+
+/* Botones */
+.choose-plan {
+  background: linear-gradient(135deg, #f4c23d, #f39c12);
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 12px 20px;
+  border-radius: 50px;
   cursor: pointer;
-  margin-top: auto;
-  width: auto; /* Ajusta el ancho del botón */
-  align-self: center; /* Centra el botón dentro de la tarjeta */
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.3s ease;
 }
 
-.card button:hover {
-  background-color: #bd9e3f;
+.choose-plan:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #e67e22, #d35400);
 }
 
-/* Media queries para responsividad */
-@media (max-width: 768px) {
-  .card {
-    flex: 1 1 45%;
-    max-width: 45%;
+/* Responsividad */
+@media (max-width: 991px) {
+  .plan-card {
+    flex: 1 1 calc(50% - 40px);
   }
 }
 
-@media (max-width: 480px) {
-  .card {
+@media (max-width: 600px) {
+  .plan-card {
     flex: 1 1 100%;
-    max-width: 100%;
   }
 }
