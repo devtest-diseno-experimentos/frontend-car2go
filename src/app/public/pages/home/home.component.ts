@@ -16,8 +16,8 @@ export class HomeComponent implements OnInit {
       price: 1200,
       description: 'Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.',
       year: 2018,
-      speed: '160p/h',
-      mileage: '26.00km',
+      speed: '160',
+      mileage: '26.00',
       fuel: 'Petrol',
       image: 'assets/car_item_1.jpg',
       link: 'home'
@@ -28,8 +28,8 @@ export class HomeComponent implements OnInit {
       price: 1200,
       description: 'Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.',
       year: 2018,
-      speed: '160p/h',
-      mileage: '26.00km',
+      speed: '160',
+      mileage: '26.00',
       fuel: 'Petrol',
       image: 'assets/default_image.jpg',
       link: 'home'
@@ -42,11 +42,9 @@ export class HomeComponent implements OnInit {
     this.userRole = localStorage.getItem('userRole') || '';
   }
 
-
   openModal() {
     this.showForm = true;
   }
-
 
   closeModal() {
     this.showForm = false;
@@ -63,7 +61,7 @@ export class HomeComponent implements OnInit {
         speed: newCar.speed,
         mileage: newCar.mileage,
         fuel: newCar.fuel,
-        image: newCar.image ,
+        image: newCar.image,
         link: newCar.link
       };
 
@@ -73,3 +71,4 @@ export class HomeComponent implements OnInit {
     }
   }
 }
+//

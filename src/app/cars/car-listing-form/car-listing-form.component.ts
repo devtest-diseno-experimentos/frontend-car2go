@@ -17,26 +17,28 @@ export class CarListingFormComponent {
 
   constructor(private fb: FormBuilder) {
     this.carForm = this.fb.group({
-      name: ['', ],
-      phone: ['', ],
-      email: ['', Validators.email],
-      brand: ['', ],
-      model: ['', ],
-      color: ['', ],
-      year: ['', ],
-      price: [0, ],
-      transmission: ['', ],
-      engine: ['', ],
-      mileage: ['', ],
-      doors: ['', ],
-      plate: ['', ],
-      location: ['', ],
-      description: ['', ],
-      image: ['', ],
-      fuel: ['', ],
-      speed: ['', ],
+      name: ['Juan Pérez', Validators.required],
+      phone: ['5551234567', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+      email: ['juan.perez@example.com', [Validators.required, Validators.email]],
+      brand: ['Toyota', Validators.required],
+      model: ['Corolla', Validators.required],
+      color: ['White', Validators.required],
+      year: ['2018', [Validators.required, Validators.pattern(/^[0-9]{4}$/)]],
+      price: [15000, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+      transmission: ['Automatic', Validators.required],
+      engine: ['2.0L', Validators.required],
+      mileage: [45000, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+      doors: ['4', Validators.required],
+      plate: ['ABC1234', Validators.required],
+      location: ['Mexico City', Validators.required],
+      description: ['Vehicle in excellent condition, single owner, all services done at the dealership. Includes 4 new tires.', Validators.required],
+      image: ['assets/default_image.jpg'],
+      fuel: ['Gasoline', Validators.required],
+      speed: [180, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
     });
   }
+
+
 
   onFileSelected(event: any) {
     const selectedFiles = event.target.files;
