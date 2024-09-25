@@ -84,7 +84,6 @@
   border-bottom: #2959ad 3px solid;
 }
 
-/* Banner y contenido superior */
 .thumb-content {
   position: relative;
   overflow: hidden;
@@ -92,17 +91,19 @@
 
 .thumb-inner img {
   width: 100%;
-  display: block;
+  aspect-ratio: 16 / 13;
+  object-fit: cover;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   transition: transform 0.3s ease;
 }
 
+
 .car-item:hover .thumb-inner img {
   transform: scale(1.05);
 }
 
-/* Contenido inferior */
+
 .down-content {
   padding: 20px;
   text-align: left;
@@ -133,7 +134,7 @@
   margin-bottom: 20px;
 }
 
-/* Información del auto */
+
 .car-info {
   display: flex;
   justify-content: space-between;
@@ -246,8 +247,41 @@
   color: #fff;
 }
 
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 40px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 1000px;
+  max-height: 70vh;
+  overflow-y: auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+
 
 /* Responsividad */
+@media (min-width: 768px) {
+  .modal-content {
+    width: 50%;
+  }
+}
+
 @media (max-width: 991px) {
   .car-item {
     flex: 1 1 calc(50% - 30px);

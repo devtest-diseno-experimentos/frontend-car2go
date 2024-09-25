@@ -40,6 +40,8 @@ import { RegisterComponent } from './register/components/register/register.compo
 import { ForgotPasswordComponent } from './register/components/forgot-password/forgot-password.component';
 import { CarDetailsComponent } from './public/pages/car-details/car-details.component';
 import { CardInformationComponent } from './public/components/card-information/card-information.component';
+import { CarListingFormComponent } from './cars/car-listing-form/car-listing-form.component';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +54,7 @@ import { CardInformationComponent } from './public/components/card-information/c
     ForgotPasswordComponent,
     CarDetailsComponent,
     CardInformationComponent,
-
+    CarListingFormComponent,
   ],
   imports: [
     BrowserModule,

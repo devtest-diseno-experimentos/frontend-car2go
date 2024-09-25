@@ -6,7 +6,6 @@
       <div class="icon-wrapper">
         <div class="icon-circle">
           <i class="fa fa-car"></i>
-
         </div>
         <div class="header-underline"></div>
       </div>
@@ -18,59 +17,75 @@
 
     <div class="cta-section-top">
       <a href="/my-cars" class="cta-button-top">My Cars</a>
-      <a href="/sell-car" class="cta-button-top">Sell Car</a>
+      <a href="#" class="cta-button-top" (click)="openModal(); $event.preventDefault()">Sell Car</a>
     </div>
 
-  <div class="car-container">
-    <div class="car-item" *ngFor="let car of cars | slice:0:6">
-      <div class="thumb-content">
-        <div class="car-banner">
-          <a href="{{ car.link }}"></a>
-        </div>
-        <div class="thumb-inner">
-          <a href="{{ car.link }}">
-            <img [src]="car.image" alt="{{ car.title }}">
-          </a>
-        </div>
-      </div>
-      <div class="down-content">
-        <a href="{{ car.link }}"><h4>{{ car.title }}</h4></a>
-        <span>{{ car.price | currency }}</span>
-        <p>{{ car.description }}</p>
-        <ul class="car-info">
-          <li>
-            <div class="item">
-              <i class="fas fa-calendar"></i>
-              <p>{{ car.year }}</p>
-            </div>
-          </li>
-          <li>
-            <div class="item">
-              <i class="fas fa-road"></i>
-              <p>{{ car.speed }}</p>
-            </div>
-          </li>
-          <li>
-            <div class="item">
-              <i class="fas fa-gas-pump"></i>
-              <p>{{ car.distance }}</p>
-            </div>
-          </li>
-          <li>
-            <div class="item">
-              <i class="fas fa-gas-pump"></i>
-              <p>{{ car.fuel }}</p>
-            </div>
-          </li>
-        </ul>
+    <!-- Formulario en ventana modal -->
+    <div class="modal-overlay" *ngIf="showForm" (click)="closeModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+
+
+        <app-car-listing-form (carAdded)="addCar($event)"></app-car-listing-form>
       </div>
     </div>
-  </div>
+
+
+    <div class="car-container">
+      <div class="car-item" *ngFor="let car of cars | slice:0:6">
+        <div class="thumb-content">
+          <div class="car-banner">
+            <a href="{{ car.link }}"></a>
+          </div>
+          <div class="thumb-inner">
+            <div class="image-wrapper">
+              <a href="{{ car.link }}">
+                <img [src]="car.image" alt="{{ car.title }}" class="img-thumbnail" width="150">
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="down-content">
+          <a href="{{ car.link }}"><h4>{{ car.title }}</h4></a>
+          <span>{{ car.price | currency }}</span>
+          <p>{{ car.description }}</p>
+          <ul class="car-info">
+            <li>
+              <div class="item">
+                <i class="fas fa-calendar"></i>
+                <p>{{ car.year }}</p>
+              </div>
+            </li>
+            <li>
+              <div class="item">
+                <i class="fas fa-road"></i>
+                <p>{{ car.speed }}p/h</p>
+              </div>
+            </li>
+            <li>
+              <div class="item">
+                <i class="fas fa-gas-pump"></i>
+                <p>{{ car.mileage }}km</p>
+              </div>
+            </li>
+            <li>
+              <div class="item">
+                <i class="fas fa-gas-pump"></i>
+                <p>{{ car.fuel }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <div class="cta-section">
       <a href="/home" class="cta-button">Explore More Cars</a>
     </div>
   </div>
 </section>
+
+
+
 
 <section *ngIf="userRole === 'buyer'">
   <div class="car-wrapper">
@@ -130,7 +145,7 @@
             <li>
               <div class="item">
                 <i class="fas fa-road"></i>
-                <p>{{ car.distance }}</p>
+                <p>{{ car.mileage }}</p>
               </div>
             </li>
             <li>
@@ -155,7 +170,7 @@
 <section *ngIf="userRole === 'mechanic'">
   <div class="car-wrapper">
     <div class="car-header">
-      <div class="icon-wrapper">  <!-- Contenedor circular para el icono -->
+      <div class="icon-wrapper">
         <div class="icon-circle">
           <i class="fa fa-car"></i>
 
