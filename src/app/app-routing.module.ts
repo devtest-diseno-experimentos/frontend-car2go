@@ -6,15 +6,17 @@ import {FooterComponent} from "./public/components/footer/footer.component";
 import {LoginComponent} from "./register/components/login/login.component";
 import {RegisterComponent} from "./register/components/register/register.component";
 import {ForgotPasswordComponent} from "./register/components/forgot-password/forgot-password.component";
-import {CarListingFormComponent} from "./cars/car-listing-form/car-listing-form.component";
+import {CarDetailsComponent} from "./public/pages/car-details/car-details.component";
+import { CarListingFormComponent } from './cars/car-listing-form/car-listing-form.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {path: 'home', component:HomeComponent },
   {path: 'footer', component:FooterComponent },
   { path: 'login', component: LoginComponent },
   {path: 'register', component: RegisterComponent },
   {path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'car-details/:id', component: CarDetailsComponent },
   {path: 'car-listing-form', component: CarListingFormComponent },
   {path: '**', component: PageNotFoundComponent }
 ];

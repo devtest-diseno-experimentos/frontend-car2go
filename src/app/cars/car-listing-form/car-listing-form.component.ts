@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CarService } from '../services/car.service'; // Importa el servicio
 
 @Component({
   selector: 'app-car-listing-form',
@@ -7,33 +8,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./car-listing-form.component.css']
 })
 export class CarListingFormComponent {
-  @Output() carAdded = new EventEmitter<any>();
+  @Output() formClosed = new EventEmitter<void>();
   carForm: FormGroup;
   photos: File[] = [];
   photoPreviews: string[] = [];
   selectedImage: string = '';
   showImageModal: boolean = false;
+  showPreviewModal: boolean = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private carService: CarService) {
     this.carForm = this.fb.group({
-      name: ['', Validators.required],
-      phone: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      brand: ['', Validators.required],
-      model: ['', Validators.required],
-      color: ['', Validators.required],
-      year: ['', Validators.required],
-      price: [0, Validators.required],
-      transmission: ['', Validators.required],
-      engine: ['', Validators.required],
-      mileage: ['', Validators.required],
-      doors: ['', Validators.required],
-      plate: ['', Validators.required],
-      location: ['', Validators.required],
-      description: ['', Validators.required],
-      image: ['', Validators.required],
-      fuel: ['', Validators.required],
-      speed: ['', Validators.required],
+      name: ['Juan Pérez', Validators.required],
+      phone: ['5551234567', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+      email: ['juan.perez@example.com', [Validators.required, Validators.email]],
+      brand: ['Toyota', Validators.required],
+      model: ['Corolla', Validators.required],
+      color: ['White', Validators.required],
+      year: ['2018', [Validators.required, Validators.pattern(/^[0-9]{4}$/)]],
+      price: [15000, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+      transmission: ['Automatic', Validators.required],
+      engine: ['2.0L', Validators.required],
+      mileage: [45000, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+      doors: ['4', Validators.required],
+      plate: ['ABC1234', Validators.required],
+      location: ['Mexico City', Validators.required],
+      description: ['Vehicle in excellent condition, single owner, all services done at the dealership. Includes 4 new tires.', Validators.required],
+      image: ['assets/default_image.jpg'],
+      fuel: ['Gasoline', Validators.required],
+      speed: [180, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
     });
   }
 
@@ -62,6 +64,14 @@ export class CarListingFormComponent {
     this.showImageModal = false;
   }
 
+  openPreviewModal() {
+    this.showPreviewModal = true;
+  }
+
+  closePreviewModal() {
+    this.showPreviewModal = false;
+  }
+
   removeImage(index: number) {
     this.photoPreviews.splice(index, 1);
     this.photos.splice(index, 1);
@@ -71,7 +81,8 @@ export class CarListingFormComponent {
     if (this.carForm.valid) {
       const newCar = this.carForm.value;
       newCar.id = Date.now();
-      newCar.photos = this.photos;
+
+      newCar.title = `${newCar.brand} ${newCar.model}`;
 
       if (this.photoPreviews.length > 0) {
         newCar.image = this.photoPreviews[0];
@@ -79,10 +90,13 @@ export class CarListingFormComponent {
         newCar.image = 'assets/default_image.jpg';
       }
 
-      this.carAdded.emit(newCar);
+      this.carService.addCar(newCar);
       this.carForm.reset();
       this.photos = [];
       this.photoPreviews = [];
+
+
+      this.formClosed.emit();
     }
   }
 }
