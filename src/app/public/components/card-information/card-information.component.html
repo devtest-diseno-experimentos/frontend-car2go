@@ -1,126 +1,49 @@
 <section class="car-details" *ngIf="userRole === 'seller'">
   <h2>CAR <span>DETAILS</span></h2>
   <mat-card class="card">
-      <div class="car-gallery">
-        <div class="car-images">
-          <div class="main-image">
-            <img [src]="mainImage" alt="Imagen del producto" />
-          </div>
-          <div class="thumbnails">
-            <img *ngFor="let image of images"
-                 [src]="image"
-                 alt="Miniatura"
-                 (click)="changeImage(image)" />
-          </div>
+    <div class="car-gallery">
+      <div class="car-images">
+        <div class="main-image">
+          <img [src]="mainImage" alt="Imagen del producto" />
         </div>
-
-      </div>
-      <div class="car-information">
-        <div class="car-description">
-          <h4>{{ cars[0].title }}</h4>
-          <h5>${{cars[0].price}}</h5>
-          <p class="description">{{cars[0].description}} </p>
-        </div>
-        <div class="car-data">
-          <div class="column-list">
-            <ul>
-              <li><i class="material-symbols-outlined">event</i><span>{{cars[0].year}}</span></li>
-              <li><i class="material-symbols-outlined">auto_transmission</i><span>TRANSMISSION</span></li>
-              <li><i class="material-symbols-outlined">bolt</i><span>ENGINE</span></li>
-              <li><i class="material-symbols-outlined">location_on</i><span>LOCATION</span></li>
-            </ul>
-          </div>
-          <div class="column-list">
-            <ul>
-              <li><i class="material-symbols-outlined">invert_colors</i><span>COLORS</span></li>
-              <li><i class="material-symbols-outlined">sensor_door</i><span>DOORS</span></li>
-              <li><i class="material-symbols-outlined">road</i><span>{{cars[0].distance}}</span></li>
-            </ul>
-          </div>
-        </div>
-        <div class="buttons">
-          <button>DELETE VEHICLE</button>
-          <button>REQUEST REVIEW</button>
+        <div class="thumbnails">
+          <img *ngFor="let image of images"
+               [src]="image"
+               alt="Miniatura"
+               (click)="changeImage(image)" />
         </div>
       </div>
+    </div>
+    <div class="car-information">
+      <div class="car-description">
+        <h4>{{ car.title }}</h4>
+        <h5>${{ car.price }}</h5>
+        <p class="description">{{ car.description }}</p>
+      </div>
+      <div class="car-data">
+        <div class="column-list">
+          <ul>
+            <li><i class="material-symbols-outlined">event</i><span>{{ car.year }}</span></li>
+            <li><i class="material-symbols-outlined">auto_transmission</i><span>{{ car.transmission }}</span></li>
+            <li><i class="material-symbols-outlined">bolt</i><span>{{ car.engine }}</span></li>
+            <li><i class="material-symbols-outlined">location_on</i><span>{{ car.location }}</span></li>
+          </ul>
+        </div>
+        <div class="column-list">
+          <ul>
+            <li><i class="material-symbols-outlined">invert_colors</i><span>COLORS</span></li>
+            <li><i class="material-symbols-outlined">sensor_door</i><span>{{ car.doors }}</span></li>
+            <li><i class="material-symbols-outlined">road</i><span>{{ car.mileage }}</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="buttons">
+        <button>DELETE VEHICLE</button>
+        <button>REQUEST REVIEW</button>
+      </div>
+    </div>
   </mat-card>
   <div class="back-button">
     <button class="back-arrow"><i class="material-symbols-outlined">arrow_back</i></button>
   </div>
 </section>
-
-<section *ngIf="userRole === 'buyer'">
-  <div class="recent-car single-car wow fadeIn" data-wow-delay="0.5s" data-wow-duration="1s">
-    <div class="container">
-      <div class="recent-car-content">
-        <div class="row">
-          <div class="col-md-6">
-            <div id="single-car" class="slider-pro">
-              <div class="sp-slides">
-
-                <div class="sp-slide">
-                  <img class="sp-image" src="assets/car_item_1.jpg" alt="" />
-                </div>
-
-                <div class="sp-slide">
-                  <img class="sp-image" src="assets/car_item_2.jpg" alt="" />
-                </div>
-
-                <div class="sp-slide">
-                  <img class="sp-image" src="assets/car_item_3.jpg" alt="" />
-                </div>
-
-                <div class="sp-slide">
-                  <img class="sp-image" src="assets/car_item_4.jpg" alt="" />
-                </div>
-
-                <div class="sp-slide">
-                  <img class="sp-image" src="assets/car_item_5.jpg" alt="" />
-                </div>
-              </div>
-
-              <div class="sp-thumbnails">
-                <img class="sp-thumbnail" src="assets/car_item_1.jpg" alt="" />
-                <img class="sp-thumbnail" src="assets/car_item_2.jpg" alt="" />
-                <img class="sp-thumbnail" src="assets/car_item_3.jpg" alt="" />
-                <img class="sp-thumbnail" src="assets/car_item_4.jpg" alt="" />
-                <img class="sp-thumbnail" src="assets/car_item_5.jpg" alt="" />
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="car-details">
-              <h4>TOYOTA AGYA</h4>
-              <span>PRICE</span>
-              <p>Lorem ipsum dolor sit amet consectetur. Urna nullam pellentesque augue faucibus viverra nullam egestas ultrices purus. Maecenas ipsum morbi donec morbi. Ut laoreet et vel consectetur pellentesque. Volutpat augue vestibulum imperdiet nisi faucibus varius. In eu auctor urna facilisi. </p>
-              <div class="container">
-                <div class="row">
-                  <ul class="car-info col-md-6">
-                    <li><i class="material-symbols-outlined icon-square">event</i><p>YEAR</p></li>
-                    <li><i class="material-symbols-outlined icon-square">auto_transmission</i><p>TRANSMISSION TYPE</p></li>
-                    <li><i class="icon-square"><img src="assets/car-motor.png" class="img-icon" alt="car motor icon"/></i><p>ENGINE</p></li>
-                    <li><i class="material-symbols-outlined icon-square">location_on</i><p>LOCATION</p></li>
-                  </ul>
-                  <ul class="car-info col-md-6">
-                    <li><i class="material-symbols-outlined icon-square">invert_colors</i><p>COLORS</p></li>
-                    <li><i class="icon-square"><img src="assets/car-door.png" class="img-icon" alt="door icon"/></i><p>DOORS</p></li>
-                    <li><i class="icon-square"><img src="assets/road-mizleage.png" class="img-icon" alt="road-icon"/></i><p>MILEAGE</p></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="similar-info">
-                <div class="primary-button">
-                  <a href="#">DELETE VEHICLE</a>
-                </div>
-                <div class="primary-button">
-                  <a href="#">REQUEST REVIEW</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
