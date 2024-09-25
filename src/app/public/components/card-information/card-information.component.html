@@ -1,5 +1,8 @@
 <section class="car-details" *ngIf="userRole === 'seller'">
-  <h2>CAR <span>DETAILS</span></h2>
+  <div class="back-button">
+    <h2>CAR <span>DETAILS</span></h2>
+  </div>
+
   <mat-card class="card">
     <div class="car-gallery">
       <div class="car-images">
@@ -43,7 +46,4 @@
       </div>
     </div>
   </mat-card>
-  <div class="back-button">
-    <button class="back-arrow"><i class="material-symbols-outlined">arrow_back</i></button>
-  </div>
 </section>

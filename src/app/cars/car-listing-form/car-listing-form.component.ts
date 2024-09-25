@@ -81,20 +81,20 @@ export class CarListingFormComponent {
     if (this.carForm.valid) {
       const newCar = this.carForm.value;
       newCar.id = Date.now();
-
       newCar.title = `${newCar.brand} ${newCar.model}`;
 
       if (this.photoPreviews.length > 0) {
-        newCar.image = this.photoPreviews[0];
+        newCar.image = this.photoPreviews[0]; // Primera imagen para la tarjeta del home
+        newCar.images = this.photoPreviews; // Todas las imágenes para el componente de información detallada
       } else {
         newCar.image = 'assets/default_image.jpg';
+        newCar.images = ['assets/default_image.jpg'];
       }
 
       this.carService.addCar(newCar);
       this.carForm.reset();
       this.photos = [];
       this.photoPreviews = [];
-
 
       this.formClosed.emit();
     }

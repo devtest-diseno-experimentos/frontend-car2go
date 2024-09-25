@@ -15,7 +15,7 @@ export class CardInformationComponent implements OnChanges {
   ngOnChanges() {
     if (this.car) {
       this.mainImage = this.car.image;
-      this.images = [this.car.image]; // Assuming there's only one image for simplicity
+      this.images = this.car.images || [this.car.image]; // Manejar múltiples imágenes
     }
   }
 
