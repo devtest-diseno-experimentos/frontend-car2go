@@ -1,0 +1,95 @@
+/* Contenedor modal del perfil */
+.profile-modal {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  width: 400px;
+  max-width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 50px auto;
+  position: relative;
+}
+
+/* Encabezado del modal */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.profile-header h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.highlight {
+  color: #F4C23D;
+}
+
+.underline {
+  width: 100px;
+  height: 4px;
+  background-color: #3366cc; /* Color azul de la línea */
+  margin-top: 0px; /* Ajustar la distancia desde el título */
+}
+
+.close-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+/* Detalles del perfil en modo lectura */
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.detail-item p {
+  font-size: 16px;
+  color: #333;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 0;
+}
+
+.update-button {
+  background-color: #2959AD;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-button:hover {
+  background-color: #F4C23D;
+}

@@ -44,6 +44,7 @@ import { CarListingFormComponent } from './cars/car-listing-form/car-listing-for
 import { MechanicRevisionComponent } from './mechanic/mechanic-revision/mechanic-revision.component';
 import { MechanicCheckComponent } from './mechanic/mechanic-check/mechanic-check.component';
 import { MechanicHomeComponent } from './mechanic/components/mechanic-home/mechanic-home.component';
+import { ProfileComponent } from './profiles/components/profile/profile.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { MechanicHomeComponent } from './mechanic/components/mechanic-home/mecha
     MechanicRevisionComponent,
     MechanicCheckComponent,
     MechanicHomeComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
