@@ -7,6 +7,7 @@ import {RegisterComponent} from "./register/components/register/register.compone
 import {ForgotPasswordComponent} from "./register/components/forgot-password/forgot-password.component";
 import {PlanComponent} from "./plans/components/plan/plan.component";
 import {PaymentFormComponent} from "./plans/components/payment-form/payment-form.component";
+import {PageNotFoundComponent} from "./public/pages/page-not-found/page-not-found.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'forgot-password', component: ForgotPasswordComponent },
   {path: 'plan', component: PlanComponent },
   {path: 'payment-form', component: PaymentFormComponent },
+  {path: 'page-not-found',component:PageNotFoundComponent},
 ];
 
 @NgModule({
