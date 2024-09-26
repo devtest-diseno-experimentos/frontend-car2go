@@ -8,6 +8,8 @@ import {RegisterComponent} from "./register/components/register/register.compone
 import {ForgotPasswordComponent} from "./register/components/forgot-password/forgot-password.component";
 import {CarDetailsComponent} from "./public/pages/car-details/car-details.component";
 import { CarListingFormComponent } from './cars/car-listing-form/car-listing-form.component';
+import {MechanicRevisionComponent}  from "./mechanic/mechanic-revision/mechanic-revision.component";
+import {MechanicCheckComponent} from "./mechanic/mechanic-check/mechanic-check.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -17,6 +19,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent },
   {path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'car-details/:id', component: CarDetailsComponent },
+  {path:'mechanic-revision', component: MechanicRevisionComponent},
+  {path:'mechanic-check', component: MechanicCheckComponent},
   {path: 'car-listing-form', component: CarListingFormComponent },
   {path: '**', component: PageNotFoundComponent }
 ];
