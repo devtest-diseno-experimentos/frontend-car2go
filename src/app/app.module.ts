@@ -42,7 +42,7 @@ import { CarDetailsComponent } from './public/pages/car-details/car-details.comp
 import { CardInformationComponent } from './public/components/card-information/card-information.component';
 import { CarListingFormComponent } from './cars/car-listing-form/car-listing-form.component';
 import { MechanicRevisionComponent } from './mechanic/mechanic-revision/mechanic-revision.component';
-import { MechanicCheckComponent } from './mechanic_review/mechanic-check/mechanic-check.component';
+import { MechanicCheckComponent } from './mechanic/mechanic-check/mechanic-check.component';
 
 
 @NgModule({
