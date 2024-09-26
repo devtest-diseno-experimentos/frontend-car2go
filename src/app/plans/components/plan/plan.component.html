@@ -1,0 +1,19 @@
+<section>
+  <h1>Choose a <span class="highlight">Plan</span></h1>
+
+  <div class="plan-container">
+    <div *ngFor="let plan of plans" class="plan-card">
+      <div class="plan-header">
+        <h5>{{ plan.name }}</h5>
+        <h4>S/ {{ plan.price }} / month</h4>
+      </div>
+      <ul class="plan-features">
+        <li *ngFor="let feature of plan.features"
+            [ngClass]="{'unavailable': feature.startsWith('❌')}">
+          {{ feature }}
+        </li>
+      </ul>
+      <button class="choose-plan" (click)="selectPlan(plan)">Choose Plan</button>
+    </div>
+  </div>
+</section>

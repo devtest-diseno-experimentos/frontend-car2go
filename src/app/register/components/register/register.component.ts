@@ -26,7 +26,11 @@ export class RegisterComponent {
   onSignup() {
     if (this.selectedRole) {
       localStorage.setItem('userRole', this.selectedRole);
-      this.router.navigate(['/home']);
+      if (this.selectedRole === 'seller') {
+        this.router.navigate(['/plan']);
+      } else {
+        this.router.navigate(['/home']);
+      }
     } else {
       alert('Please select a role before signing up.');
     }

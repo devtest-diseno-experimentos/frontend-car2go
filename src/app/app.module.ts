@@ -43,6 +43,8 @@ import { CardInformationComponent } from './public/components/card-information/c
 import { CarListingFormComponent } from './cars/car-listing-form/car-listing-form.component';
 import { MechanicRevisionComponent } from './mechanic/mechanic-revision/mechanic-revision.component';
 import { MechanicCheckComponent } from './mechanic/mechanic-check/mechanic-check.component';
+import {PlanComponent} from "./plans/components/plan/plan.component";
+import {PaymentFormComponent} from "./plans/components/payment-form/payment-form.component";
 
 
 @NgModule({
@@ -59,6 +61,8 @@ import { MechanicCheckComponent } from './mechanic/mechanic-check/mechanic-check
     CarListingFormComponent,
     MechanicRevisionComponent,
     MechanicCheckComponent,
+    PlanComponent,
+    PaymentFormComponent,
   ],
   imports: [
     BrowserModule,

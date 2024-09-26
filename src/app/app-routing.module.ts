@@ -10,6 +10,8 @@ import {CarDetailsComponent} from "./public/pages/car-details/car-details.compon
 import { CarListingFormComponent } from './cars/car-listing-form/car-listing-form.component';
 import {MechanicRevisionComponent}  from "./mechanic/mechanic-revision/mechanic-revision.component";
 import {MechanicCheckComponent} from "./mechanic/mechanic-check/mechanic-check.component";
+import {PlanComponent} from "./plans/components/plan/plan.component";
+import {PaymentFormComponent} from "./plans/components/payment-form/payment-form.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -22,6 +24,8 @@ const routes: Routes = [
   {path:'mechanic-revision', component: MechanicRevisionComponent},
   {path:'mechanic-check', component: MechanicCheckComponent},
   {path: 'car-listing-form', component: CarListingFormComponent },
+  {path: 'plan', component: PlanComponent },
+  {path: 'payment-form', component: PaymentFormComponent },
   {path: '**', component: PageNotFoundComponent }
 ];
 
