@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'forgot-password', component: ForgotPasswordComponent },
   {path: 'plan', component: PlanComponent },
   {path: 'payment-form', component: PaymentFormComponent },
-  {path: 'page-not-found',component:PageNotFoundComponent},
+  {path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
