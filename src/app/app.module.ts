@@ -41,6 +41,8 @@ import { ForgotPasswordComponent } from './register/components/forgot-password/f
 import { CarDetailsComponent } from './public/pages/car-details/car-details.component';
 import { CardInformationComponent } from './public/components/card-information/card-information.component';
 import { CarListingFormComponent } from './cars/car-listing-form/car-listing-form.component';
+import { MechanicRevisionComponent } from './mechanic/mechanic-revision/mechanic-revision.component';
+import { MechanicCheckComponent } from './mechanic_review/mechanic-check/mechanic-check.component';
 
 
 @NgModule({
@@ -55,6 +57,8 @@ import { CarListingFormComponent } from './cars/car-listing-form/car-listing-for
     CarDetailsComponent,
     CardInformationComponent,
     CarListingFormComponent,
+    MechanicRevisionComponent,
+    MechanicCheckComponent,
   ],
   imports: [
     BrowserModule,
