@@ -42,7 +42,8 @@ export class CarDetailsComponent implements OnInit {
       image: [''],
       fuel: ['', Validators.required],
       speed: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-      images: [[]]
+      images: [[]],
+      userId: ['']  // Add userId to the form
     });
   }
 
@@ -94,7 +95,8 @@ export class CarDetailsComponent implements OnInit {
     if (this.carForm.valid) {
       const updatedCar = {
         ...this.carForm.value,
-        images: this.images
+        images: this.images,
+        userId: this.car.userId  // Ensure userId is included
       };
       this.carService.updateCar(this.car.id, updatedCar).subscribe(
         (response) => {

@@ -36,7 +36,7 @@ export class RegisterComponent {
           if (this.selectedRole === 'seller') {
             this.router.navigate(['/plan']);
           } else {
-            this.router.navigate(['/home']);
+            this.router.navigate(['/login']);
           }
         },
         error => {
