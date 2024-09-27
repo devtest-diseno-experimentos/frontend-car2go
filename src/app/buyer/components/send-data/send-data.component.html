@@ -1,0 +1,49 @@
+<app-toolbar></app-toolbar>
+<div class="container">
+  <div class="header">
+    <h1 class="title">
+      <span class="black-text">SEND</span>
+      <span class="yellow-text">DATA</span>
+    </h1>
+    <div class="underline"></div> <!-- Línea azul debajo del texto -->
+  </div>
+
+  <div class="form-container">
+    <div class="form-section">
+      <h2 class="form-title">DATA</h2>
+
+      <div class="form-field">
+        <label>Name</label>
+        <p>Paola Del Rosario Abanto Sanchez</p>
+      </div>
+
+      <div class="form-field">
+        <label>Email</label>
+        <p>haxek16906-pepito.com</p>
+      </div>
+
+      <div class="form-field">
+        <label>Telephone</label>
+        <input type="text" placeholder="Placeholder" />
+      </div>
+
+      <div class="form-field">
+        <label>DNI</label>
+        <input type="text" placeholder="Placeholder" />
+      </div>
+    </div>
+
+    <div class="location-section">
+      <div class="profile-icon">
+        <img src="https://via.placeholder.com/50" alt="Profile Icon" />
+      </div>
+      <h2 class="location-title">Location</h2>
+      <input type="text" placeholder="Placeholder" />
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button class="send-button" (click)="redirectToPay()">Send</button>
+  </div>
+</div>
+<app-footer></app-footer>

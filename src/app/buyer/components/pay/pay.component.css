@@ -1,0 +1,125 @@
+.container {
+  margin: 0 auto;
+  max-width: 1100px;
+  padding: 20px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.black-text {
+  color: #000;
+}
+
+.underline {
+  width: 60px;
+  height: 4px;
+  background-color: #3366cc;
+  margin-top: 4px;
+}
+
+.data-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.data-card {
+  flex: 0.45;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.data-card h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.data-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.profile-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.profile-icon img {
+  border-radius: 50%;
+}
+
+.payment-container {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.payment-title {
+  display: flex;
+  align-items: center;
+}
+
+.payment-title h2 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.payment-form {
+  margin-top: 20px;
+}
+
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.send-button {
+  background-color: #ffcc00;
+  border: none;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.send-button:hover {
+  background-color: #ff9900;
+}

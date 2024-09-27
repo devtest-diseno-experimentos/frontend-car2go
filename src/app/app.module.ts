@@ -48,6 +48,9 @@ import { MyCarsComponent } from './cars/components/my-cars/my-cars.component';
 import { CarListingComponent } from './cars/components/car-listing/car-listing.component';
 import { FavoritesComponent } from './cars/components/favorites/favorites.component';
 import { ProfileComponent } from './profiles/components/profile/profile.component';
+import { PayComponent } from './buyer/components/pay/pay.component';
+import { SendDataComponent } from './buyer/components/send-data/send-data.component';
+import { TechnicalReviewComponent } from './buyer/components/technical-review/technical-review.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +71,9 @@ import { ProfileComponent } from './profiles/components/profile/profile.componen
     CarListingComponent,
     ProfileComponent,
     FavoritesComponent,
+    PayComponent,
+    SendDataComponent,
+    TechnicalReviewComponent,
   ],
   imports: [
     BrowserModule,
