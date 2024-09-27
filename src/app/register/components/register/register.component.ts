@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
+import { AuthService} from "../../service/auth.service";
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   selectedRole: string = '';
+  name: string = '';
+  email: string = '';
+  password: string = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   onRoleChange(role: string) {
     this.selectedRole = role;
@@ -24,16 +28,23 @@ export class RegisterComponent {
   }
 
   onSignup() {
-    if (this.selectedRole) {
-      localStorage.setItem('userRole', this.selectedRole);
-      if (this.selectedRole === 'seller') {
-        this.router.navigate(['/plan']);
-      } else {
-        this.router.navigate(['/home']);
-      }
+    if (this.name && this.email && this.password && this.selectedRole) {
+      const user = { name: this.name, email: this.email, password: this.password, role: this.selectedRole };
+      this.authService.register(user).subscribe(
+        response => {
+          console.log('User registered successfully:', response);
+          if (this.selectedRole === 'seller') {
+            this.router.navigate(['/plan']);
+          } else {
+            this.router.navigate(['/home']);
+          }
+        },
+        error => {
+          console.error('Error registering user:', error);
+        }
+      );
     } else {
-      alert('Please select a role before signing up.');
+      alert('Please fill in all fields before signing up.');
     }
   }
-
 }
