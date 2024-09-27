@@ -29,4 +29,18 @@ export class FavoriteService {
   getFavoritesByUserId(userId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.favoritesUrl}?userId=${userId}`);
   }
+
+  deleteFavorite(carId: number): Observable<any> {
+    const userId = +localStorage.getItem('id')!;
+    return this.getFavoritesByUserId(userId).pipe(
+      switchMap((favorites: any[]) => {
+        const favorite = favorites.find(fav => fav.carId === carId);
+        if (favorite) {
+          return this.http.delete<any>(`${this.favoritesUrl}/${favorite.id}`);
+        } else {
+          return of({ error: 'Favorite not found.' });
+        }
+      })
+    );
+  }
 }

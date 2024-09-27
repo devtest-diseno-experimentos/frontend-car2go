@@ -21,7 +21,14 @@
           <img [src]="car.image" alt="{{ car.title }}" class="img-thumbnail">
         </div>
         <div class="content-horizontal">
-          <a><h4>{{ car.title }}</h4></a>
+          <div class="title-favorite-wrapper">
+            <a>
+              <h4>{{ car.title }}</h4>
+            </a>
+            <button class="delete-button" (click)="removeFavorite(car.id); $event.stopPropagation()">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
           <span>{{ car.price | currency }}</span>
           <p>{{ car.description }}</p>
           <ul class="car-info">
