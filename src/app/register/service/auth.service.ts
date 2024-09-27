@@ -7,7 +7,7 @@ import { tap, switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'https://car2go-fake-api.vercel.app/users';
 
   constructor(private http: HttpClient) {}
 

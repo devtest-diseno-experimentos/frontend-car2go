@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CarService {
-  private apiUrl = 'http://localhost:3000/cars';
+  private apiUrl = 'https://car2go-fake-api.vercel.app/cars';
 
   constructor(private http: HttpClient) {}
 

@@ -7,7 +7,7 @@ import { switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class FavoriteService {
-  private favoritesUrl = 'http://localhost:3000/favorites';
+  private favoritesUrl = 'https://car2go-fake-api.vercel.app/favorites';
 
   constructor(private http: HttpClient) {}
 

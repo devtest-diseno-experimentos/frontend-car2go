@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/frontend-car2go",
+    "public": "dist/frontend-car2go/browser",
     "ignore": [
       "firebase.json",
       "**/.*",

@@ -1,7 +1,13 @@
 {
   "users": [
+    {
+      "id": 1,
+      "name": "11",
+      "email": "11",
+      "password": "11",
+      "role": "seller"
+    }
   ],
-  "favorites": [
-  ],
+  "favorites": [],
   "cars": []
 }
