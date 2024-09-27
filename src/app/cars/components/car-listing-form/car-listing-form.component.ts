@@ -99,10 +99,6 @@ export class CarListingFormComponent {
     this.showPreviewModal = false;
   }
 
-  openImageModal() {
-    // Implement the logic to open the image modal
-  }
-
   onSubmit() {
     if (this.carForm.valid) {
       const newCar = this.carForm.value;

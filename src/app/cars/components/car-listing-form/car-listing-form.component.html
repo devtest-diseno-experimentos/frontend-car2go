@@ -129,7 +129,6 @@
       <!-- Aquí van las previsualizaciones de las fotos -->
       <div *ngIf="photoPreviews.length > 0" class="photo-previews">
         <div *ngFor="let preview of photoPreviews; let i = index" class="photo-preview">
-          <img [src]="preview" class="img-thumbnail" alt="Car Photo" (click)="openImageModal">
           <button type="button" class="remove-button" (click)="removeImage(i)">
             <i class="fas fa-trash"></i>
           </button>
