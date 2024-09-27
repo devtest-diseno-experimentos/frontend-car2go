@@ -1,0 +1,75 @@
+<app-toolbar></app-toolbar>
+
+<div class="car-wrapper">
+  <div class="car-header">
+    <div class="icon-wrapper">
+      <div class="icon-circle">
+        <i class="fa fa-car"></i>
+      </div>
+      <div class="header-underline"></div>
+    </div>
+    <div class="text-content">
+      <h2>MY CARS</h2>
+      <span>Here are the cars you have listed</span>
+    </div>
+  </div>
+
+  <div class="car-container">
+    <div *ngIf="cars.length === 0" class="no-cars-message">
+      <div class="icon-wrapper">
+        <i class="fa fa-heart-broken"></i>
+      </div>
+      <p>You have not listed any cars yet. <a routerLink="/home">Create a new car listing</a>.</p>
+    </div>
+    <div *ngFor="let car of cars" class="car-item">
+      <div class="thumb-content">
+        <div class="car-banner"></div>
+        <div class="thumb-inner">
+          <div class="image-wrapper">
+            <img [src]="car.image" alt="{{ car.title }}" class="img-thumbnail" width="150">
+          </div>
+        </div>
+      </div>
+      <div class="down-content">
+        <div class="title-favorite-wrapper">
+          <a>
+            <h4>{{ car.title }}</h4>
+          </a>
+          <button class="delete-button" (click)="deleteCar(car.id); $event.stopPropagation()">
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
+        <span>{{ car.price | currency }}</span>
+        <p>{{ car.description }}</p>
+        <ul class="car-info">
+          <li>
+            <div class="item">
+              <i class="fas fa-calendar"></i>
+              <p>{{ car.year }}</p>
+            </div>
+          </li>
+          <li>
+            <div class="item">
+              <i class="fas fa-road"></i>
+              <p>{{ car.speed }}p/h</p>
+            </div>
+          </li>
+          <li>
+            <div class="item">
+              <i class="fas fa-gas-pump"></i>
+              <p>{{ car.mileage }}km</p>
+            </div>
+          </li>
+          <li>
+            <div class="item">
+              <i class="fas fa-gas-pump"></i>
+              <p>{{ car.fuel }}</p>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
