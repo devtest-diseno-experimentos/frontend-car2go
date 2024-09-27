@@ -1,6 +1,7 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CarService } from '../services/car.service'; // Importa el servicio
+import { CarService } from '../../services/car.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-car-listing-form',
@@ -9,14 +10,15 @@ import { CarService } from '../services/car.service'; // Importa el servicio
 })
 export class CarListingFormComponent {
   @Output() formClosed = new EventEmitter<void>();
+  @Output() carAdded = new EventEmitter<any>();
   carForm: FormGroup;
   photos: File[] = [];
   photoPreviews: string[] = [];
-  selectedImage: string = '';
-  showImageModal: boolean = false;
   showPreviewModal: boolean = false;
+  currentImageIndex: number = 0;
+  previewImageIndex: number = 0;
 
-  constructor(private fb: FormBuilder, private carService: CarService) {
+  constructor(private fb: FormBuilder, private carService: CarService, private router: Router) {
     this.carForm = this.fb.group({
       name: ['Juan Pérez', Validators.required],
       phone: ['5551234567', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
@@ -53,28 +55,52 @@ export class CarListingFormComponent {
       };
       reader.readAsDataURL(selectedFiles[i]);
     }
+    this.currentImageIndex = 0;
   }
 
-  openImageModal(preview: string) {
-    this.selectedImage = preview;
-    this.showImageModal = true;
+  removeImage(index: number) {
+    this.photoPreviews.splice(index, 1);
+    this.photos.splice(index, 1);
+    if (this.currentImageIndex >= this.photoPreviews.length) {
+      this.currentImageIndex = this.photoPreviews.length - 1;
+    }
   }
 
-  closeImageModal() {
-    this.showImageModal = false;
+  prevImage() {
+    if (this.currentImageIndex > 0) {
+      this.currentImageIndex--;
+    }
+  }
+
+  nextImage() {
+    if (this.currentImageIndex < this.photoPreviews.length - 1) {
+      this.currentImageIndex++;
+    }
+  }
+
+  prevPreviewImage() {
+    if (this.previewImageIndex > 0) {
+      this.previewImageIndex--;
+    }
+  }
+
+  nextPreviewImage() {
+    if (this.previewImageIndex < this.photoPreviews.length - 1) {
+      this.previewImageIndex++;
+    }
   }
 
   openPreviewModal() {
     this.showPreviewModal = true;
+    this.previewImageIndex = 0;
   }
 
   closePreviewModal() {
     this.showPreviewModal = false;
   }
 
-  removeImage(index: number) {
-    this.photoPreviews.splice(index, 1);
-    this.photos.splice(index, 1);
+  openImageModal() {
+    // Implement the logic to open the image modal
   }
 
   onSubmit() {
@@ -84,19 +110,26 @@ export class CarListingFormComponent {
       newCar.title = `${newCar.brand} ${newCar.model}`;
 
       if (this.photoPreviews.length > 0) {
-        newCar.image = this.photoPreviews[0]; // Primera imagen para la tarjeta del home
-        newCar.images = this.photoPreviews; // Todas las imágenes para el componente de información detallada
+        newCar.image = this.photoPreviews[0];
+        newCar.images = this.photoPreviews;
       } else {
         newCar.image = 'assets/default_image.jpg';
         newCar.images = ['assets/default_image.jpg'];
       }
 
-      this.carService.addCar(newCar);
-      this.carForm.reset();
-      this.photos = [];
-      this.photoPreviews = [];
-
-      this.formClosed.emit();
+      this.carService.addCar(newCar).subscribe(
+        (response) => {
+          this.carForm.reset();
+          this.photos = [];
+          this.photoPreviews = [];
+          this.carAdded.emit(response);
+          this.formClosed.emit();
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          console.error('Error adding car:', error);
+        }
+      );
     }
   }
 }

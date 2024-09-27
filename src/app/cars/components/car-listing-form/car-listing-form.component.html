@@ -1,3 +1,4 @@
+<app-toolbar></app-toolbar>
 <div class="container my-5">
   <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
     <!-- Sales Data Section -->
@@ -128,7 +129,7 @@
       <!-- Aquí van las previsualizaciones de las fotos -->
       <div *ngIf="photoPreviews.length > 0" class="photo-previews">
         <div *ngFor="let preview of photoPreviews; let i = index" class="photo-preview">
-          <img [src]="preview" class="img-thumbnail" alt="Car Photo" (click)="openImageModal(preview)">
+          <img [src]="preview" class="img-thumbnail" alt="Car Photo" (click)="openImageModal">
           <button type="button" class="remove-button" (click)="removeImage(i)">
             <i class="fas fa-trash"></i>
           </button>
@@ -137,12 +138,7 @@
     </div>
 
 
-    <div class="modal-overlay" *ngIf="showImageModal" (click)="closeImageModal()">
-      <div class="modal-content" (click)="$event.stopPropagation()">
-        <span class="close-button" (click)="closeImageModal()">&times;</span>
-        <img [src]="selectedImage" class="img-large" alt="Large Car Photo">
-      </div>
-    </div>
+
 
 
   </form>
@@ -166,19 +162,16 @@
         <div class="preview-card-wrapper">
           <div class="car-item">
             <div class="thumb-content">
-              <div class="car-banner">
-                <a href="#"></a>
-              </div>
               <div class="thumb-inner">
                 <div class="image-wrapper">
-                  <a href="#">
+                  <a>
                     <img [src]="photoPreviews[0] || 'assets/default_image.jpg'" alt="{{ carForm.value.brand }} {{ carForm.value.model }}" class="img-thumbnail" width="150">
                   </a>
                 </div>
               </div>
             </div>
             <div class="down-content">
-              <a href="#"><h4>{{ carForm.value.brand || 'Brand' }} {{ carForm.value.model || 'Model' }}</h4></a>
+              <a><h4>{{ carForm.value.brand || 'Brand' }} {{ carForm.value.model || 'Model' }}</h4></a>
               <span>{{ carForm.value.price | currency }}</span>
               <p>{{ carForm.value.description || 'No description provided' }}</p>
               <ul class="car-info">
@@ -191,13 +184,13 @@
                 <li>
                   <div class="item">
                     <i class="fas fa-road"></i>
-                    <p>{{ carForm.value.speed || 'Speed' }}</p>
+                    <p>{{ carForm.value.speed || 'Speed' }}p/h</p>
                   </div>
                 </li>
                 <li>
                   <div class="item">
                     <i class="fas fa-gas-pump"></i>
-                    <p>{{ carForm.value.mileage || 'Mileage' }}</p>
+                    <p>{{ carForm.value.mileage || 'Mileage' }}km</p>
                   </div>
                 </li>
                 <li>
@@ -223,6 +216,8 @@
             <li><strong>Number of Doors:</strong> {{ carForm.value.doors || 'N/A' }}</li>
             <li><strong>Plate:</strong> {{ carForm.value.plate || 'N/A' }}</li>
             <li><strong>Location:</strong> {{ carForm.value.location || 'N/A' }}</li>
+
+
           </ul>
         </div>
 
@@ -233,3 +228,4 @@
 
 
 </div>
+<app-footer></app-footer>
