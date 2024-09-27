@@ -16,16 +16,9 @@
     </div>
 
     <div class="cta-section-top">
-      <a href="/my-cars" class="cta-button-top">My Cars</a>
-      <a href="#" class="cta-button-top" (click)="openModal(); $event.preventDefault()">Sell Car</a>
+      <a class="cta-button-top" (click)="navigateToCarListingForm()">Sell Car</a>
     </div>
 
-    <!-- Formulario en ventana modal -->
-    <div class="modal-overlay" *ngIf="showForm" (click)="closeModal()">
-      <div class="modal-content" (click)="$event.stopPropagation()">
-        <app-car-listing-form (formClosed)="onFormClosed()" *ngIf="showForm"></app-car-listing-form>
-      </div>
-    </div>
 
     <div class="car-container">
       <div class="car-item" *ngFor="let car of cars | slice:0:6" (click)="viewCarDetails(car.id)">
@@ -74,7 +67,7 @@
     </div>
 
     <div class="cta-section">
-      <a href="/home" class="cta-button">Explore More Cars</a>
+      <a href="/car-listing" class="cta-button">Explore More Cars</a>
     </div>
   </div>
 </section>
@@ -98,27 +91,25 @@
       </div>
     </div>
 
-    <!-- Contenedor de las tarjetas de autos -->
     <div class="car-container">
-      <div class="car-item" *ngFor="let car of cars | slice:0:6">
+      <div class="car-item" *ngFor="let car of cars | slice:0:6" (click)="viewCarDetails(car.id)">
         <div class="thumb-content">
-          <div class="car-banner">
-            <a href="{{ car.link }}"></a>
-          </div>
+          <div class="car-banner"></div>
           <div class="thumb-inner">
-            <a href="{{ car.link }}">
-              <img [src]="car.image" alt="{{ car.title }}">
-            </a>
-
-
+            <div class="image-wrapper">
+              <a>
+                <img [src]="car.image" alt="{{ car.title }}" class="img-thumbnail" width="150">
+              </a>
+            </div>
           </div>
         </div>
+
         <div class="down-content">
           <div class="title-favorite-wrapper">
-            <a href="{{ car.link }}">
+            <a>
               <h4>{{ car.title }}</h4>
             </a>
-            <button class="favorite-button">
+            <button class="favorite-button" (click)="addToFavorites(car.id); $event.stopPropagation()">
               <i class="fa fa-star"></i>
             </button>
           </div>
@@ -133,14 +124,14 @@
             </li>
             <li>
               <div class="item">
-                <i class="fas fa-tachometer-alt"></i>
-                <p>{{ car.speed }}</p>
+                <i class="fas fa-road"></i>
+                <p>{{ car.speed }}p/h</p>
               </div>
             </li>
             <li>
               <div class="item">
-                <i class="fas fa-road"></i>
-                <p>{{ car.mileage }}</p>
+                <i class="fas fa-gas-pump"></i>
+                <p>{{ car.mileage }}km</p>
               </div>
             </li>
             <li>
@@ -154,9 +145,8 @@
       </div>
     </div>
 
-    <!-- CTA al final -->
     <div class="cta-section">
-      <a href="/home" class="cta-button">Explore More Cars</a>
+      <a href="/car-listing" class="cta-button">Explore More Cars</a>
     </div>
   </div>
 </section>
@@ -179,3 +169,4 @@
     </div>
   </div>
 </section>
+<app-footer></app-footer>
