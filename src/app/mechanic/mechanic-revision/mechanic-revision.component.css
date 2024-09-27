@@ -1,115 +1,124 @@
-
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  font-family: Arial, sans-serif;
-}
-
+/* Contenedor principal */
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  width: 90%;
+  gap: 20px; /* Espacio entre las tarjetas */
+  margin: 20px auto;
   max-width: 1200px;
-}
-
-.card {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  align-items: center;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
   padding: 20px;
 }
 
+/* Estilo de las tarjetas */
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+/* Efecto hover en la tarjeta */
+.card:hover {
+  transform: translateY(-5px); /* Pequeño levantamiento al hacer hover */
+}
+
+/* Contenedor de la imagen */
 .img-container {
+  flex: 0 0 250px; /* Tamaño fijo para la imagen */
+  max-height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .img-container img {
-  width: 100%;
-  max-width: 150px;
+  max-width: 100%;
   height: auto;
-  object-fit: cover;
-  border-radius: 10px;
+  border-radius: 10px; /* Bordes redondeados en la imagen */
 }
 
+/* Estilo para la información a la derecha */
 .info {
+  flex: 1;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-between; /* Espacio entre las secciones */
-  gap: 20px; /* Espacio entre los elementos */
-  width: 100%;
+  padding-left: 20px;
 }
 
+/* Información a la izquierda */
 .info-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 5px; /* Espacio entre la marca y el modelo */
+  text-align: left;
 }
 
-h2 {
-  font-size: 1.5em;
+.info-left h2 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.info-left h3 {
+  font-size: 18px;
+  margin: 5px 0;
+  color: #666; /* Color gris para el subtítulo */
+}
+
+/* Estilo para el campo de texto y el "Review Document" */
+.info div p {
   font-weight: bold;
-  color: #333;
+  color: #000;
+  margin: 0;
 }
 
-h3 {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #333;
-}
-
-input {
+.info div input {
+  margin-top: 5px;
   padding: 8px;
-  border: 1px solid #ddd;
+  font-size: 14px;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  max-width: 200px;
-  flex-shrink: 0; /* Para evitar que se encoge */
+  width: 200px; /* Ajuste de tamaño del input */
+  box-sizing: border-box; /* Asegura que el padding no altere el tamaño */
 }
 
-/* Botón Ready */
+/* Botón "READY" */
 button {
-  padding: 30px 40px;
-  background-color: #f9c847;
+  background-color: #ffcc00;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 16px;
   font-weight: bold;
   color: white;
-  flex-shrink: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #d1a639;
+  background-color: #ff9900;
 }
 
+/* Diseño responsive */
 @media (max-width: 768px) {
   .card {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .img-container img {
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
   }
 
   .info {
+    padding-left: 0;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
-  button {
+  .img-container {
     max-width: 100%;
-    margin-top: 10px;
+    height: auto;
+  }
+
+  .info div input {
+    width: 100%; /* Ajuste para móviles */
   }
 }

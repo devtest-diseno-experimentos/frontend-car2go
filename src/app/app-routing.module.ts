@@ -14,7 +14,7 @@ import {MechanicCheckComponent} from "./mechanic/mechanic-check/mechanic-check.c
 import {PlanComponent} from "./plans/components/plan/plan.component";
 import {PaymentFormComponent} from "./plans/components/payment-form/payment-form.component";
 import {MyCarsComponent} from "./cars/components/my-cars/my-cars.component";
-import {ProfileComponent} from "./profile/profile/profile.component";
+import {ProfileComponent} from "./profiles/components/profile/profile.component";
 import {FavoritesComponent} from "./cars/components/favorites/favorites.component";
 
 const routes: Routes = [

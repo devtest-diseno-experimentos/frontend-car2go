@@ -46,9 +46,8 @@ import {PlanComponent} from "./plans/components/plan/plan.component";
 import {PaymentFormComponent} from "./plans/components/payment-form/payment-form.component";
 import { MyCarsComponent } from './cars/components/my-cars/my-cars.component';
 import { CarListingComponent } from './cars/components/car-listing/car-listing.component';
-import { ProfileComponent } from './profile/profile/profile.component';
 import { FavoritesComponent } from './cars/components/favorites/favorites.component';
-
+import { ProfileComponent } from './profiles/components/profile/profile.component';
 
 @NgModule({
   declarations: [

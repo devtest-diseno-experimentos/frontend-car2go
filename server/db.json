@@ -1,8 +1,20 @@
 {
   "users": [
+    {
+      "id": "1",
+      "name": "11",
+      "email": "11",
+      "password": "11",
+      "role": "mechanic"
+    },
+    {
+      "id": 2,
+      "name": "22",
+      "email": "22",
+      "password": "22",
+      "role": "seller"
+    }
   ],
-  "favorites": [
-  ],
-  "cars": [
-  ]
+  "favorites": [],
+  "cars": []
 }

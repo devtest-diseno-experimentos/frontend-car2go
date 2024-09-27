@@ -87,8 +87,12 @@
         </select>
       </div>
     </form>
+
+    <!-- Toggle button for the summary in small screens -->
+    <div class="summary-toggle-button" (click)="toggleSummary()">View Summary</div>
   </div>
 
+  <!-- Right column: Payment summary -->
   <div class="summary-column" *ngIf="selectedPlan">
     <h2>Your Products</h2>
     <div class="product-summary">

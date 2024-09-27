@@ -1,0 +1,36 @@
+<app-toolbar></app-toolbar>
+<div class="profile-modal">
+  <div class="profile-header">
+    <h2>Account <span class="highlight">Details</span></h2>
+    <div class="underline"></div> <!-- Línea azul debajo del título -->
+    <button class="close-button">&times;</button>
+  </div>
+
+  <div class="profile-details">
+    <div class="detail-item">
+      <label>First Name:</label>
+      <p> {{ user.name }}</p>
+    </div>
+
+    <div class="detail-item">
+      <label>Last Name:</label>
+      <p>{{ user.name }}</p>
+    </div>
+
+    <div class="detail-item">
+      <label>E-Mail:</label>
+      <p>{{ user.email }}</p>
+    </div>
+
+    <div class="detail-item">
+      <label>Date of Birth (Optional):</label>
+      <p>10 June 1990</p>
+    </div>
+
+    <div class="detail-item">
+      <label>Role</label>
+      <p>{{ user.role }}</p>
+    </div>
+    <button routerLink="/home" type="submit" class="update-button">Update</button>
+  </div>
+</div>

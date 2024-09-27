@@ -1,13 +1,23 @@
+/* General Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Container for grid layout */
 .grid-container {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
   padding: 20px;
+  margin-top: -100px;
 }
 
+/* Scrollable form content */
 .scrollable-content {
   max-height: 80vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding-right: 110px;
   width: 90%;
 }
@@ -23,7 +33,7 @@ h2 {
 
 .form-group label {
   display: block;
-  font-size: .7em;
+  font-size: 0.7em;
   margin-bottom: 5px;
 }
 
@@ -36,16 +46,19 @@ h2 {
   border-radius: 5px;
   background-color: #f9f9f9;
 }
-.form-group select{
+
+.form-group select {
   width: 52.74%;
 }
+
 .form-row {
   display: flex;
-
 }
-.form-row input{
+
+.form-row input {
   width: 67%;
 }
+
 .half-width {
   width: 30%;
 }
@@ -78,7 +91,7 @@ select {
   width: 100%;
 }
 
-
+/* Summary Column (payment summary) */
 .summary-column {
   border: 1px solid #ddd;
   padding: 20px;
@@ -109,7 +122,7 @@ select {
   margin: 10px 0;
 }
 
-
+/* Scrollbar styling */
 .scrollable-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -121,4 +134,34 @@ select {
 
 .scrollable-content::-webkit-scrollbar-thumb:hover {
   background-color: #555;
+}
+
+/* Responsive: Adjust layout for small screens */
+@media (max-width: 768px) {
+  /* Change layout to single column */
+  .grid-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  /* Payment summary initially hidden */
+  .summary-column {
+    display: none; /* Ocultamos el resumen inicialmente en pantallas pequeñas */
+  }
+
+  /* Button to toggle the summary */
+  .summary-toggle-button {
+    display: block;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .summary-column.active {
+    display: block; /* Mostramos el resumen cuando esté activo */
+  }
 }

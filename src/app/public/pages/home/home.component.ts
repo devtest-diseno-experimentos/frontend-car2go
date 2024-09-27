@@ -36,6 +36,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/car-listing-form']);
   }
 
+  startInspection() {
+    this.router.navigate(['/mechanic-check']);
+  }
+
   viewCarDetails(carId: number) {
     this.router.navigate(['/car-details', carId]);
   }
