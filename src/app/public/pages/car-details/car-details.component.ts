@@ -16,9 +16,9 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   defaultImage: string = 'assets/default_image.jpg';
   carForm: FormGroup;
   isModalOpen: boolean = false;
-  currentIndex: number = 0; // Índice actual de la imagen
-  autoScrollInterval: any;  // Variable para manejar el auto-scroll
-  autoScrollTime: number = 5000; // Tiempo de cambio automático (5 segundos)
+  currentIndex: number = 0;
+  autoScrollInterval: any;
+  autoScrollTime: number = 5000;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,7 +46,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
       fuel: ['', Validators.required],
       speed: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       images: [[]],
-      userId: ['']  // Agrega el userId al formulario
+      userId: ['']
     });
   }
 
@@ -58,7 +58,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
           this.car = data;
           this.updateImages();
           this.populateForm();
-          this.startAutoScroll();  // Inicia el auto-scroll al cargar las imágenes
+          this.startAutoScroll();
         }
       );
     });
@@ -67,14 +67,14 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.stopAutoScroll();  // Detiene el auto-scroll al destruir el componente
+    this.stopAutoScroll();
   }
 
   updateImages() {
     if (this.car) {
       this.images = this.car.images && this.car.images.length > 0 ? this.car.images : [this.defaultImage];
-      this.mainImage = this.images[0]; // Inicia con la primera imagen
-      this.currentIndex = 0; // Reinicia el índice
+      this.mainImage = this.images[0];
+      this.currentIndex = 0;
     } else {
       this.mainImage = this.defaultImage;
       this.images = [this.defaultImage];
@@ -84,22 +84,21 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   changeImage(index: number) {
     this.currentIndex = index;
     this.mainImage = this.images[index];
-    this.restartAutoScroll();  // Reinicia el auto-scroll después de la interacción
+    this.restartAutoScroll();
   }
 
   nextImage() {
     this.currentIndex = (this.currentIndex + 1) % this.images.length;
     this.mainImage = this.images[this.currentIndex];
-    this.restartAutoScroll();  // Reinicia el auto-scroll después de la interacción
+    this.restartAutoScroll();
   }
 
   prevImage() {
     this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
     this.mainImage = this.images[this.currentIndex];
-    this.restartAutoScroll();  // Reinicia el auto-scroll después de la interacción
+    this.restartAutoScroll();
   }
 
-  // Auto-scroll
   startAutoScroll() {
     this.autoScrollInterval = setInterval(() => {
       this.nextImage();
@@ -113,8 +112,8 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   }
 
   restartAutoScroll() {
-    this.stopAutoScroll();  // Pausa el auto-scroll
-    this.startAutoScroll();  // Lo reinicia después de la interacción
+    this.stopAutoScroll();
+    this.startAutoScroll();
   }
 
   openEditModal(): void {
@@ -137,16 +136,16 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
       const updatedCar = {
         ...this.carForm.value,
         images: this.images,
-        userId: this.car.userId  // Asegúrate de incluir el userId
+        userId: this.car.userId
       };
       this.carService.updateCar(this.car.id, updatedCar).subscribe(
         (response) => {
           this.car = response;
           this.closeEditModal();
-          console.log('Coche actualizado:', response);
+            console.log('Car updated', response);
         },
         (error) => {
-          console.error('Error al actualizar el coche:', error);
+          console.error('Error', error);
         }
       );
     }

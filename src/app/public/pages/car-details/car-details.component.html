@@ -1,21 +1,21 @@
 <app-toolbar></app-toolbar>
 <section class="car-details" *ngIf="userRole === 'seller'">
   <div class="back-button">
-    <h2>CAR <span>DETAILS</span></h2>
+
   </div>
 
   <mat-card class="card">
     <!-- Car Gallery Section -->
     <div class="car-gallery">
       <div class="car-images">
-        <!-- Botón para imagen anterior -->
+
         <button (click)="prevImage()" class="carousel-nav prev">&#10094;</button>
 
         <div class="main-image">
           <img [src]="mainImage" alt="Imagen del producto" />
         </div>
 
-        <!-- Botón para siguiente imagen -->
+
         <button (click)="nextImage()" class="carousel-nav next">&#10095;</button>
 
         <div class="thumbnails">
@@ -72,23 +72,25 @@
   <mat-card class="card">
     <div class="car-gallery">
       <div class="car-images">
-        <!-- Botón para imagen anterior -->
-        <button (click)="prevImage()" class="carousel-nav prev">&#10094;</button>
-
         <div class="main-image">
           <img [src]="mainImage" alt="Imagen del producto" />
         </div>
+        <div class="carousel-container">
+          <button (click)="prevImage()">&#10094;</button>
 
-        <!-- Botón para siguiente imagen -->
-        <button (click)="nextImage()" class="carousel-nav next">&#10095;</button>
+          <img [src]="mainImage" alt="Imagen principal" class="main-image" />
 
-        <div class="thumbnails">
-          <img *ngFor="let image of images; let i = index"
-               [src]="image"
-               alt="Miniatura"
-               (click)="changeImage(i)"
-               [class.active]="i === currentIndex" />
+          <button (click)="nextImage()">&#10095;</button>
+
+          <div class="thumbnails">
+            <img *ngFor="let image of images; let i = index"
+                 [src]="image"
+                 alt="Miniatura"
+                 (click)="changeImage(i)"
+                 [class.active]="i === currentIndex" />
+          </div>
         </div>
+
       </div>
     </div>
 
