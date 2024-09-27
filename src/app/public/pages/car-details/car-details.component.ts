@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CarService } from '../../../cars/services/car.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './car-details.component.html',
   styleUrls: ['./car-details.component.css']
 })
-export class CarDetailsComponent implements OnInit {
+export class CarDetailsComponent implements OnInit, OnDestroy {
   car: any;
   userRole: string = '';
   mainImage: string = '';
@@ -16,6 +16,9 @@ export class CarDetailsComponent implements OnInit {
   defaultImage: string = 'assets/default_image.jpg';
   carForm: FormGroup;
   isModalOpen: boolean = false;
+  currentIndex: number = 0; // Índice actual de la imagen
+  autoScrollInterval: any;  // Variable para manejar el auto-scroll
+  autoScrollTime: number = 5000; // Tiempo de cambio automático (5 segundos)
 
   constructor(
     private route: ActivatedRoute,
@@ -43,7 +46,7 @@ export class CarDetailsComponent implements OnInit {
       fuel: ['', Validators.required],
       speed: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       images: [[]],
-      userId: ['']  // Add userId to the form
+      userId: ['']  // Agrega el userId al formulario
     });
   }
 
@@ -55,6 +58,7 @@ export class CarDetailsComponent implements OnInit {
           this.car = data;
           this.updateImages();
           this.populateForm();
+          this.startAutoScroll();  // Inicia el auto-scroll al cargar las imágenes
         }
       );
     });
@@ -62,18 +66,55 @@ export class CarDetailsComponent implements OnInit {
     this.userRole = localStorage.getItem('userRole') || '';
   }
 
+  ngOnDestroy() {
+    this.stopAutoScroll();  // Detiene el auto-scroll al destruir el componente
+  }
+
   updateImages() {
     if (this.car) {
-      this.mainImage = this.car.mainImage || this.car.image || this.defaultImage;
       this.images = this.car.images && this.car.images.length > 0 ? this.car.images : [this.defaultImage];
+      this.mainImage = this.images[0]; // Inicia con la primera imagen
+      this.currentIndex = 0; // Reinicia el índice
     } else {
       this.mainImage = this.defaultImage;
       this.images = [this.defaultImage];
     }
   }
 
-  changeImage(image: string) {
-    this.mainImage = image;
+  changeImage(index: number) {
+    this.currentIndex = index;
+    this.mainImage = this.images[index];
+    this.restartAutoScroll();  // Reinicia el auto-scroll después de la interacción
+  }
+
+  nextImage() {
+    this.currentIndex = (this.currentIndex + 1) % this.images.length;
+    this.mainImage = this.images[this.currentIndex];
+    this.restartAutoScroll();  // Reinicia el auto-scroll después de la interacción
+  }
+
+  prevImage() {
+    this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+    this.mainImage = this.images[this.currentIndex];
+    this.restartAutoScroll();  // Reinicia el auto-scroll después de la interacción
+  }
+
+  // Auto-scroll
+  startAutoScroll() {
+    this.autoScrollInterval = setInterval(() => {
+      this.nextImage();
+    }, this.autoScrollTime);
+  }
+
+  stopAutoScroll() {
+    if (this.autoScrollInterval) {
+      clearInterval(this.autoScrollInterval);
+    }
+  }
+
+  restartAutoScroll() {
+    this.stopAutoScroll();  // Pausa el auto-scroll
+    this.startAutoScroll();  // Lo reinicia después de la interacción
   }
 
   openEditModal(): void {
@@ -96,7 +137,7 @@ export class CarDetailsComponent implements OnInit {
       const updatedCar = {
         ...this.carForm.value,
         images: this.images,
-        userId: this.car.userId  // Ensure userId is included
+        userId: this.car.userId  // Asegúrate de incluir el userId
       };
       this.carService.updateCar(this.car.id, updatedCar).subscribe(
         (response) => {

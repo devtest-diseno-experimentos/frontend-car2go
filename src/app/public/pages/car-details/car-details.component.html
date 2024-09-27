@@ -8,14 +8,22 @@
     <!-- Car Gallery Section -->
     <div class="car-gallery">
       <div class="car-images">
+        <!-- Botón para imagen anterior -->
+        <button (click)="prevImage()" class="carousel-nav prev">&#10094;</button>
+
         <div class="main-image">
           <img [src]="mainImage" alt="Imagen del producto" />
         </div>
+
+        <!-- Botón para siguiente imagen -->
+        <button (click)="nextImage()" class="carousel-nav next">&#10095;</button>
+
         <div class="thumbnails">
-          <img *ngFor="let image of images"
+          <img *ngFor="let image of images; let i = index"
                [src]="image"
                alt="Miniatura"
-               (click)="changeImage(image)" />
+               (click)="changeImage(i)"
+               [class.active]="i === currentIndex" />
         </div>
       </div>
     </div>
@@ -23,15 +31,15 @@
     <!-- Car Information Section -->
     <div class="car-information">
       <div class="car-description">
-      <h4>
-        {{ car.title }}
-        <button (click)="openEditModal()" class="edit-button">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </h4>
-      <h5>${{ car.price }}</h5>
-      <p class="description">{{ car.description }}</p>
-    </div>
+        <h4>
+          {{ car.title }}
+          <button (click)="openEditModal()" class="edit-button">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </h4>
+        <h5>${{ car.price }}</h5>
+        <p class="description">{{ car.description }}</p>
+      </div>
 
       <!-- Car Data Section -->
       <div class="car-data">
@@ -58,19 +66,28 @@
     </div>
   </mat-card>
 </section>
+
 <section class="car-details" *ngIf="userRole === 'buyer'">
 
   <mat-card class="card">
     <div class="car-gallery">
       <div class="car-images">
+        <!-- Botón para imagen anterior -->
+        <button (click)="prevImage()" class="carousel-nav prev">&#10094;</button>
+
         <div class="main-image">
           <img [src]="mainImage" alt="Imagen del producto" />
         </div>
+
+        <!-- Botón para siguiente imagen -->
+        <button (click)="nextImage()" class="carousel-nav next">&#10095;</button>
+
         <div class="thumbnails">
-          <img *ngFor="let image of images"
+          <img *ngFor="let image of images; let i = index"
                [src]="image"
                alt="Miniatura"
-               (click)="changeImage(image)" />
+               (click)="changeImage(i)"
+               [class.active]="i === currentIndex" />
         </div>
       </div>
     </div>
