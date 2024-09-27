@@ -1,2 +1,247 @@
 <app-toolbar></app-toolbar>
-<app-card-information [car]="car" [userRole]="userRole"></app-card-information>
+<section class="car-details" *ngIf="userRole === 'seller'">
+  <div class="back-button">
+    <h2>CAR <span>DETAILS</span></h2>
+  </div>
+
+  <mat-card class="card">
+    <!-- Car Gallery Section -->
+    <div class="car-gallery">
+      <div class="car-images">
+        <div class="main-image">
+          <img [src]="mainImage" alt="Imagen del producto" />
+        </div>
+        <div class="thumbnails">
+          <img *ngFor="let image of images"
+               [src]="image"
+               alt="Miniatura"
+               (click)="changeImage(image)" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Car Information Section -->
+    <div class="car-information">
+      <div class="car-description">
+      <h4>
+        {{ car.title }}
+        <button (click)="openEditModal()" class="edit-button">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </h4>
+      <h5>${{ car.price }}</h5>
+      <p class="description">{{ car.description }}</p>
+    </div>
+
+      <!-- Car Data Section -->
+      <div class="car-data">
+        <div class="column-list">
+          <ul>
+            <li><i class="material-symbols-outlined">event</i><span>{{ car.year }}</span></li>
+            <li><i class="material-symbols-outlined">auto_transmission</i><span>{{ car.transmission }}</span></li>
+            <li><i class="material-symbols-outlined">bolt</i><span>{{ car.engine }}</span></li>
+            <li><i class="material-symbols-outlined">location_on</i><span>{{ car.location }}</span></li>
+          </ul>
+        </div>
+        <div class="column-list">
+          <ul>
+            <li><i class="material-symbols-outlined">invert_colors</i><span>{{ car.color }}</span></li>
+            <li><i class="material-symbols-outlined">sensor_door</i><span>{{ car.doors }}</span></li>
+            <li><i class="material-symbols-outlined">road</i><span>{{ car.mileage }}</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button>REQUEST REVIEW</button>
+      </div>
+    </div>
+  </mat-card>
+</section>
+<section class="car-details" *ngIf="userRole === 'buyer'">
+
+  <mat-card class="card">
+    <div class="car-gallery">
+      <div class="car-images">
+        <div class="main-image">
+          <img [src]="mainImage" alt="Imagen del producto" />
+        </div>
+        <div class="thumbnails">
+          <img *ngFor="let image of images"
+               [src]="image"
+               alt="Miniatura"
+               (click)="changeImage(image)" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Car Information Section -->
+    <div class="car-information">
+      <div class="car-description">
+        <h4>
+          {{ car.title }}
+          <span class="safety-icon">
+        <mat-icon>shield</mat-icon>
+        <div class="safety-message">
+          For your safety this car has been inspected
+          <button class="review-button">REVIEW HERE</button>
+        </div>
+      </span>
+        </h4>
+        <h5>${{ car.price }}</h5>
+        <p class="description">{{ car.description }}</p>
+      </div>
+
+      <!-- Car Data Section -->
+      <div class="car-data">
+        <div class="column-list">
+          <ul>
+            <li><i class="material-symbols-outlined">event</i><span>{{ car.year }}</span></li>
+            <li><i class="material-symbols-outlined">auto_transmission</i><span>{{ car.transmission }}</span></li>
+            <li><i class="material-symbols-outlined">bolt</i><span>{{ car.engine }}</span></li>
+            <li><i class="material-symbols-outlined">location_on</i><span>{{ car.location }}</span></li>
+          </ul>
+        </div>
+        <div class="column-list">
+          <ul>
+            <li><i class="material-symbols-outlined">invert_colors</i><span>{{ car.color }}</span></li>
+            <li><i class="material-symbols-outlined">sensor_door</i><span>{{ car.doors }}</span></li>
+            <li><i class="material-symbols-outlined">road</i><span>{{ car.mileage }}</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button class="offer-button">ADD OFFER $</button>
+      </div>
+    </div>
+  </mat-card>
+</section>
+<app-footer></app-footer>
+
+<!-- Modal -->
+<div class="modal" [ngClass]="{'show': isModalOpen}">
+  <div class="modal-content">
+    <span class="close" (click)="closeEditModal()">&times;</span>
+
+    <div class="container">
+
+      <form [formGroup]="carForm" (ngSubmit)="editCar()">
+        <div class="form-section">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input formControlName="name" id="name" class="form-control" placeholder="Name" />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input formControlName="phone" id="phone" class="form-control" placeholder="Telephone" />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input formControlName="email" id="email" class="form-control" placeholder="Email" />
+          </div>
+        </div>
+
+        <!-- PRICE Section -->
+        <div class="section-header">
+          <h3><span class="text-black">PRICE</span></h3>
+        </div>
+        <div class="form-section">
+          <div class="form-group full-width">
+            <label for="price">Offer</label>
+            <input formControlName="price" id="price" class="form-control" placeholder="Offer" />
+            <small class="text-muted">PAYMENT INCLUDES 5% COMMISSION</small>
+          </div>
+        </div>
+
+        <!-- CAR DATA Section -->
+        <div class="section-header">
+          <h3><span class="text-black">CAR</span> <span class="text-yellow"> DATA</span></h3>
+        </div>
+        <div class="form-section">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input id="title" formControlName="title" type="text">
+          </div>
+          <div class="form-group">
+            <label for="brand">Brand</label>
+            <input formControlName="brand" id="brand" class="form-control" placeholder="Brand" />
+          </div>
+          <div class="form-group">
+            <label for="model">Model</label>
+            <input formControlName="model" id="model" class="form-control" placeholder="Model" />
+          </div>
+          <div class="form-group">
+            <label for="color">Color</label>
+            <input formControlName="color" id="color" class="form-control" placeholder="Color" />
+          </div>
+          <div class="form-group">
+            <label for="year">Year of Manufacture</label>
+            <input formControlName="year" id="year" class="form-control" placeholder="Year of Manufacture" />
+          </div>
+          <div class="form-group">
+            <label for="transmission">Transmission Type</label>
+            <select formControlName="transmission" id="transmission" class="form-control">
+              <option value="">Select Transmission</option>
+              <option value="Manual">Manual</option>
+              <option value="Automatic">Automatic</option>
+              <option value="Semi-automatic">Semi-automatic</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="engine">Engine (Cylinder Capacity)</label>
+            <input formControlName="engine" id="engine" class="form-control" placeholder="Engine" />
+          </div>
+          <div class="form-group">
+            <label for="mileage">Mileage</label>
+            <input formControlName="mileage" id="mileage" class="form-control" placeholder="Mileage" />
+          </div>
+          <div class="form-group">
+            <label for="fuel">Fuel Type</label>
+            <select formControlName="fuel" id="fuel" class="form-control">
+              <option value="">Select Fuel Type</option>
+              <option value="Gasoline">Gasoline</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Electric">Electric</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="speed">Speed</label>
+            <input formControlName="speed" id="speed" class="form-control" placeholder="Speed" />
+          </div>
+          <div class="form-group">
+            <label for="doors">Number of Doors</label>
+            <select formControlName="doors" id="doors" class="form-control">
+              <option value="">Select Number of Doors</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="plate">Plate</label>
+            <input formControlName="plate" id="plate" class="form-control" placeholder="This information will not be shown in the notice" />
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input formControlName="location" id="location" class="form-control" placeholder="Location" />
+          </div>
+
+
+          <div class="form-group full-width">
+            <label for="description">Description</label>
+            <textarea formControlName="description" id="description" class="form-control" placeholder="Description"></textarea>
+          </div>
+        </div>
+
+
+        <div class="submit-button">
+          <button type="submit" class="btn btn-primary">Update Car</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
