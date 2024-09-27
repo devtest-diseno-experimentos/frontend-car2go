@@ -72,25 +72,23 @@
   <mat-card class="card">
     <div class="car-gallery">
       <div class="car-images">
+
+        <button (click)="prevImage()" class="carousel-nav prev">&#10094;</button>
+
         <div class="main-image">
           <img [src]="mainImage" alt="Imagen del producto" />
         </div>
-        <div class="carousel-container">
-          <button (click)="prevImage()">&#10094;</button>
 
-          <img [src]="mainImage" alt="Imagen principal" class="main-image" />
 
-          <button (click)="nextImage()">&#10095;</button>
+        <button (click)="nextImage()" class="carousel-nav next">&#10095;</button>
 
-          <div class="thumbnails">
-            <img *ngFor="let image of images; let i = index"
-                 [src]="image"
-                 alt="Miniatura"
-                 (click)="changeImage(i)"
-                 [class.active]="i === currentIndex" />
-          </div>
+        <div class="thumbnails">
+          <img *ngFor="let image of images; let i = index"
+               [src]="image"
+               alt="Miniatura"
+               (click)="changeImage(i)"
+               [class.active]="i === currentIndex" />
         </div>
-
       </div>
     </div>
 
