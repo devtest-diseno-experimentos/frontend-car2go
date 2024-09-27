@@ -1,53 +1,39 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarService {
-  private cars = [
-    {
-      id: 1,
-      title: 'Perfect Sport Car',
-      price: 1200,
-      description: 'Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.',
-      year: 2018,
-      speed: '160p/h',
-      mileage: '26.00km',
-      fuel: 'Petrol',
-      image: 'assets/car_item_1.jpg',
-      transmission: 'Automatic',
-      engine: 'V8',
-      doors: 4,
-      plate: 'ABC123',
-      location: 'New York'
-    },
-    {
-      id: 2,
-      title: 'Perfect Sport Car',
-      price: 1200,
-      description: 'Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.',
-      year: 2018,
-      speed: '160p/h',
-      mileage: '26.00km',
-      fuel: 'Petrol',
-      image: 'assets/default_image.jpg',
-      transmission: 'Manual',
-      engine: 'V6',
-      doors: 2,
-      plate: 'XYZ789',
-      location: 'Los Angeles'
-    }
-  ];
+  private apiUrl = 'http://localhost:3000/cars';
 
-  getCars() {
-    return this.cars;
+  constructor(private http: HttpClient) {}
+
+  getCars(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
   }
 
-  getCarById(id: number) {
-    return this.cars.find(car => car.id === id);
+  getCarById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
-  addCar(newCar: any) {
-    this.cars.push(newCar);
+  getCarsByUserId(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}?userId=${userId}`);
+  }
+
+  addCar(newCar: any): Observable<any> {
+    const userId = +localStorage.getItem('id')!;
+    newCar.userId = userId;
+
+    return this.http.post<any>(this.apiUrl, newCar);
+  }
+
+  deleteCar(carId: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${carId}`);
+  }
+
+  updateCar(carId: number, updatedCar: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${carId}`, updatedCar);
   }
 }
