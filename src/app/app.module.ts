@@ -39,12 +39,15 @@ import { LoginComponent } from './register/components/login/login.component';
 import { RegisterComponent } from './register/components/register/register.component';
 import { ForgotPasswordComponent } from './register/components/forgot-password/forgot-password.component';
 import { CarDetailsComponent } from './public/pages/car-details/car-details.component';
-import { CardInformationComponent } from './public/components/card-information/card-information.component';
-import { CarListingFormComponent } from './cars/car-listing-form/car-listing-form.component';
+import { CarListingFormComponent } from './cars/components/car-listing-form/car-listing-form.component';
 import { MechanicRevisionComponent } from './mechanic/mechanic-revision/mechanic-revision.component';
 import { MechanicCheckComponent } from './mechanic/mechanic-check/mechanic-check.component';
 import {PlanComponent} from "./plans/components/plan/plan.component";
 import {PaymentFormComponent} from "./plans/components/payment-form/payment-form.component";
+import { MyCarsComponent } from './cars/components/my-cars/my-cars.component';
+import { CarListingComponent } from './cars/components/car-listing/car-listing.component';
+import { ProfileComponent } from './profile/profile/profile.component';
+import { FavoritesComponent } from './cars/components/favorites/favorites.component';
 
 
 @NgModule({
@@ -57,12 +60,15 @@ import {PaymentFormComponent} from "./plans/components/payment-form/payment-form
     RegisterComponent,
     ForgotPasswordComponent,
     CarDetailsComponent,
-    CardInformationComponent,
     CarListingFormComponent,
     MechanicRevisionComponent,
     MechanicCheckComponent,
     PlanComponent,
     PaymentFormComponent,
+    MyCarsComponent,
+    CarListingComponent,
+    ProfileComponent,
+    FavoritesComponent,
   ],
   imports: [
     BrowserModule,
