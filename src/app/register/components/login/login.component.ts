@@ -1,35 +1,36 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
   standalone: true,
-  styleUrls: ['./login.component.css']
+  imports: [FormsModule]
 })
 export class LoginComponent {
-  selectedRole: string = '';
+  username: string = '';
+  password: string = '';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) {}
 
-  onRoleChange(role: string) {
-    this.selectedRole = role;
-    this.updateCheckboxes();
-  }
-
-  updateCheckboxes() {
-    const checkboxes = document.querySelectorAll('.checkbox-group input[type="checkbox"]');
-    checkboxes.forEach((checkbox: any) => {
-      checkbox.checked = checkbox.value === this.selectedRole;
-    });
-  }
-
-  onSignup() {
-    if (this.selectedRole) {
-      localStorage.setItem('userRole', this.selectedRole);
-      this.router.navigate(['/home']);
+  onLogin() {
+    if (this.username && this.password) {
+      const credentials = { username: this.username, password: this.password };
+      this.authService.login(credentials).subscribe(
+        response => {
+          console.log('Login successful:', response);
+          localStorage.getItem('id');
+          this.router.navigate(['/home']);
+        },
+        error => {
+          console.error('Error logging in:', error);
+        }
+      );
     } else {
-      alert('Please select a role before signing up.');
+      alert('Please fill in all fields before logging in.');
     }
   }
 }
