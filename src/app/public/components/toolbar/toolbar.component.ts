@@ -1,4 +1,6 @@
 import {Component, HostListener, OnInit} from '@angular/core';
+import { AuthService } from '../../../register/service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,6 +11,13 @@ export class ToolbarComponent implements OnInit {
   isScrolled = false;
   isMenuOpen = false;
   userRole: string = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
 
   ngOnInit() {
 

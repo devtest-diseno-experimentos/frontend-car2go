@@ -91,12 +91,22 @@ header {
   height: 25vh;
 }
 
+
 .profile-icon {
   display: block;
 }
-.profile-link{
+
+.profile-link {
   display: none;
 }
+.logout-button{
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease, font-size 0.3s ease;
+  cursor:pointer;
+}
+
 .hamburger {
   display: none;
   cursor: pointer;
@@ -112,30 +122,36 @@ header {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+
   .nav-links {
+    display: none;
     flex-direction: column;
     position: absolute;
-    top: 100px;
+    top: 93px;
     right: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
-    max-height: 0;
+    transition: max-height 0.5s ease;
+  }
+
+  .scrolled-header .nav-links {
+    top: 83px;
   }
 
   .nav-links.active {
-    max-height: 300px;
+    display: flex;
   }
-
+  .space {
+    height: 16vh;
+  }
   .nav-links li {
     text-align: center;
     margin: 15px 0;
   }
 
-
   .nav-links li.profile-link {
     display: block;
   }
-
 
   .profile-icon {
     display: none;
