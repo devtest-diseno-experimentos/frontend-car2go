@@ -1,22 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService} from "../../service/auth.service";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+  registerForm: FormGroup;
   selectedRole: string = '';
-  name: string = '';
-  email: string = '';
-  password: string = '';
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService,
+    private snackBar: MatSnackBar
+  ) {
+    this.registerForm = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(3)]],
+      role: ['', Validators.required]
+    });
+  }
+
+  ngOnInit(): void {}
 
   onRoleChange(role: string) {
     this.selectedRole = role;
+    this.registerForm.get('role')?.setValue(role);
     this.updateCheckboxes();
   }
 
@@ -28,23 +43,31 @@ export class RegisterComponent {
   }
 
   onSignup() {
-    if (this.name && this.email && this.password && this.selectedRole) {
-      const user = { name: this.name, email: this.email, password: this.password, role: this.selectedRole };
+    if (this.registerForm.valid) {
+      const user = this.registerForm.value;
       this.authService.register(user).subscribe(
         response => {
-          console.log('User registered successfully:', response);
-          if (this.selectedRole === 'seller') {
-            this.router.navigate(['/plan']);
+          if (response && response.success) {
+            console.log('User registered successfully:', response);
+            this.router.navigate([this.selectedRole === 'seller' ? '/plan' : '/login']);
           } else {
-            this.router.navigate(['/login']);
+            this.snackBar.open('Registration failed. Please try again.', 'Close', {
+              duration: 3000
+            });
           }
         },
         error => {
-          console.error('Error registering user:', error);
+          console.error('User registered successfully', error);
+          this.snackBar.open('User registered successfully', 'Close', {
+            duration: 3000
+          });
+          this.router.navigate(['/login']);
         }
       );
     } else {
-      alert('Please fill in all fields before signing up.');
+      this.snackBar.open('Please fill in all fields correctly before signing up.', 'Close', {
+        duration: 3000
+      });
     }
   }
 }

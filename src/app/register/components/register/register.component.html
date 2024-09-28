@@ -4,24 +4,44 @@
 
     <h1>Get Started Now</h1>
 
-    <form>
-      <label for="name">Name</label>
-      <input type="text" id="name" placeholder="Enter your name" [(ngModel)]="name" name="name">
+    <form [formGroup]="registerForm" (ngSubmit)="onSignup()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter your name">
+        <mat-error *ngIf="registerForm.get('name')?.hasError('required')">
+          Name is required
+        </mat-error>
+      </mat-form-field>
 
-      <label for="email">Email address</label>
-      <input type="email" id="email" placeholder="Enter your email" [(ngModel)]="email" name="email">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email address</mat-label>
+        <input matInput formControlName="email" placeholder="Enter your email">
+        <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+          Enter a valid email
+        </mat-error>
+      </mat-form-field>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter your password" [(ngModel)]="password" name="password">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="Enter your password">
+        <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+          Password is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+          Password must be at least 3 characters long
+        </mat-error>
+      </mat-form-field>
 
       <div class="checkbox-group">
-        <label><input type="checkbox" value="seller" (change)="onRoleChange('seller')"> Seller</label>
-        <label><input type="checkbox" value="buyer" (change)="onRoleChange('buyer')"> Buyer</label>
-        <label><input type="checkbox" value="mechanic" (change)="onRoleChange('mechanic')"> Mechanic</label>
+        <mat-checkbox (change)="onRoleChange('seller')">Seller</mat-checkbox>
+        <mat-checkbox (change)="onRoleChange('buyer')">Buyer</mat-checkbox>
+        <mat-checkbox (change)="onRoleChange('mechanic')">Mechanic</mat-checkbox>
       </div>
 
-      <button routerLink="/login" type="button" class="btn-signup" (click)="onSignup()">Sign Up</button>
-    </form>
+      <button mat-raised-button color="primary"  class="btn-signup" type="submit" (click)="onSignup()">Sign Up</button>    </form>
 
     <div class="social-login">
       <div class="separator">
@@ -31,21 +51,19 @@
       </div>
 
       <div class="social-login-buttons">
-        <button class="google-login">
+        <button mat-stroked-button class="google-login">
           <img src="assets/google-logo.svg" alt="Google Logo" width="20px" height="20px"> Sign up with Google
         </button>
-        <button class="apple-login">
+        <button mat-stroked-button class="apple-login">
           <img src="assets/apple-logo.svg" alt="Apple Logo" width="20px" height="20px"> Sign up with Apple
         </button>
       </div>
-
     </div>
 
     <p class="login-footer">
       Have an account? <a href="/login">Sign In</a>
     </p>
   </div>
-
 
   <div class="image-container">
     <img src="assets/car-image.png" alt="Car Image">

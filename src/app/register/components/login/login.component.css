@@ -1,4 +1,3 @@
-/* General Styles */
 body, html {
   margin: 0;
   padding: 0;
@@ -6,12 +5,7 @@ body, html {
   font-family: 'Arial', sans-serif;
   height: 100%;
 }
-.logo {
-  max-width: 130px;
-  margin-top: 15px;
-  align-self: center;
-}
-/* Main Container */
+
 .login-container {
   display: flex;
   height: 100vh;
@@ -21,7 +15,6 @@ body, html {
   min-height: 100vh;
 }
 
-/* Form Container */
 .form-container {
   width: 50%;
   display: flex;
@@ -30,22 +23,13 @@ body, html {
   justify-content: center;
   height: 100%;
   padding: 20px;
-
+  text-align: center;
 }
 
-.forgot-password-link{
-  margin-top: 10px;
-  color:#F4C23D;
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.forgot-password-link:hover{
-  text-decoration: underline;
-}
 .form-container h1 {
   font-size: 32px;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .form-container h2 {
@@ -53,86 +37,41 @@ body, html {
   font-weight: bold;
 }
 
-.form-container form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.full-width {
+  width: 60%;
+  margin-bottom: 15px;
+}
+
+.mat-form-field {
   width: 100%;
 }
 
-.form-container label {
-  font-size: 14px;
-  margin: 10px 0 5px;
-  width: 52%;
-  text-align: left;
-  font-weight: bold;
-}
 
-.form-container input {
-  padding: 10px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  width: 50%;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-container input:hover {
-  border-color: #ffcc00;
-  box-shadow: 0 0 5px #ffcc00;
-}
-
-input:focus {
-  outline: none;
-  border: 2px solid #ffcc00;
-  box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
-}
-
-/* Remember Checkbox */
-.remember-checkbox {
-  display: flex;
-  align-items: center;
-  margin-right: 48px;
-  width: 50%;
-}
-
-.remember-checkbox label {
-  font-size: 14px;
-  margin-left: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-}
-
-.remember-checkbox input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.remember-checkbox input[type="checkbox"]:checked {
-  accent-color: #ffcc00;
-}
-
-/* Signup Button */
 .btn-signin {
-  background-color: #ffcc00;
-  border: none;
-  padding: 10px;
-  font-size: 16px;
   color: #000;
-  cursor: pointer;
-  border-radius: 5px;
+  width: 55%;
   margin-top: 10px;
-  width: 52.3%;
+  border-radius: 5px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn-signin:hover {
-  background-color: #e6b800;
+
   transform: scale(1.02);
+}
+
+.forgot-password-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.forgot-password-link {
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
 }
 
 /* Social Login */
@@ -142,12 +81,6 @@ input:focus {
   width: 50%;
 }
 
-.social-login-buttons {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 10px;
-}
 .separator {
   display: flex;
   align-items: center;
@@ -189,7 +122,7 @@ input:focus {
   cursor: pointer;
   width: 48%;
   text-align: center;
-
+  margin-top: 10px;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -198,19 +131,15 @@ input:focus {
   transform: scale(1.02);
 }
 
-.google-login i, .apple-login i {
-  margin-right: 10px;
-}
-
 .google-login img, .apple-login img {
-  margin-bottom: 4px;
   margin-right: 10px;
   vertical-align: middle;
 }
+
 /* Footer */
 .login-footer {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .login-footer a {
@@ -221,6 +150,7 @@ input:focus {
 .login-footer a:hover {
   text-decoration: underline;
 }
+
 /* Image Container */
 .image-container {
   width: 50%;
@@ -231,6 +161,12 @@ input:focus {
   width: 100%;
   height: 101vh;
   object-fit: cover;
+}
+
+.logo {
+  max-width: 130px;
+  margin-top: 15px;
+  align-self: center;
 }
 
 /* Responsive Design */
@@ -251,10 +187,6 @@ input:focus {
   }
 
   .form-container input, .btn-signin, .form-container label {
-    width: 100%;
-  }
-
-  .remember-checkbox {
     width: 100%;
   }
 
