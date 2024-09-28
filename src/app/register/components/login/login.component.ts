@@ -22,8 +22,12 @@ export class LoginComponent {
       this.authService.login(credentials).subscribe(
         response => {
           console.log('Login successful:', response);
-          localStorage.getItem('id');
-          this.router.navigate(['/home']);
+          const userRole = localStorage.getItem('userRole');
+          if (userRole === 'seller') {
+            this.router.navigate(['/plan']);
+          } else {
+            this.router.navigate(['/home']);
+          }
         },
         error => {
           console.error('Error logging in:', error);
