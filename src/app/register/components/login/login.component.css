@@ -9,7 +9,7 @@ body, html {
 .logo {
   max-width: 130px;
   margin-top: 15px;
-  align-self: flex-start;
+  align-self: center;
 }
 /* Main Container */
 .login-container {
