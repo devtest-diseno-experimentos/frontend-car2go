@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarService } from '../../services/car.service';
 import { Router } from '@angular/router';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-car-listing-form',
@@ -15,6 +16,7 @@ export class CarListingFormComponent {
   photos: File[] = [];
   photoPreviews: string[] = [];
   showPreviewModal: boolean = false;
+  showPublicationModal: boolean = false;
   currentImageIndex: number = 0;
   previewImageIndex: number = 0;
 
@@ -42,19 +44,20 @@ export class CarListingFormComponent {
   }
 
   onFileSelected(event: any) {
-    const selectedFiles = event.target.files;
+    const selectedFiles = Array.from(event.target.files) as File[];
     this.photos = [];
     this.photoPreviews = [];
 
-    for (let i = 0; i < selectedFiles.length; i++) {
-      this.photos.push(selectedFiles[i]);
+    selectedFiles.forEach((file) => {
+      this.photos.push(file);
 
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.photoPreviews.push(e.target.result);
       };
-      reader.readAsDataURL(selectedFiles[i]);
-    }
+      reader.readAsDataURL(file);
+    });
+
     this.currentImageIndex = 0;
   }
 
@@ -66,38 +69,56 @@ export class CarListingFormComponent {
     }
   }
 
-  prevImage() {
-    if (this.currentImageIndex > 0) {
-      this.currentImageIndex--;
-    }
+
+  openPreviewModal(index: number) {
+    this.showPreviewModal = true;
+    this.previewImageIndex = index;
+
+    document.body.style.overflow = 'hidden';
   }
 
-  nextImage() {
-    if (this.currentImageIndex < this.photoPreviews.length - 1) {
-      this.currentImageIndex++;
-    }
+
+  closePreviewModal() {
+    this.showPreviewModal = false;
+
+    document.body.style.overflow = 'auto';
   }
 
   prevPreviewImage() {
     if (this.previewImageIndex > 0) {
       this.previewImageIndex--;
+    } else {
+      this.previewImageIndex = this.photoPreviews.length - 1;
     }
   }
 
   nextPreviewImage() {
     if (this.previewImageIndex < this.photoPreviews.length - 1) {
       this.previewImageIndex++;
+    } else {
+      this.previewImageIndex = 0;
     }
   }
 
-  openPreviewModal() {
-    this.showPreviewModal = true;
-    this.previewImageIndex = 0;
+
+
+  openPublicationPreview() {
+    this.showPublicationModal = true;
+    document.body.style.overflow = 'hidden';
   }
 
-  closePreviewModal() {
-    this.showPreviewModal = false;
+
+  closePublicationModal() {
+    this.showPublicationModal = false;
+    document.body.style.overflow = 'auto';
   }
+
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.photoPreviews, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.photos, event.previousIndex, event.currentIndex);
+  }
+
 
   onSubmit() {
     if (this.carForm.valid) {

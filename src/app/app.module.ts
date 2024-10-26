@@ -51,6 +51,7 @@ import { ProfileComponent } from './profiles/components/profile/profile.componen
 import { PayComponent } from './buyer/components/pay/pay.component';
 import { SendDataComponent } from './buyer/components/send-data/send-data.component';
 import { TechnicalReviewComponent } from './buyer/components/technical-review/technical-review.component';
+import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
 
 @NgModule({
   declarations: [
@@ -103,7 +104,9 @@ import { TechnicalReviewComponent } from './buyer/components/technical-review/te
     ReactiveFormsModule,
     MatExpansionModule,
     NgOptimizedImage,
-    LoginComponent
+    LoginComponent,
+    CdkDropList,
+    CdkDrag
   ],
   providers: [
     provideAnimationsAsync(),

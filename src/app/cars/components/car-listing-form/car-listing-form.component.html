@@ -1,23 +1,26 @@
 <app-toolbar></app-toolbar>
 <div class="container my-5">
   <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+
     <!-- Sales Data Section -->
     <div class="section-header">
       <h3><span class="text-black">SALES</span> <span class="text-yellow">DATA</span></h3>
     </div>
     <div class="form-section">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input formControlName="name" id="name" class="form-control" placeholder="Name" />
-      </div>
-      <div class="form-group">
-        <label for="phone">Phone</label>
-        <input formControlName="phone" id="phone" class="form-control" placeholder="Telephone" />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input formControlName="email" id="email" class="form-control" placeholder="Email" />
-      </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Name">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phone" placeholder="Telephone">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" placeholder="Email">
+      </mat-form-field>
     </div>
 
     <!-- Price Section -->
@@ -25,91 +28,102 @@
       <h3><span class="text-black">PRICE</span></h3>
     </div>
     <div class="form-section">
-      <div class="form-group full-width">
-        <label for="price">Offer</label>
-        <input formControlName="price" id="price" class="form-control" placeholder="Offer" />
-        <small class="text-muted">PAYMENT INCLUDES 5% COMMISSION</small>
-      </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Offer</mat-label>
+        <input matInput formControlName="price" placeholder="Offer">
+        <mat-hint>PAYMENT INCLUDES 5% COMMISSION</mat-hint>
+      </mat-form-field>
     </div>
 
     <!-- Car Data Section -->
     <div class="section-header">
       <h3><span class="text-black">CAR</span> <span class="text-yellow">DATA</span></h3>
     </div>
-    <div class="form-section">
-      <div class="form-group">
-        <label for="brand">Brand</label>
-        <input formControlName="brand" id="brand" class="form-control" placeholder="Brand" />
-      </div>
-      <div class="form-group">
-        <label for="model">Model</label>
-        <input formControlName="model" id="model" class="form-control" placeholder="Model" />
-      </div>
-      <div class="form-group">
-        <label for="color">Color</label>
-        <input formControlName="color" id="color" class="form-control" placeholder="Color" />
-      </div>
-      <div class="form-group">
-        <label for="year">Year of Manufacture</label>
-        <input formControlName="year" id="year" class="form-control" placeholder="Year of Manufacture" />
-      </div>
-      <div class="form-group">
-        <label for="transmission">Transmission Type</label>
-        <select formControlName="transmission" id="transmission" class="form-control">
-          <option value="">Select Transmission</option>
-          <option value="Manual">Manual</option>
-          <option value="Automatic">Automatic</option>
-          <option value="Semi-automatic">Semi-automatic</option>
-        </select>
-      </div>
+    <div class="form-section form-group">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Brand</mat-label>
+        <input matInput formControlName="brand" placeholder="Brand">
+      </mat-form-field>
 
-      <div class="form-group">
-        <label for="engine">Engine (Cylinder Capacity)</label>
-        <input formControlName="engine" id="engine" class="form-control" placeholder="Engine (Cylinder Capacity)" />
-      </div>
-      <div class="form-group">
-        <label for="mileage">Mileage</label>
-        <input formControlName="mileage" id="mileage" class="form-control" placeholder="Mileage" />
-      </div>
-      <div class="form-group">
-        <label for="fuel">Fuel Type</label>
-        <select formControlName="fuel" id="fuel" class="form-control">
-          <option value="">Select Fuel Type</option>
-          <option value="Gasoline">Gasoline</option>
-          <option value="Diesel">Diesel</option>
-          <option value="Electric">Electric</option>
-          <option value="Hybrid">Hybrid</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="speed">Speed</label>
-        <input formControlName="speed" id="speed" class="form-control" placeholder="Speed" />
-      </div>
-      <div class="form-group">
-        <label for="doors">Number of Doors</label>
-        <select formControlName="doors" id="doors" class="form-control">
-          <option value="">Select Number of Doors</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="plate">Plate</label>
-        <input formControlName="plate" id="plate" class="form-control" placeholder="This information will not be shown in the notice" />
-      </div>
-      <div class="form-group">
-        <label for="location">Location</label>
-        <input formControlName="location" id="location" class="form-control" placeholder="Location" />
-      </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Model</mat-label>
+        <input matInput formControlName="model" placeholder="Model">
+      </mat-form-field>
 
-      <!-- Description field restored -->
-      <div class="form-group full-width">
-        <label for="description">Description</label>
-        <textarea formControlName="description" id="description" class="form-control" placeholder="Description"></textarea>
-      </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Color</mat-label>
+        <input matInput formControlName="color" placeholder="Color">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Year of Manufacture</mat-label>
+        <input matInput formControlName="year" placeholder="Year of Manufacture">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Transmission Type</mat-label>
+        <mat-select formControlName="transmission">
+          <mat-option value="">Select Transmission</mat-option>
+          <mat-option value="Manual">Manual</mat-option>
+          <mat-option value="Automatic">Automatic</mat-option>
+          <mat-option value="Semi-automatic">Semi-automatic</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Engine (Cylinder Capacity)</mat-label>
+        <input matInput formControlName="engine" placeholder="Engine (Cylinder Capacity)">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Mileage</mat-label>
+        <input matInput formControlName="mileage" placeholder="Mileage">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Fuel Type</mat-label>
+        <mat-select formControlName="fuel">
+          <mat-option value="">Select Fuel Type</mat-option>
+          <mat-option value="Gasoline">Gasoline</mat-option>
+          <mat-option value="Diesel">Diesel</mat-option>
+          <mat-option value="Electric">Electric</mat-option>
+          <mat-option value="Hybrid">Hybrid</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Speed</mat-label>
+        <input matInput formControlName="speed" placeholder="Speed">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Number of Doors</mat-label>
+        <mat-select formControlName="doors">
+          <mat-option value="">Select Number of Doors</mat-option>
+          <mat-option value="2">2</mat-option>
+          <mat-option value="3">3</mat-option>
+          <mat-option value="4">4</mat-option>
+          <mat-option value="5">5</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Plate</mat-label>
+        <input matInput formControlName="plate" placeholder="This information will not be shown in the notice">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" placeholder="Location">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" placeholder="Description"></textarea>
+      </mat-form-field>
     </div>
+
+    <!-- Photos Section con Drag & Drop -->
     <div class="section-header">
       <h3><span class="text-black">PHOTOS</span></h3>
     </div>
@@ -117,7 +131,9 @@
     <div class="form-section photo-section">
       <label class="custum-file-upload" for="file">
         <div class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill=""><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10 1C9.73478 1 9.48043 1.10536 9.29289 1.29289L3.29289 7.29289C3.10536 7.48043 3 7.73478 3 8V20C3 21.6569 4.34315 23 6 23H7C7.55228 23 8 22.5523 8 22C8 21.4477 7.55228 21 7 21H6C5.44772 21 5 20.5523 5 20V9H10C10.5523 9 11 8.55228 11 8V3H18C18.5523 3 19 3.44772 19 4V9C19 9.55228 19.4477 10 20 10C20.5523 10 21 9.55228 21 9V4C21 2.34315 19.6569 1 18 1H10ZM9 7H6.41421L9 4.41421V7ZM14 15.5C14 14.1193 15.1193 13 16.5 13C17.8807 13 19 14.1193 19 15.5V16V17H20C21.1046 17 22 17.8954 22 19C22 20.1046 21.1046 21 20 21H13C11.8954 21 11 20.1046 11 19C11 17.8954 11.8954 17 13 17H14V16V15.5ZM16.5 11C14.142 11 12.2076 12.8136 12.0156 15.122C10.2825 15.5606 9 17.1305 9 19C9 21.2091 10.7909 23 13 23H20C22.2091 23 24 21.2091 24 19C24 17.1305 22.7175 15.5606 20.9844 15.122C20.7924 12.8136 18.858 11 16.5 11Z"></path>
+          </svg>
         </div>
         <div class="text">
           <span>Click to upload image</span>
@@ -125,11 +141,10 @@
         <input type="file" id="file" (change)="onFileSelected($event)" multiple>
       </label>
 
-      <!-- Aquí van las previsualizaciones de las fotos -->
-      <div *ngIf="photoPreviews.length > 0" class="photo-previews">
-        <div *ngFor="let preview of photoPreviews; let i = index" class="photo-preview">
-          <img [src]="preview" alt="Photo Preview" class="img-thumbnail" width="150">
-          <button type="button" class="remove-button" (click)="removeImage(i)">
+      <div cdkDropList class="photo-list-horizontal" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let preview of photoPreviews; let i = index" class="photo-preview" cdkDrag>
+          <img [src]="preview" alt="Photo Preview" class="img-thumbnail" width="150" (click)="openPreviewModal(i)">
+          <button type="button" class="remove-button" (click)="removeImage(i); $event.stopPropagation()">
             <i class="fas fa-trash"></i>
           </button>
         </div>
@@ -138,76 +153,87 @@
   </form>
 
   <div class="submit-button">
-    <button type="button" class="btn btn-info btn-block" (click)="openPreviewModal()">Preview</button>
-    <button routerLink="/home" type="submit" class="btn btn-warning btn-block" (click)="onSubmit()">Publish Car</button>
+    <button mat-raised-button color="primary" type="button" (click)="openPublicationPreview()">Preview Car</button>
+    <button mat-raised-button color="accent" routerLink="/home" type="submit" (click)="onSubmit()">Publish Car</button>
   </div>
 
-  <!-- Preview Modal -->
+
   <div class="modal-overlay" *ngIf="showPreviewModal" (click)="closePreviewModal()">
     <div class="modal-preview-content" (click)="$event.stopPropagation()">
       <span class="close-button" (click)="closePreviewModal()">&times;</span>
-      <div class="preview-columns">
-        <div class="preview-card-wrapper">
-          <div class="car-item">
-            <div class="thumb-content">
-              <div class="thumb-inner">
-                <div class="image-wrapper">
-                  <a>
-                    <img [src]="photoPreviews[0] || 'assets/default_image.jpg'" alt="{{ carForm.value.brand }} {{ carForm.value.model }}" class="img-thumbnail" width="150">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="down-content">
-              <a><h4>{{ carForm.value.brand || 'Brand' }} {{ carForm.value.model || 'Model' }}</h4></a>
-              <span>{{ carForm.value.price | currency }}</span>
-              <p>{{ carForm.value.description || 'No description provided' }}</p>
-              <ul class="car-info">
-                <li>
-                  <div class="item">
-                    <i class="fas fa-calendar"></i>
-                    <p>{{ carForm.value.year || 'Year' }}</p>
-                  </div>
-                </li>
-                <li>
-                  <div class="item">
-                    <i class="fas fa-road"></i>
-                    <p>{{ carForm.value.speed || 'Speed' }}p/h</p>
-                  </div>
-                </li>
-                <li>
-                  <div class="item">
-                    <i class="fas fa-gas-pump"></i>
-                    <p>{{ carForm.value.mileage || 'Mileage' }}km</p>
-                  </div>
-                </li>
-                <li>
-                  <div class="item">
-                    <i class="fas fa-gas-pump"></i>
-                    <p>{{ carForm.value.fuel || 'Fuel Type' }}</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Additional Information (right column) -->
-        <div class="additional-info-column">
-          <h3 class="additional-title">Additional Information</h3>
-          <ul class="additional-info-list">
-            <li><strong>Name:</strong> {{ carForm.value.name || 'N/A' }}</li>
-            <li><strong>Phone:</strong> {{ carForm.value.phone || 'N/A' }}</li>
-            <li><strong>Email:</strong> {{ carForm.value.email || 'N/A' }}</li>
-            <li><strong>Transmission:</strong> {{ carForm.value.transmission || 'N/A' }}</li>
-            <li><strong>Engine Capacity:</strong> {{ carForm.value.engine || 'N/A' }}</li>
-            <li><strong>Number of Doors:</strong> {{ carForm.value.doors || 'N/A' }}</li>
-            <li><strong>Plate:</strong> {{ carForm.value.plate || 'N/A' }}</li>
-            <li><strong>Location:</strong> {{ carForm.value.location || 'N/A' }}</li>
-          </ul>
-        </div>
+      <div class="image-modal">
+        <button class="prev-button" (click)="prevPreviewImage()">&#10094;</button>
+        <img [src]="photoPreviews[previewImageIndex]" alt="Preview Image" class="modal-image">
+        <button class="next-button" (click)="nextPreviewImage()">&#10095;</button>
       </div>
     </div>
   </div>
+
+
+    <div class="modal-overlay" *ngIf="showPublicationModal" (click)="closePublicationModal()">
+      <div class="modal-preview-car" (click)="$event.stopPropagation()">
+        <span class="close-button" (click)="closePublicationModal()">&times;</span>
+        <div class="preview-columns">
+          <div class="preview-card-wrapper">
+            <div class="car-item">
+              <div class="thumb-content">
+                <div class="thumb-inner">
+                  <div class="image-wrapper">
+                    <a>
+                      <img [src]="photoPreviews[0] || 'assets/default_image.jpg'" alt="{{ carForm.value.brand }} {{ carForm.value.model }}" class="img-thumbnail" width="150">
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="down-content">
+                <a><h4>{{ carForm.value.brand || 'Brand' }} {{ carForm.value.model || 'Model' }}</h4></a>
+                <span>{{ carForm.value.price | currency }}</span>
+                <p>{{ carForm.value.description || 'No description provided' }}</p>
+                <ul class="car-info">
+                  <li>
+                    <div class="item">
+                      <i class="fas fa-calendar"></i>
+                      <p>{{ carForm.value.year || 'Year' }}</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="item">
+                      <i class="fas fa-road"></i>
+                      <p>{{ carForm.value.speed || 'Speed' }}p/h</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="item">
+                      <i class="fas fa-gas-pump"></i>
+                      <p>{{ carForm.value.mileage || 'Mileage' }}km</p>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="item">
+                      <i class="fas fa-gas-pump"></i>
+                      <p>{{ carForm.value.fuel || 'Fuel Type' }}</p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="additional-info-column">
+            <h3 class="additional-title">Additional Information</h3>
+            <ul class="additional-info-list">
+              <li><strong>Name:</strong> {{ carForm.value.name || 'N/A' }}</li>
+              <li><strong>Phone:</strong> {{ carForm.value.phone || 'N/A' }}</li>
+              <li><strong>Email:</strong> {{ carForm.value.email || 'N/A' }}</li>
+              <li><strong>Transmission:</strong> {{ carForm.value.transmission || 'N/A' }}</li>
+              <li><strong>Engine Capacity:</strong> {{ carForm.value.engine || 'N/A' }}</li>
+              <li><strong>Number of Doors:</strong> {{ carForm.value.doors || 'N/A' }}</li>
+              <li><strong>Plate:</strong> {{ carForm.value.plate || 'N/A' }}</li>
+              <li><strong>Location:</strong> {{ carForm.value.location || 'N/A' }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
 <app-footer></app-footer>
