@@ -29,8 +29,13 @@ export class MechanicCheckComponent implements OnInit {
     );
   }
 
-  // Método 1: Actualizar el estado del coche a "reviewed"
+  // Método para actualizar el estado del coche a "reviewed"
   updateCarStatus(car: any): void {
+    if (car.status === 'reviewed') {
+      alert(`Car ${car.brand} ${car.model} is already marked as reviewed.`);
+      return;
+    }
+
     this.carService.markAsReviewed(car.id).subscribe(
       (carResponse) => {
         console.log('Car status updated to reviewed:', carResponse);
@@ -45,7 +50,7 @@ export class MechanicCheckComponent implements OnInit {
     );
   }
 
-  // Método 2: Crear una nueva revisión
+  // Método para crear una nueva revisión
   createCarReview(car: any, reviewNotes: string): void {
     if (!reviewNotes.trim()) {
       alert('Please add review notes before creating the review.');

@@ -12,6 +12,71 @@ h3 {
   color: #333;
 }
 
+.container {
+  padding: 20px;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 20px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.img-container img {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+
+.car-details {
+  flex-grow: 1;
+}
+
+.review-action {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.review-icon {
+  font-size: 24px;
+  color: grey;
+  transition: color 0.3s ease;
+}
+
+.review-icon:hover {
+  color: orange;
+}
+
+.review-icon.reviewed {
+  color: green;
+}
+
+.review-text {
+  margin-left: 8px;
+  font-size: 16px;
+  color: grey;
+  transition: color 0.3s ease;
+}
+
+.review-action:hover .review-text {
+  color: orange;
+}
+
+.review-icon.reviewed + .review-text {
+  color: green;
+}
+
 /* Tarjetas */
 .card {
   background-color: white;

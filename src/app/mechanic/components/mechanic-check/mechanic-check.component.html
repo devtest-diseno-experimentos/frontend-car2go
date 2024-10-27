@@ -17,11 +17,18 @@
         <h3>{{ car.year }}</h3>
         <p>{{ car.location }}</p>
         <p class="price">Price: {{ car.price | currency }}</p>
+
+        <!-- Ícono interactivo con texto -->
+        <div class="review-action" (click)="updateCarStatus(car)">
+          <i
+            class="fa fa-check-circle review-icon"
+            [class.reviewed]="car.status === 'reviewed'"
+            title="{{ car.status === 'reviewed' ? 'Car already reviewed' : 'Click to mark as reviewed' }}">
+          </i>
+          <span class="review-text">{{ car.status === 'reviewed' ? 'Reviewed' : 'Mark as Reviewed' }}</span>
+        </div>
       </div>
     </div>
-
-    <!-- Botón para sdasdactualizar el estado a "reviewed" -->
-    <button (click)="updateCarStatus(car)">Mark as Reviewed</button>
 
     <!-- Notas de revisión -->
     <div class="review-section">
