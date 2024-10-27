@@ -1,0 +1,35 @@
+<app-toolbar></app-toolbar>
+
+<div class="container">
+  <h3>Pending Cars</h3>
+
+  <div *ngIf="pendingCars.length === 0">
+    <p>No cars pending for review.</p>
+  </div>
+
+  <div *ngFor="let car of pendingCars" class="card">
+    <div class="card-header">
+      <div class="img-container">
+        <img [src]="car.image || 'assets/default_image.jpg'" alt="{{ car.brand }} {{ car.model }}">
+      </div>
+      <div class="car-details">
+        <h2>{{ car.brand }} {{ car.model }}</h2>
+        <h3>{{ car.year }}</h3>
+        <p>{{ car.location }}</p>
+        <p class="price">Price: {{ car.price | currency }}</p>
+      </div>
+    </div>
+
+    <!-- Botón para actualizar el estado a "reviewed" -->
+    <button (click)="updateCarStatus(car)">Mark as Reviewed</button>
+
+    <!-- Notas de revisión -->
+    <div class="review-section">
+      <p><strong>Review Document</strong></p>
+      <textarea [(ngModel)]="car.reviewNotes" placeholder="Add review notes here..."></textarea>
+    </div>
+
+    <!-- Botón para crear una revisión -->
+    <button (click)="createCarReview(car, car.reviewNotes)">Create Review</button>
+  </div>
+</div>

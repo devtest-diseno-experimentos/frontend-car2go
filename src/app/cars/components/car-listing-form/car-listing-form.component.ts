@@ -100,7 +100,29 @@ export class CarListingFormComponent {
     }
   }
 
+  toggleZoom(event: MouseEvent) {
+    const image = event.currentTarget as HTMLElement;
+    if (image.classList.contains('zoomed')) {
+      image.classList.remove('zoomed');
+      image.style.transformOrigin = 'center center';
+    } else {
+      image.classList.add('zoomed');
+      this.moveZoom(event);
+    }
+  }
 
+  moveZoom(event: MouseEvent) {
+    const image = event.currentTarget as HTMLElement;
+    if (image.classList.contains('zoomed')) {
+      const rect = image.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const xPercent = (x / rect.width) * 100;
+      const yPercent = (y / rect.height) * 100;
+
+      image.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+    }
+  }
 
   openPublicationPreview() {
     this.showPublicationModal = true;
@@ -119,12 +141,12 @@ export class CarListingFormComponent {
     moveItemInArray(this.photos, event.previousIndex, event.currentIndex);
   }
 
-
   onSubmit() {
     if (this.carForm.valid) {
       const newCar = this.carForm.value;
       newCar.id = Date.now();
       newCar.title = `${newCar.brand} ${newCar.model}`;
+      newCar.status = 'not reviewed';
 
       if (this.photoPreviews.length > 0) {
         newCar.image = this.photoPreviews[0];
@@ -135,17 +157,17 @@ export class CarListingFormComponent {
       }
 
       this.carService.addCar(newCar).subscribe(
-        (response) => {
-          this.carForm.reset();
-          this.photos = [];
-          this.photoPreviews = [];
-          this.carAdded.emit(response);
-          this.formClosed.emit();
-          this.router.navigate(['/home']);
-        },
-        (error) => {
-          console.error('Error adding car:', error);
-        }
+          (response) => {
+            this.carForm.reset();
+            this.photos = [];
+            this.photoPreviews = [];
+            this.carAdded.emit(response);
+            this.formClosed.emit();
+            this.router.navigate(['/home']);
+          },
+          (error) => {
+            console.error('Error adding car:', error);
+          }
       );
     }
   }

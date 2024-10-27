@@ -1,0 +1,126 @@
+/* Contenedor principal */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h3 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Tarjetas */
+.card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Encabezado de la tarjeta: imagen y detalles del coche */
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.img-container {
+  flex-shrink: 0;
+  width: 150px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+}
+
+.img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.car-details {
+  flex-grow: 1;
+}
+
+.car-details h2 {
+  margin: 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.car-details h3 {
+  margin: 5px 0;
+  font-size: 18px;
+  color: #888;
+}
+
+.car-details p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.price {
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+/* Detalles de la revisión */
+.review-details {
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+  font-size: 14px;
+}
+
+.review-details p {
+  margin: 5px 0;
+}
+
+/* Si no hay revisiones */
+.no-review {
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #999;
+  text-align: center;
+}
+
+/* Diseño responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .img-container {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 10px;
+  }
+
+  .car-details h2 {
+    font-size: 20px;
+  }
+
+  .car-details h3 {
+    font-size: 16px;
+  }
+}

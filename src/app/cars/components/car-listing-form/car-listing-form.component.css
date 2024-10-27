@@ -136,6 +136,7 @@ body {
 body.modal-open {
   overflow: hidden;
 }
+
 .modal-preview-car {
   background-color: #fff;
   padding: 20px;
@@ -168,12 +169,18 @@ body.modal-open {
 
 
 .modal-image {
-  width: 80%;
+  width: 180%;
   height: auto;
-  max-height: 70vh;
+  max-height: 80vh;
   aspect-ratio: 1/1;
   object-fit: contain;
-  border-radius: 10px;
+  transition: transform 0.2s ease;
+  cursor: zoom-in;
+}
+
+.modal-image.zoomed {
+  transform: scale(1.6);
+  cursor: zoom-out;
 }
 
 .close-button {
@@ -184,6 +191,9 @@ body.modal-open {
   cursor: pointer;
   color: #333;
   transition: color 0.3s ease;
+  border-radius: 50%;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.53);
 }
 
 .close-button:hover {
@@ -327,10 +337,10 @@ body.modal-open {
 
 }
 
-/* flexbox para las cards */
+
 .car-item {
-  width: 300px; /* Fixed width for consistency */
-  flex: 0 0 auto; /* Prevent flex shrink */
+  width: 300px;
+  flex: 0 0 auto;
   margin-bottom: 30px;
   border-radius: 12px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
@@ -479,6 +489,7 @@ body.modal-open {
 .additional-info-list strong {
   font-weight: bold;
 }
+
 .custum-file-upload {
   height: 100px;
   width: 300px;

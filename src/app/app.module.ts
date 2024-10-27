@@ -40,8 +40,8 @@ import { RegisterComponent } from './register/components/register/register.compo
 import { ForgotPasswordComponent } from './register/components/forgot-password/forgot-password.component';
 import { CarDetailsComponent } from './public/pages/car-details/car-details.component';
 import { CarListingFormComponent } from './cars/components/car-listing-form/car-listing-form.component';
-import { MechanicRevisionComponent } from './mechanic/mechanic-revision/mechanic-revision.component';
-import { MechanicCheckComponent } from './mechanic/mechanic-check/mechanic-check.component';
+import { MechanicRevisionComponent } from './mechanic/components/mechanic-revision/mechanic-revision.component';
+import { MechanicCheckComponent } from './mechanic/components/mechanic-check/mechanic-check.component';
 import {PlanComponent} from "./plans/components/plan/plan.component";
 import {PaymentFormComponent} from "./plans/components/payment-form/payment-form.component";
 import { MyCarsComponent } from './cars/components/my-cars/my-cars.component';
