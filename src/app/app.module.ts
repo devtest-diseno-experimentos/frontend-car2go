@@ -52,6 +52,7 @@ import { PayComponent } from './buyer/components/pay/pay.component';
 import { SendDataComponent } from './buyer/components/send-data/send-data.component';
 import { TechnicalReviewComponent } from './buyer/components/technical-review/technical-review.component';
 import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
     NgOptimizedImage,
     LoginComponent,
     CdkDropList,
-    CdkDrag
+    CdkDrag,
+    MatProgressSpinner
   ],
   providers: [
     provideAnimationsAsync(),

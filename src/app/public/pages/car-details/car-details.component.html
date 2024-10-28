@@ -1,23 +1,16 @@
 <app-toolbar></app-toolbar>
 <section class="car-details" *ngIf="userRole === 'seller'">
   <div class="back-button">
-
   </div>
 
   <mat-card class="card">
-    <!-- Car Gallery Section -->
     <div class="car-gallery">
       <div class="car-images">
-
         <button (click)="prevImage()" class="carousel-nav prev">&#10094;</button>
-
         <div class="main-image">
           <img [src]="mainImage" alt="Imagen del producto" />
         </div>
-
-
         <button (click)="nextImage()" class="carousel-nav next">&#10095;</button>
-
         <div class="thumbnails">
           <img *ngFor="let image of images; let i = index"
                [src]="image"
@@ -28,7 +21,6 @@
       </div>
     </div>
 
-    <!-- Car Information Section -->
     <div class="car-information">
       <div class="car-description">
         <h4>
@@ -41,7 +33,6 @@
         <p class="description">{{ car.description }}</p>
       </div>
 
-      <!-- Car Data Section -->
       <div class="car-data">
         <div class="column-list">
           <ul>
@@ -60,12 +51,22 @@
         </div>
       </div>
 
-      <div class="buttons">
+      <div class="buttons" *ngIf="car.status !== 'reviewed' && car.status !== 'pending inspection'">
         <button (click)="requestReview()">REQUEST REVIEW</button>
       </div>
+
+      <div *ngIf="car.status === 'reviewed'" class="reviewed-message">
+        <p>This car has already been reviewed.</p>
+      </div>
+
+      <div *ngIf="car.status === 'pending inspection'" class="pending-message">
+        <p>This car is pending review.</p>
+      </div>
+
     </div>
   </mat-card>
 </section>
+
 
 <section class="car-details" *ngIf="userRole === 'buyer'">
 
@@ -92,7 +93,6 @@
       </div>
     </div>
 
-    <!-- Car Information Section -->
     <div class="car-information">
       <div class="car-description">
         <h4>
@@ -109,7 +109,6 @@
         <p class="description">{{ car.description }}</p>
       </div>
 
-      <!-- Car Data Section -->
       <div class="car-data">
         <div class="column-list">
           <ul>
@@ -136,7 +135,6 @@
 </section>
 <app-footer></app-footer>
 
-<!-- Modal -->
 <div class="modal" [ngClass]="{'show': isModalOpen}">
   <div class="modal-content">
     <span class="close" (click)="closeEditModal()">&times;</span>
