@@ -1,230 +1,191 @@
-/* Contenedor principal */
 .container {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
+  width: 100%;
 }
 
 h3 {
   text-align: center;
-  font-size: 32px;
-  margin-bottom: 30px;
+  font-size: 28px;
+  margin-bottom: 40px;
   color: #333;
 }
 
-.container {
-  padding: 20px;
-}
-
-.card {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  padding: 20px;
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.img-container img {
-  width: 150px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-right: 20px;
-}
-
-.car-details {
-  flex-grow: 1;
-}
-
-.review-action {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.review-icon {
-  font-size: 24px;
-  color: grey;
-  transition: color 0.3s ease;
-}
-
-.review-icon:hover {
-  color: orange;
-}
-
-.review-icon.reviewed {
-  color: green;
-}
-
-.review-text {
-  margin-left: 8px;
-  font-size: 16px;
-  color: grey;
-  transition: color 0.3s ease;
-}
-
-.review-action:hover .review-text {
-  color: orange;
-}
-
-.review-icon.reviewed + .review-text {
-  color: green;
-}
-
-/* Tarjetas */
 .card {
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  overflow: hidden;
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-}
-
-/* Encabezado de la tarjeta: imagen y detalles del coche */
-.card-header {
-  display: flex;
-  align-items: center;
+  margin-bottom: 30px;
   padding: 20px;
-  border-bottom: 1px solid #f0f0f0;
+  width: 100%;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .img-container {
-  flex-shrink: 0;
-  width: 150px;
-  height: 100px;
-  overflow: hidden;
+  width: 50%;
+  max-width: 100%;
+  max-height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-right: 20px;
+  overflow: hidden;
 }
 
 .img-container img {
   width: 100%;
-  height: 100%;
+  height: 460px;
   object-fit: cover;
+  border-radius: 8px;
 }
 
-.car-details {
-  flex-grow: 1;
+.info-container {
+  flex: 1;
+  text-align: left;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 
-.car-details h2 {
-  margin: 0;
+h4 {
+  margin-bottom: 15px;
   font-size: 22px;
   color: #333;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
 }
 
-.car-details h3 {
-  margin: 5px 0;
-  font-size: 18px;
-  color: #888;
-}
-
-.car-details p {
-  margin: 5px 0;
-  font-size: 14px;
-  color: #666;
-}
-
-.price {
-  color: #ffcc00;
-  font-weight: bold;
-}
-
-/* Sección de revisión */
-.review-section {
-  padding: 20px;
+.owner-details, .review-details {
   background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 90%;
 }
 
-.review-section p {
-  margin-bottom: 10px;
+.owner-details p, .review-details p {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
   font-size: 16px;
+  color: #555;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.owner-details p i, .review-details p i {
+  margin-right: 12px;
+  color: #777;
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.owner-details strong, .review-details strong {
+  margin-right: 8px;
+  font-weight: 600;
   color: #333;
 }
 
-.review-section textarea {
-  width: 100%;
+.owner-details:hover, .review-details:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.no-review {
+  background-color: #f9f9f9;
   padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  resize: vertical;
-  min-height: 80px;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
+  color: #999;
+  text-align: center;
+  border-radius: 8px;
 }
 
-.review-section textarea:focus {
-  border-color: #ffcc00;
-  outline: none;
-}
-
-/* Botón "READY" */
-button {
-  background-color: #ffcc00;
-  border: none;
-  padding: 12px 25px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 20px;
-  align-self: flex-end;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-button:hover {
-  background-color: #ff9900;
-  transform: scale(1.05);
-}
-
-/* Diseño responsive */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .container {
-    padding: 10px;
+    padding: 15px;
   }
 
-  .card-header {
+  .card-content {
+    gap: 20px;
+  }
+
+  .img-container img {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    max-width: 500px;
+  }
+  .card-content {
     flex-direction: column;
-    align-items: flex-start;
   }
 
   .img-container {
     width: 100%;
-    height: 200px;
-    margin-bottom: 10px;
   }
 
-  .car-details h2 {
+  .img-container img {
+    height: 300px;
+    width: 100%;
+  }
+
+  .info-container {
+    width: 100%;
+  }
+
+  .owner-details, .review-details {
+    width: 89%;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  h3 {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+
+  h4 {
     font-size: 20px;
   }
 
-  .car-details h3 {
-    font-size: 16px;
+  .owner-details p, .review-details p {
+    font-size: 14px;
   }
 
-  .review-section textarea {
-    min-height: 100px;
+  .img-container img {
+    height: auto;
+    width: 100%;
   }
 
-  button {
-    width: 100%; /* El botón ocupa todo el ancho en pantallas pequeñas */
-    text-align: center;
-    margin: 10px 0;
+  .card-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .owner-details, .review-details {
+    padding: 15px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 640px) {
+  .owner-details, .review-details {
+    padding: 20px;
+    font-size: 15px;
+  }
+
+  .img-container img {
+    height: 300px;
   }
 }

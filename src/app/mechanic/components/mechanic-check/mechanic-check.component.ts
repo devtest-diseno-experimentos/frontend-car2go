@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CarService } from '../../../cars/services/car.service';  // Servicio para manejar coches
-import { ReviewService } from '../../services/review.service';  // Servicio para manejar revisiones
+import { ReviewService } from '../../services/review.service';
+import { CarService } from '../../../cars/services/car.service';
+import { AuthService } from '../../../register/service/auth.service';
+import { forkJoin, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-mechanic-check',
@@ -8,71 +10,88 @@ import { ReviewService } from '../../services/review.service';  // Servicio para
   styleUrls: ['./mechanic-check.component.css']
 })
 export class MechanicCheckComponent implements OnInit {
-  pendingCars: any[] = [];
-  mechanicId: string = localStorage.getItem('id') || 'mechanic-123';  // Obtener ID del mecánico desde localStorage
+  reviewedCars: any[] = [];
+  user: any;
 
-  constructor(private carService: CarService, private reviewService: ReviewService) {}
+  constructor(
+    private reviewService: ReviewService,
+    private carService: CarService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.loadPendingCars();
+    this.loadReviewedCars();
+    this.loadUserData();
   }
 
-  // Cargar coches pendientes de revisión
-  loadPendingCars(): void {
-    this.carService.getPendingCars().subscribe(
-      (cars) => {
-        this.pendingCars = cars;
+  loadUserData(): void {
+    const userId = +localStorage.getItem('id')!;
+    this.authService.getUserInfo(userId).subscribe(
+      (data: any) => {
+        this.user = data;
       },
       (error) => {
-        console.error('Error fetching pending cars:', error);
+        console.error('Error al obtener la información del usuario:', error);
       }
     );
   }
 
-  // Método para actualizar el estado del coche a "reviewed"
-  updateCarStatus(car: any): void {
-    if (car.status === 'reviewed') {
-      alert(`Car ${car.brand} ${car.model} is already marked as reviewed.`);
-      return;
-    }
-
-    this.carService.markAsReviewed(car.id).subscribe(
-      (carResponse) => {
-        console.log('Car status updated to reviewed:', carResponse);
-
-        // Actualizar el estado del coche a "reviewed" visualmente
-        car.status = 'reviewed';
-        alert(`Car ${car.brand} ${car.model} marked as reviewed.`);
+  loadReviewedCars(): void {
+    this.reviewService.getAllReviews().subscribe(
+      (reviews) => {
+        const groupedCars = this.groupReviewsByCar(reviews);
+        this.getCarsDetails(groupedCars);
       },
       (error) => {
-        console.error('Error updating car status:', error);
+        console.error('Error fetching reviewed cars:', error);
       }
     );
   }
 
-  // Método para crear una nueva revisión
-  createCarReview(car: any, reviewNotes: string): void {
-    if (!reviewNotes.trim()) {
-      alert('Please add review notes before creating the review.');
-      return;
-    }
+  groupReviewsByCar(reviews: any[]): any[] {
+    const grouped = reviews.reduce((acc, review) => {
+      const carId = review.carId;
+      if (!acc[carId]) {
+        acc[carId] = {
+          carId: carId,
+          reviews: []
+        };
+      }
+      acc[carId].reviews.push(review);
+      return acc;
+    }, {});
 
-    // Crear el objeto de revisión
-    const review = {
-      carId: car.id,  // Relacionar con el coche
-      reviewedBy: this.mechanicId,  // ID del mecánico desde localStorage
-      reviewDate: new Date().toISOString(),  // Fecha de revisión
-      notes: reviewNotes  // Notas de la revisión
-    };
+    return Object.values(grouped);
+  }
 
-    // Crear la revisión en el endpoint de /reviews
-    this.reviewService.createReview(review).subscribe(
-      (reviewResponse) => {
-        console.log('Review created successfully:', reviewResponse);
-        alert(`Review for ${car.brand} ${car.model} created.`);
+  getCarsDetails(carsGroupedByReview: any[]): void {
+    const carDetailsRequests = carsGroupedByReview.map(carGroup => {
+      return this.carService.getCarById(carGroup.carId).pipe(
+        switchMap(carDetails => {
+          const reviewUserRequests = carGroup.reviews.map((review: any) => {
+            return this.authService.getUserInfo(+review.reviewedBy).pipe(
+              map(userInfo => ({
+                ...review,
+                reviewerInfo: userInfo
+              }))
+            );
+          });
+          return forkJoin(reviewUserRequests).pipe(
+            map(reviewsWithUserInfo => ({
+              ...carDetails,
+              reviews: reviewsWithUserInfo
+            }))
+          );
+        })
+      );
+    });
+
+    forkJoin(carDetailsRequests).subscribe(
+      (carsWithDetails) => {
+        this.reviewedCars = carsWithDetails;
       },
       (error) => {
-        console.error('Error creating review:', error);
+        console.error('Error fetching car details:', error);
       }
     );
   }
