@@ -1,0 +1,63 @@
+<app-toolbar></app-toolbar>
+
+<div class="profile-container">
+
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="profile-form">
+    <div class="form-row">
+      <!-- Campo de nombre -->
+      <div class="form-group">
+        <label for="names">Full Name:</label>
+        <input id="names" type="text" formControlName="names" placeholder="Your First Name" />
+      </div>
+
+      <!-- Campo de apellido -->
+      <div class="form-group">
+        <label for="lastName">Nick Name:</label>
+        <input id="lastName" type="text" formControlName="lastName" placeholder="Your Last Name" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- Campo de correo electrónico -->
+      <div class="form-group">
+        <label for="email">Email Address:</label>
+        <input id="email" type="email" formControlName="email" placeholder="Your Email" />
+      </div>
+
+      <!-- Campo de DNI -->
+      <div class="form-group">
+        <label for="dni">DNI:</label>
+        <input id="dni" type="text" formControlName="dni" placeholder="Your DNI" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <!-- Campo de dirección -->
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <input id="address" type="text" formControlName="address" placeholder="Your Address" />
+      </div>
+
+      <!-- Campo de número de teléfono -->
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input id="phoneNumber" type="text" formControlName="phoneNumber" placeholder="Your Phone Number" />
+      </div>
+    </div>
+
+    <!-- Campo para subir imagen -->
+    <div class="form-group">
+      <label for="photo">Profile Photo:</label>
+      <input id="photo" type="file" (change)="onFileSelected($event)" />
+    </div>
+
+    <!-- Vista previa de la imagen seleccionada -->
+    <div class="form-group">
+      <img *ngIf="photoPreview" [src]="photoPreview" alt="Profile photo preview" class="image-preview" />
+    </div>
+
+    <button type="submit" [disabled]="profileForm.invalid" class="submit-button">Save Changes</button>
+  </form>
+
+  <button type="button" class="cancel-button" (click)="closeForm()">Cancel</button>
+</div>
