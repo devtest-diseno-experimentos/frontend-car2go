@@ -19,6 +19,7 @@ import {FavoritesComponent} from "./cars/components/favorites/favorites.componen
 import {PayComponent} from "./buyer/components/pay/pay.component";
 import {SendDataComponent} from "./buyer/components/send-data/send-data.component";
 import {TechnicalReviewComponent} from "./buyer/components/technical-review/technical-review.component";
+import {ProfileFormComponent} from "./profiles/components/profile-form/profile-form.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -35,6 +36,7 @@ const routes: Routes = [
   {path: 'plan', component: PlanComponent },
   {path: 'payment-form', component: PaymentFormComponent },
   {path: 'my-cars', component: MyCarsComponent },
+  {path: 'profile-form', component: ProfileFormComponent },
   {path: 'profile', component: ProfileComponent },
   {path: 'favorites', component: FavoritesComponent },
   {path: 'pay', component: PayComponent },

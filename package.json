@@ -9,7 +9,6 @@
     "test": "ng test",
     "start:fake-api": "json-server --watch server/db.json --port 3000"
   },
-
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.1.0",

@@ -27,6 +27,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 
 // Feature Components Imports
@@ -53,6 +54,7 @@ import { SendDataComponent } from './buyer/components/send-data/send-data.compon
 import { TechnicalReviewComponent } from './buyer/components/technical-review/technical-review.component';
 import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import { ProfileFormComponent } from './profiles/components/profile-form/profile-form.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +78,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     PayComponent,
     SendDataComponent,
     TechnicalReviewComponent,
+    ProfileFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,7 +111,8 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     LoginComponent,
     CdkDropList,
     CdkDrag,
-    MatProgressSpinner
+    MatProgressSpinner,
+    SlickCarouselModule,
   ],
   providers: [
     provideAnimationsAsync(),
