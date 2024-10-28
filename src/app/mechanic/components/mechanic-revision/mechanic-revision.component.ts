@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReviewService } from '../../services/review.service';
-import { CarService } from '../../../cars/services/car.service';  // Importar CarService
-import {forkJoin, map} from 'rxjs';  // Para combinar múltiples observables
+import { CarService } from '../../../cars/services/car.service';
 
 @Component({
   selector: 'app-mechanic-revision',
@@ -9,67 +8,67 @@ import {forkJoin, map} from 'rxjs';  // Para combinar múltiples observables
   styleUrls: ['./mechanic-revision.component.css']
 })
 export class MechanicRevisionComponent implements OnInit {
-  reviewedCars: any[] = [];
+  pendingCars: any[] = [];
+  mechanicId: string = localStorage.getItem('id') || 'mechanic-123';
 
-  constructor(private reviewService: ReviewService, private carService: CarService) {}
+  constructor(private carService: CarService, private reviewService: ReviewService) {}
 
   ngOnInit(): void {
-    this.loadReviewedCars();
+    this.loadPendingCars();
   }
 
-  // Cargar los coches que han sido revisados
-  loadReviewedCars(): void {
-    this.reviewService.getAllReviews().subscribe(
-      (reviews) => {
-        // Agrupar las revisiones por coche
-        const groupedCars = this.groupReviewsByCar(reviews);
-
-        // Obtener los detalles de cada coche revisado
-        this.getCarsDetails(groupedCars);
+  loadPendingCars(): void {
+    this.carService.getPendingCars().subscribe(
+      (cars) => {
+        this.pendingCars = cars;
       },
       (error) => {
-        console.error('Error fetching reviewed cars:', error);
+        console.error('Error fetching pending cars:', error);
       }
     );
   }
 
-  // Agrupar las revisiones por coche
-  groupReviewsByCar(reviews: any[]): any[] {
-    const grouped = reviews.reduce((acc, review) => {
-      const carId = review.carId;
-      if (!acc[carId]) {
-        acc[carId] = {
-          carId: carId,
-          reviews: []  // Agrupamos las revisiones por coche
-        };
-      }
-      acc[carId].reviews.push(review);
-      return acc;
-    }, {});
+  updateCarStatus(car: any): void {
+    if (car.status === 'reviewed') {
+      alert(`Car ${car.brand} ${car.model} is already marked as reviewed.`);
+      return;
+    }
 
-    // Convertir el objeto agrupado en un array
-    return Object.values(grouped);
-  }
+    this.carService.markAsReviewed(car.id).subscribe(
+      (carResponse) => {
+        console.log('Car status updated to reviewed:', carResponse);
 
-  // Obtener los detalles completos de los coches usando el CarService
-  getCarsDetails(carsGroupedByReview: any[]): void {
-    const carDetailsRequests = carsGroupedByReview.map(carGroup => {
-      return this.carService.getCarById(carGroup.carId).pipe(
-        // Combinar los datos del coche con sus revisiones
-        map(carDetails => ({
-          ...carDetails,
-          reviews: carGroup.reviews  // Agregar las revisiones correspondientes
-        }))
-      );
-    });
-
-    // Ejecutar todas las solicitudes para obtener los detalles de los coches
-    forkJoin(carDetailsRequests).subscribe(
-      (carsWithDetails) => {
-        this.reviewedCars = carsWithDetails;
+        car.status = 'reviewed';
+        alert(`Car ${car.brand} ${car.model} marked as reviewed.`);
       },
       (error) => {
-        console.error('Error fetching car details:', error);
+        console.error('Error updating car status:', error);
+      }
+    );
+  }
+
+  createCarReview(car: any, reviewNotes: string): void {
+    if (!reviewNotes.trim()) {
+      alert('Please add review notes before creating the review.');
+      return;
+    }
+
+
+    const review = {
+      carId: car.id,
+      reviewedBy: this.mechanicId,
+      reviewDate: new Date().toISOString(),
+      notes: reviewNotes
+    };
+
+
+    this.reviewService.createReview(review).subscribe(
+      (reviewResponse) => {
+        console.log('Review created successfully:', reviewResponse);
+        alert(`Review for ${car.brand} ${car.model} created.`);
+      },
+      (error) => {
+        console.error('Error creating review:', error);
       }
     );
   }

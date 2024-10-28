@@ -1,35 +1,66 @@
 <app-toolbar></app-toolbar>
 
 <div class="container">
-  <h3>Reviewed Cars</h3>
-
-  <div *ngIf="reviewedCars.length === 0" class="no-reviews">
-    <p>No cars have been reviewed yet.</p>
+  <div *ngIf="pendingCars.length === 0">
+    <p>No cars pending for review.</p>
   </div>
 
-  <div *ngFor="let car of reviewedCars" class="card">
-    <div class="card-header">
-      <div class="img-container">
-        <img [src]="car.image || 'assets/default_image.jpg'" alt="{{ car.brand }} {{ car.model }}">
-      </div>
-      <div class="car-details">
-        <h2>{{ car.brand }} {{ car.model }}</h2>
-        <h3>{{ car.year }}</h3>
-        <p>{{ car.location }}</p>
-        <p class="price">Price: {{ car.price | currency }}</p>
-      </div>
-    </div>
+  <div *ngFor="let car of pendingCars">
+    <mat-card class="card">
+      <div class="row">
+        <div class="col-50 image-column">
+          <div class="car-gallery">
+            <img [src]="car.image" alt="{{ car.title }}">
+          </div>
+        </div>
 
-    <!-- Revisión -->
-    <div class="review-details" *ngIf="car.reviews && car.reviews.length > 0">
-      <p><strong>Reviewed By:</strong> {{ car.reviews[car.reviews.length - 1].reviewedBy }}</p>
-      <p><strong>Review Date:</strong> {{ car.reviews[car.reviews.length - 1].reviewDate | date }}</p>
-      <p><strong>Notes:</strong> {{ car.reviews[car.reviews.length - 1].notes }}</p>
-    </div>
+        <div class="col-50">
+          <div class="car-data">
+            <div class="column-list">
+              <ul>
+                <li><i class="material-symbols-outlined">event</i><span>{{ car.year }}</span></li>
+                <li><i class="material-symbols-outlined">auto_transmission</i><span>{{ car.transmission }}</span></li>
+                <li><i class="material-symbols-outlined">bolt</i><span>{{ car.engine }}</span></li>
+                <li><i class="material-symbols-outlined">location_on</i><span>{{ car.location }}</span></li>
+              </ul>
+            </div>
+            <div class="column-list">
+              <ul>
+                <li><i class="material-symbols-outlined">invert_colors</i><span>{{ car.color }}</span></li>
+                <li><i class="material-symbols-outlined">sensor_door</i><span>{{ car.doors }}</span></li>
+                <li><i class="material-symbols-outlined">road</i><span>{{ car.mileage }}</span></li>
+              </ul>
+            </div>
+          </div>
 
-    <!-- En caso de que no haya revisiones -->
-    <div class="no-review" *ngIf="!car.reviews || car.reviews.length === 0">
-      <p><strong>No reviews available</strong></p>
-    </div>
+
+          <div class="owner-info">
+            <h4>Owner Information</h4>
+            <p><strong>Name:</strong> {{ car.name }}</p>
+            <p><strong>Phone:</strong> {{ car.phone }}</p>
+            <p><strong>Email:</strong> {{ car.email }}</p>
+          </div>
+
+
+          <div class="review-action" (click)="updateCarStatus(car)">
+            <i
+              class="fa fa-check-circle review-icon"
+              [class.reviewed]="car.status === 'reviewed'"
+              title="{{ car.status === 'reviewed' ? 'Car already reviewed' : 'Click to mark as reviewed' }}">
+            </i>
+            <span class="review-text">{{ car.status === 'reviewed' ? 'Reviewed' : 'Mark as Reviewed' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="review-section">
+          <p><strong>Review Document</strong></p>
+          <textarea [(ngModel)]="car.reviewNotes" placeholder="Add review notes here..."></textarea>
+        </div>
+
+        <button (click)="createCarReview(car, car.reviewNotes)">Create Review</button>
+      </div>
+    </mat-card>
   </div>
 </div>
