@@ -1,70 +1,105 @@
 <app-toolbar></app-toolbar>
-
-<div class="profile-container">
-  <div class="profile-content">
-
-    <!-- Card de la información del perfil -->
-    <div class="profile-card">
-      <div class="profile-info-container">
-        <!-- Imagen de perfil -->
-        <div class="profile-picture">
-          <img *ngIf="userData.photo" [src]="userData.photo" alt="{{ userData.names }} {{ userData.lastName }}">
-        </div>
-        <!-- Información del usuario -->
-        <div class="profile-info">
-          <h3>{{ userData.names }} {{ userData.lastName }}</h3>
-          <p>Email: {{ userData.email }}</p>
-        </div>
-      </div>
-      <!-- Botón para editar -->
-      <button mat-raised-button color="primary" class="edit-btn">Edit</button>
+<div class="profile-background">
+  <!-- Contenedor del perfil -->
+  <div class="profile-card">
+    <!-- Imagen de perfil -->
+    <div class="profile-picture">
+      <img *ngIf="imagePreview" [src]="imagePreview" alt="{{ userData.names }} {{ userData.lastName }}">
     </div>
 
-    <!-- Formulario para editar los datos -->
-    <form class="profile-form">
-      <div class="form-group">
-        <label for="fullName">Full Name</label>
-        <input matInput type="text" id="fullName" placeholder="Your First Name" [value]="userData.names">
-      </div>
-      <div class="form-group">
-        <label for="lastName">Last Name</label>
-        <input matInput type="text" id="lastName" placeholder="Your Last Name" [value]="userData.lastName">
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input matInput type="text" id="email" placeholder="Your Email" [value]="userData.email">
-      </div>
-      <div class="form-group">
-        <label for="dni">DNI</label>
-        <input matInput type="text" id="dni" placeholder="Your DNI" [value]="userData.dni">
-      </div>
-      <div class="form-group">
-        <label for="address">Address</label>
-        <input matInput type="text" id="address" placeholder="Your Address" [value]="userData.address">
-      </div>
-      <div class="form-group">
-        <label for="phoneNumber">Phone Number</label>
-        <input matInput type="text" id="phoneNumber" placeholder="Your Phone Number" [value]="userData.phoneNumber">
-      </div>
-    </form>
+    <!-- Información del usuario -->
+    <div class="profile-info">
+      <h2 *ngIf="!editMode">{{ userData.names }} {{ userData.lastName }}</h2>
 
-    <!-- Sección de vehículos mejorada -->
-    <div class="vehicle-section" *ngIf="userVehicles.length > 0">
+      <!-- En modo edición, mostrar los inputs alineados en una fila -->
+      <div class="edit-name-row" *ngIf="editMode">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="userData.names" placeholder="Enter your name">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Last Name</mat-label>
+          <input matInput [(ngModel)]="userData.lastName" placeholder="Enter your last name">
+        </mat-form-field>
+      </div>
 
-      <div *ngFor="let vehicle of userVehicles" class="vehicle-card">
-        <div class="vehicle-image">
-          <img [src]="vehicle.image" alt="{{ vehicle.model }}">
+      <p *ngIf="!editMode">{{ userData.email }}</p>
+    </div>
+
+    <div class="profile-extra">
+      <!-- Dirección con icono -->
+      <div class="info-item">
+        <span class="material-symbols-outlined">home</span>
+        <div class="info-content">
+          <mat-form-field *ngIf="editMode" appearance="outline" class="full-width">
+            <mat-label>Address</mat-label>
+            <input matInput [(ngModel)]="userData.address" placeholder="Enter your address">
+          </mat-form-field>
+          <p *ngIf="!editMode">{{ userData.address }}</p>
         </div>
-        <div class="vehicle-details">
-          <h4>{{ vehicle.title }}</h4>
-          <p><strong>Año:</strong> {{ vehicle.year }}</p>
-          <p><strong>Matrícula:</strong> {{ vehicle.plate }}</p>
+      </div>
+
+      <hr *ngIf="!editMode">
+
+      <!-- Número de teléfono con icono -->
+      <div class="info-item">
+        <span class="material-symbols-outlined">phone</span>
+        <div class="info-content">
+          <mat-form-field *ngIf="editMode" appearance="outline" class="full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput [(ngModel)]="userData.phoneNumber" placeholder="Enter your phone number">
+          </mat-form-field>
+          <p *ngIf="!editMode">{{ userData.phoneNumber }}</p>
         </div>
+      </div>
+
+      <hr *ngIf="!editMode">
+
+      <!-- DNI con icono -->
+      <div class="info-item">
+        <span class="material-symbols-outlined">credit_card</span>
+        <div class="info-content">
+          <mat-form-field *ngIf="editMode" appearance="outline" class="full-width">
+            <mat-label>DNI</mat-label>
+            <input matInput [(ngModel)]="userData.dni" placeholder="Enter your DNI">
+          </mat-form-field>
+          <p *ngIf="!editMode">{{ userData.dni }}</p>
+        </div>
+      </div>
+
+      <!-- Botón de subida de archivo personalizado -->
+      <div class="info-item" *ngIf="editMode">
+        <button type="button" (click)="triggerFileInput()">
+          <svg
+            aria-hidden="true"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-width="2"
+              stroke="#ffffff"
+              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+              stroke-linejoin="round"
+              stroke-linecap="round"
+            ></path>
+            <path
+              stroke-linejoin="round"
+              stroke-linecap="round"
+              stroke-width="2"
+              stroke="#ffffff"
+              d="M17 15V18M17 21V18M17 18H14M17 18H20"
+            ></path>
+          </svg>
+          ADD FILE
+        </button>
+        <input id="photo" type="file" (change)="onFileSelected($event)" class="hidden-file-input">
       </div>
     </div>
 
-    <div *ngIf="userVehicles.length === 0">
-      <p>No tienes vehículos registrados.</p>
-    </div>
+    <!-- Botón para alternar entre editar/visualizar -->
+    <button mat-raised-button color="primary" (click)="toggleEditMode()">{{ editMode ? 'Save' : 'Edit' }}</button>
   </div>
 </div>

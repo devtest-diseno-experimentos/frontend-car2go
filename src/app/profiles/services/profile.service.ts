@@ -15,8 +15,12 @@ export class ProfileService {
     return this.http.get<any>(`${this.apiUrl}?userId=${userId}`); // Pasar el userId como query param
   }
 
+  updateUserProfile(id: number, userData: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, userData);
+  }
+
   // Método para actualizar el perfil
-  updateUserProfile(userData: any): Observable<any> {
+  createUserProfile(userData: any): Observable<any> {
     return this.http.post(this.apiUrl, userData);
   }
 }
