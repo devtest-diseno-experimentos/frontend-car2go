@@ -78,7 +78,7 @@ import { ProfileFormComponent } from './profiles/components/profile-form/profile
     PayComponent,
     SendDataComponent,
     TechnicalReviewComponent,
-    ProfileFormComponent,
+    ProfileFormComponent
   ],
   imports: [
     BrowserModule,
@@ -108,11 +108,12 @@ import { ProfileFormComponent } from './profiles/components/profile-form/profile
     ReactiveFormsModule,
     MatExpansionModule,
     NgOptimizedImage,
-    LoginComponent,
+
     CdkDropList,
     CdkDrag,
     MatProgressSpinner,
     SlickCarouselModule,
+    LoginComponent,
   ],
   providers: [
     provideAnimationsAsync(),

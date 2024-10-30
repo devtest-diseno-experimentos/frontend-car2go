@@ -142,7 +142,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
         (response) => {
           this.car = response;
           this.closeEditModal();
-            console.log('Car updated', response);
+          console.log('Car updated', response);
         },
         (error) => {
           console.error('Error', error);
