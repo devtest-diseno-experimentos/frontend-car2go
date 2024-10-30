@@ -13,8 +13,8 @@ body{
 .profile-container {
 
   max-width: 700px;
-  margin: 0 auto; /* Eliminar márgenes predeterminados del body */
-  width: 100%; /* Asegura que el contenedor no exceda el ancho máximo */
+  margin: 0 auto;
+  width: 100%;
   padding: 20px;
   font-family: 'Arial', sans-serif;
   background-color: #f9f9f9;
@@ -22,14 +22,11 @@ body{
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-
-/* Estilos del formulario */
 .profile-form {
   display: grid;
   gap: 15px;
 }
 
-/* Alineación de filas */
 .form-row {
   display: flex;
   justify-content: space-between;
@@ -42,14 +39,12 @@ body{
   flex: 1;
 }
 
-/* Etiquetas */
 label {
   font-size: 14px;
   margin-bottom: 5px;
   color: #333;
 }
 
-/* Estilos de los campos de entrada */
 .form-control {
   padding: 10px;
   border: 1px solid #ccc;
@@ -64,13 +59,11 @@ label {
   outline: none;
 }
 
-/* Estilos de archivos */
 .form-control-file {
   padding: 5px;
   font-size: 14px;
 }
 
-/* Vista previa de imagen */
 .image-preview-container {
   display: flex;
   justify-content: center;
@@ -85,7 +78,6 @@ label {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Botones */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -125,7 +117,6 @@ label {
   background-color: #d32f2f;
 }
 
-/* Responsividad para pantallas pequeñas */
 @media (max-width: 600px) {
   .form-row {
     flex-direction: column;

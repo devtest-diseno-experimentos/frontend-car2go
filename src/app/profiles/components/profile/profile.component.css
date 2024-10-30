@@ -70,7 +70,6 @@ hr {
   border-top: 1px solid #ccc;
 }
 
-/* Estilos del botón de subida de archivo */
 button {
   border: none;
   display: flex;
@@ -111,12 +110,10 @@ button svg {
   height: 1.25rem;
 }
 
-/* Ocultar el input file original */
 .hidden-file-input {
   display: none;
 }
 
-/* Responsive adjustments */
 @media screen and (max-width: 768px) {
   .profile-card {
     max-width: 90%;

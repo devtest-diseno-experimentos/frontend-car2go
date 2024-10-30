@@ -55,6 +55,7 @@ import { TechnicalReviewComponent } from './buyer/components/technical-review/te
 import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import { ProfileFormComponent } from './profiles/components/profile-form/profile-form.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { ProfileFormComponent } from './profiles/components/profile-form/profile
     PayComponent,
     SendDataComponent,
     TechnicalReviewComponent,
-    ProfileFormComponent
+    ProfileFormComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,12 +110,11 @@ import { ProfileFormComponent } from './profiles/components/profile-form/profile
     ReactiveFormsModule,
     MatExpansionModule,
     NgOptimizedImage,
-
     CdkDropList,
     CdkDrag,
     MatProgressSpinner,
     SlickCarouselModule,
-    LoginComponent,
+    MatSnackBarModule
   ],
   providers: [
     provideAnimationsAsync(),

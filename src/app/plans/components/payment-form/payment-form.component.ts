@@ -9,7 +9,7 @@ import { PlanService } from '../../service/plan.service';
 })
 export class PaymentFormComponent implements OnInit {
   selectedPlan: any;
-  isSummaryVisible: boolean = false; // Estado para controlar si el resumen está visible o no
+  isSummaryVisible: boolean = false;
 
   constructor(private planService: PlanService, private router: Router) {}
 
@@ -24,10 +24,10 @@ export class PaymentFormComponent implements OnInit {
 
   // Método para alternar la visibilidad del resumen de productos en pantallas pequeñas
   toggleSummary() {
-    this.isSummaryVisible = !this.isSummaryVisible; // Cambiamos el estado de visibilidad
+    this.isSummaryVisible = !this.isSummaryVisible;
     const summary = document.querySelector('.summary-column');
     if (summary) {
-      summary.classList.toggle('active'); // Añadimos o quitamos la clase 'active'
+      summary.classList.toggle('active');
     }
   }
 }

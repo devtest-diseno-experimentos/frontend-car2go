@@ -1,10 +1,8 @@
 <app-toolbar></app-toolbar>
 <div class="grid-container">
-  <!-- Left column: Payment details -->
   <div class="scrollable-content">
     <h2>Card Details</h2>
     <form>
-      <!-- Card details -->
       <div class="form-group">
         <label for="card-number">Card Number</label>
         <input type="text" id="card-number" placeholder="E.g: 9999 9999 9999 9999" required>
@@ -20,7 +18,6 @@
         <input type="text" id="card-lastname" placeholder="E.g: Perez" required>
       </div>
 
-      <!-- Expiry date and security code grouping -->
       <div class="form-row">
         <div class="form-group half-width">
           <label for="expiry-date">Expiry Date</label>
@@ -44,7 +41,6 @@
 
       <hr>
 
-      <!-- Billing and user details -->
       <h2>Billing and User Details</h2>
       <div class="form-row">
         <div class="form-group half-width">
@@ -88,11 +84,9 @@
       </div>
     </form>
 
-    <!-- Toggle button for the summary in small screens -->
     <div class="summary-toggle-button" (click)="toggleSummary()">View Summary</div>
   </div>
 
-  <!-- Right column: Payment summary -->
   <div class="summary-column" *ngIf="selectedPlan">
     <h2>Your Products</h2>
     <div class="product-summary">

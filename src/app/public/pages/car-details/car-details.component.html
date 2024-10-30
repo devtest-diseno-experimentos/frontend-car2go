@@ -73,16 +73,12 @@
   <mat-card class="card">
     <div class="car-gallery">
       <div class="car-images">
-
         <button (click)="prevImage()" class="carousel-nav prev">&#10094;</button>
-
         <div class="main-image">
           <img [src]="mainImage" alt="Imagen del producto" />
         </div>
 
-
         <button (click)="nextImage()" class="carousel-nav next">&#10095;</button>
-
         <div class="thumbnails">
           <img *ngFor="let image of images; let i = index"
                [src]="image"
@@ -157,7 +153,6 @@
           </div>
         </div>
 
-        <!-- PRICE Section -->
         <div class="section-header">
           <h3><span class="text-black">PRICE</span></h3>
         </div>

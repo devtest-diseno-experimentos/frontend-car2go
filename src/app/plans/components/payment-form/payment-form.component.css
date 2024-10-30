@@ -1,11 +1,9 @@
-/* General Styles */
 body, html {
   margin: 0;
   padding: 0;
   font-family: 'Arial', sans-serif;
 }
 
-/* Container for grid layout */
 .grid-container {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -14,7 +12,6 @@ body, html {
   margin-top: -100px;
 }
 
-/* Scrollable form content */
 .scrollable-content {
   max-height: 80vh;
   overflow-y: auto;
@@ -79,7 +76,6 @@ button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
-/* Estilo de los selectores */
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -91,7 +87,6 @@ select {
   width: 100%;
 }
 
-/* Summary Column (payment summary) */
 .summary-column {
   border: 1px solid #ddd;
   padding: 20px;
@@ -122,7 +117,6 @@ select {
   margin: 10px 0;
 }
 
-/* Scrollbar styling */
 .scrollable-content::-webkit-scrollbar {
   width: 8px;
 }
@@ -136,20 +130,16 @@ select {
   background-color: #555;
 }
 
-/* Responsive: Adjust layout for small screens */
 @media (max-width: 768px) {
-  /* Change layout to single column */
   .grid-container {
     grid-template-columns: 1fr;
     gap: 10px;
   }
 
-  /* Payment summary initially hidden */
   .summary-column {
-    display: none; /* Ocultamos el resumen inicialmente en pantallas pequeñas */
+    display: none;
   }
 
-  /* Button to toggle the summary */
   .summary-toggle-button {
     display: block;
     background-color: #007BFF;
@@ -162,6 +152,6 @@ select {
   }
 
   .summary-column.active {
-    display: block; /* Mostramos el resumen cuando esté activo */
+    display: block;
   }
 }

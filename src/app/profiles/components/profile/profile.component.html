@@ -1,17 +1,13 @@
 <app-toolbar></app-toolbar>
 <div class="profile-background">
-  <!-- Contenedor del perfil -->
   <div class="profile-card">
-    <!-- Imagen de perfil -->
     <div class="profile-picture">
       <img *ngIf="imagePreview" [src]="imagePreview" alt="{{ userData.names }} {{ userData.lastName }}">
     </div>
 
-    <!-- Información del usuario -->
     <div class="profile-info">
       <h2 *ngIf="!editMode">{{ userData.names }} {{ userData.lastName }}</h2>
 
-      <!-- En modo edición, mostrar los inputs alineados en una fila -->
       <div class="edit-name-row" *ngIf="editMode">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Name</mat-label>
@@ -27,7 +23,6 @@
     </div>
 
     <div class="profile-extra">
-      <!-- Dirección con icono -->
       <div class="info-item">
         <span class="material-symbols-outlined">home</span>
         <div class="info-content">
@@ -41,7 +36,6 @@
 
       <hr *ngIf="!editMode">
 
-      <!-- Número de teléfono con icono -->
       <div class="info-item">
         <span class="material-symbols-outlined">phone</span>
         <div class="info-content">
@@ -55,7 +49,6 @@
 
       <hr *ngIf="!editMode">
 
-      <!-- DNI con icono -->
       <div class="info-item">
         <span class="material-symbols-outlined">credit_card</span>
         <div class="info-content">
@@ -67,7 +60,6 @@
         </div>
       </div>
 
-      <!-- Botón de subida de archivo personalizado -->
       <div class="info-item" *ngIf="editMode">
         <button type="button" (click)="triggerFileInput()">
           <svg
@@ -99,7 +91,6 @@
       </div>
     </div>
 
-    <!-- Botón para alternar entre editar/visualizar -->
     <button mat-raised-button color="primary" (click)="toggleEditMode()">{{ editMode ? 'Save' : 'Edit' }}</button>
   </div>
 </div>

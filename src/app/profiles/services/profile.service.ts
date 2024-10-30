@@ -6,13 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProfileService {
-  private apiUrl = 'https://car2go-fake-api.vercel.app/profile'; // URL base de la API
+  private apiUrl = 'https://car2go-fake-api.vercel.app/profile';
 
   constructor(private http: HttpClient) {}
 
-  // Obtener el perfil por el userId como query param
   getProfileByUserId(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}?userId=${userId}`); // Pasar el userId como query param
+    return this.http.get<any>(`${this.apiUrl}?userId=${userId}`);
   }
 
   updateUserProfile(id: number, userData: any): Observable<any> {
