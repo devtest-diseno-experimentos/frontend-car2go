@@ -15,7 +15,8 @@
       </ul>
       <a routerLink="/profile">
         <div class="profile-icon">
-          <i class="material-icons">account_circle</i>
+          <img *ngIf="userPhoto" [src]="userPhoto" alt="Profile Photo" class="profile-photo">
+          <i *ngIf="!userPhoto" class="material-icons">account_circle</i>
         </div>
       </a>
       <div class="hamburger" (click)="toggleMenu()">
@@ -41,7 +42,8 @@
       </ul>
       <a routerLink="/profile">
         <div class="profile-icon">
-          <i class="material-icons">account_circle</i>
+          <img *ngIf="userPhoto" [src]="userPhoto" alt="Profile Photo" class="profile-photo">
+          <i *ngIf="!userPhoto" class="material-icons">account_circle</i>
         </div>
       </a>
       <div class="hamburger" (click)="toggleMenu()">
@@ -67,7 +69,8 @@
       </ul>
       <a routerLink="/profile">
         <div class="profile-icon">
-          <i class="material-icons">account_circle</i>
+          <img *ngIf="userPhoto" [src]="userPhoto" alt="Profile Photo" class="profile-photo">
+          <i *ngIf="!userPhoto" class="material-icons">account_circle</i>
         </div>
       </a>
       <div class="hamburger" (click)="toggleMenu()">
