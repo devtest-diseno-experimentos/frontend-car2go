@@ -104,7 +104,7 @@ export class ProfileFormComponent implements OnInit {
       profileData.userId = this.userId;
 
       // Enviar los datos al servicio de perfil
-      this.profileService.updateUserProfile(profileData).subscribe(
+      this.profileService.updateUserProfile(profileData , this.userId).subscribe(
         (response) => {
           console.log('Perfil actualizado exitosamente', response);
           this.router.navigate(['/home']);

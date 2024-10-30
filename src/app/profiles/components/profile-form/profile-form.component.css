@@ -1,66 +1,39 @@
-/* Contenedor general */
+body{
+  overflow-y: unset;
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.space{
+  margin-top: 200px;
+
+}
 .profile-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 30px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+  max-width: 700px;
+  margin: 0 auto; /* Eliminar márgenes predeterminados del body */
+  width: 100%; /* Asegura que el contenedor no exceda el ancho máximo */
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.date {
-  color: #888;
-  font-size: 14px;
-  margin-bottom: 20px;
-}
 
-/* Encabezado del perfil */
-.profile-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-
-.profile-avatar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.profile-avatar img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-
-.edit-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.edit-button:hover {
-  background-color: #0056b3;
-}
-
-/* Formulario */
+/* Estilos del formulario */
 .profile-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  gap: 15px;
 }
 
+/* Alineación de filas */
 .form-row {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 15px;
 }
 
 .form-group {
@@ -69,101 +42,97 @@
   flex: 1;
 }
 
+/* Etiquetas */
 label {
   font-size: 14px;
-  font-weight: bold;
-  color: #333;
   margin-bottom: 5px;
+  color: #333;
 }
 
-input,
-select {
+/* Estilos de los campos de entrada */
+.form-control {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
-  width: 100%;
+  font-size: 14px;
+  background-color: #fff;
+  transition: border-color 0.3s;
 }
 
-/* Sección de correo electrónico */
-.email-section {
-  margin-top: 30px;
+.form-control:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
-.email-box {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: 10px;
+/* Estilos de archivos */
+.form-control-file {
+  padding: 5px;
+  font-size: 14px;
 }
 
-.email-icon {
-  width: 40px;
-  height: 40px;
-  background-color: #f0f4ff;
-  border-radius: 50%;
+/* Vista previa de imagen */
+.image-preview-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-
-.email-icon img {
-  width: 20px;
-  height: 20px;
-}
-
-.email-details {
-  display: flex;
-  flex-direction: column;
-}
-
-.email-text {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-}
-
-.email-date {
-  font-size: 12px;
-  color: #999;
-  margin-top: 5px;
-}
-
-.add-email-button {
-  background-color: #f0f4ff;
-  color: #007bff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
   margin-top: 15px;
 }
 
-.add-email-button:hover {
-  background-color: #e0e8ff;
+.image-preview {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.image-preview{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  height: 200px;
-  border: 1px dashed #ccc;
-  border-radius: 5px;
-}
+
 /* Botones */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
 .submit-button {
   background-color: #007bff;
-  color: white;
-  padding: 12px;
-  font-size: 16px;
+  color: #fff;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 20px;
+  transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
   background-color: #0056b3;
+}
+
+.submit-button:disabled {
+  background-color: #ccc;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .submit-button, .cancel-button {
+    width: 100%;
+    padding: 10px;
+  }
 }
