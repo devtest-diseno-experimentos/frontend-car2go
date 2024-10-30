@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     this.userRole = localStorage.getItem('userRole') || '';
     this.loadAllCars();
 
-    if (this.userRole === 'mechanic') {
+    if (this.userRole === 'ROLE_MECHANIC') {
       this.loadPendingAndCertifiedCars();
     }
 
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadUserData(): void {
-    const userId = +localStorage.getItem('id')!;
+    const userId = +localStorage.getItem('userId')!;
     this.authService.getUserInfo(userId).subscribe(
       (data: any) => {
         this.user = data;
@@ -86,11 +86,16 @@ export class HomeComponent implements OnInit {
 
   processCars(cars: any[]): any[] {
     return cars.map(car => {
-      car.image = car.image || this.defaultImage;
-      car.images = car.images && car.images.length > 0 ? car.images : [this.defaultImage];
+      // Si car.images existe y tiene elementos, utiliza la primera imagen como imagen principal.
+      car.mainImage = car.image && car.image.length > 0 ? car.image[0] : this.defaultImage;
+
+      // Por si acaso car.image se usa en algún lugar, asignamos también la imagen principal a esa propiedad.
+      car.image = car.mainImage;
+
       return car;
     });
   }
+
 
   loadReviewsForCertifiedCars(certifiedCars: any[]): void {
     certifiedCars.forEach(car => {

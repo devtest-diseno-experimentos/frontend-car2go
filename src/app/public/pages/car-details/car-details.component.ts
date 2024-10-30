@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CarService } from '../../../cars/services/car.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,13 +12,21 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   car: any;
   userRole: string = '';
   mainImage: string = '';
-  images: string[] = [];
+  images: string[] = []; // Imágenes permanentes
+  tempImages: string[] = []; // Imágenes temporales
   defaultImage: string = 'assets/default_image.jpg';
   carForm: FormGroup;
   isModalOpen: boolean = false;
   currentIndex: number = 0;
   autoScrollInterval: any;
   autoScrollTime: number = 5000;
+  newImages: File[] = []; // Almacena las nuevas imágenes seleccionadas (no guardadas)
+  isDragging: boolean = false;
+  startX: number = 0;
+  scrollLeft: number = 0;
+  mouseDown: boolean = false;
+
+  @ViewChild('thumbnailsContainer') thumbnailsContainer!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +34,6 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {
     this.carForm = this.fb.group({
-      title: ['', Validators.required],
       name: ['', Validators.required],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       email: ['', [Validators.required, Validators.email]],
@@ -50,6 +57,10 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngOnDestroy() {
+    this.stopAutoScroll();
+  }
+
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const carId = +params.get('id')!;
@@ -66,19 +77,41 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     this.userRole = localStorage.getItem('userRole') || '';
   }
 
-  ngOnDestroy() {
-    this.stopAutoScroll();
-  }
-
   updateImages() {
-    if (this.car) {
-      this.images = this.car.images && this.car.images.length > 0 ? this.car.images : [this.defaultImage];
+    if (this.car && Array.isArray(this.car.image) && this.car.image.length > 0) {
+      this.images = this.car.image;
       this.mainImage = this.images[0];
       this.currentIndex = 0;
     } else {
       this.mainImage = this.defaultImage;
       this.images = [this.defaultImage];
     }
+  }
+
+  onMouseDown(event: MouseEvent) {
+    event.preventDefault();
+    this.mouseDown = true;
+    this.startX = event.clientX;
+  }
+
+  onMouseMove(event: MouseEvent) {
+    event.preventDefault();
+    if (!this.mouseDown) return;
+    const currentX = event.clientX;
+    const diff = currentX - this.startX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        this.prevImage();
+      } else {
+        this.nextImage();
+      }
+      this.mouseDown = false;
+    }
+  }
+
+  onMouseUp(event: MouseEvent) {
+    event.preventDefault();
+    this.mouseDown = false;
   }
 
   changeImage(index: number) {
@@ -90,13 +123,45 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   nextImage() {
     this.currentIndex = (this.currentIndex + 1) % this.images.length;
     this.mainImage = this.images[this.currentIndex];
+    this.updateCarouselPosition();
+    this.animateMainImageChange();
     this.restartAutoScroll();
   }
 
   prevImage() {
     this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
     this.mainImage = this.images[this.currentIndex];
+    this.updateCarouselPosition();
+    this.animateMainImageChange();
     this.restartAutoScroll();
+  }
+
+  animateMainImageChange() {
+    const mainImageElement = document.querySelector('.main-image img');
+    if (mainImageElement) {
+      mainImageElement.classList.add('fade-out');
+      setTimeout(() => {
+        this.mainImage = this.images[this.currentIndex];
+        mainImageElement.classList.remove('fade-out');
+        mainImageElement.classList.add('fade-in');
+        setTimeout(() => {
+          mainImageElement.classList.remove('fade-in');
+        }, 500);
+      }, 500);
+    }
+  }
+
+  updateCarouselPosition() {
+    const thumbnailWidth = 90;
+    const visibleThumbnails = 5;
+    const thumbnailsContainer = this.thumbnailsContainer.nativeElement;
+    const maxScrollLeft = thumbnailsContainer.scrollWidth - thumbnailsContainer.clientWidth;
+    const scrollTo = thumbnailWidth * this.currentIndex - (thumbnailWidth * (visibleThumbnails / 2));
+    const finalScroll = Math.max(0, Math.min(maxScrollLeft, scrollTo));
+    thumbnailsContainer.scrollTo({
+      left: finalScroll,
+      behavior: 'smooth'
+    });
   }
 
   startAutoScroll() {
@@ -118,10 +183,23 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
 
   openEditModal(): void {
     this.isModalOpen = true;
+    this.stopAutoScroll();
+    document.querySelector('main')?.classList.add('blur-background');
+    document.body.style.overflow = 'hidden';
   }
 
   closeEditModal(): void {
     this.isModalOpen = false;
+    this.tempImages = []; // Limpiar las imágenes temporales si se cierra el modal
+    this.newImages = [];
+    document.querySelector('main')?.classList.remove('blur-background');
+    document.body.style.overflow = 'auto';
+  }
+
+  closeOnOutsideClick(event: MouseEvent): void {
+    if (event.target === event.currentTarget) {
+      this.closeEditModal();
+    }
   }
 
   populateForm() {
@@ -131,16 +209,96 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  editCar() {
+  changeMainImage(index: number) {
+    // Solo permitir cambiar la imagen principal si es una imagen permanente (no temporal)
+    if (index < this.images.length) {
+      const selectedImage = this.images[index];
+      this.images.splice(index, 1); // Remover la imagen seleccionada del array
+      this.images.unshift(selectedImage); // Colocar la imagen seleccionada al principio
+      this.mainImage = selectedImage; // Actualizar la imagen principal
+    }
+  }
+
+
+  startDragging(event: MouseEvent) {
+    this.isDragging = true;
+    this.startX = event.clientX;
+    this.scrollLeft = this.thumbnailsContainer.nativeElement.scrollLeft;
+    event.preventDefault();
+  }
+
+  stopDragging() {
+    this.isDragging = false;
+  }
+
+  dragThumbnails(event: MouseEvent) {
+    if (!this.isDragging) return;
+    event.preventDefault();
+    const x = event.clientX;
+    const walk = (x - this.startX) * 2;
+    this.thumbnailsContainer.nativeElement.scrollLeft = this.scrollLeft - walk;
+  }
+
+  onImageSelect(event: any) {
+    if (event.target.files) {
+      for (let file of event.target.files) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.tempImages.push(e.target.result); // Agregar imagen temporal
+        };
+        reader.readAsDataURL(file);
+        this.newImages.push(file); // Guardar los archivos seleccionados
+      }
+    }
+  }
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('newImages') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  removeImage(index: number, isTemporary: boolean = false) {
+    if (isTemporary) {
+      this.tempImages.splice(index, 1);  // Eliminar imagen temporal
+      this.newImages.splice(index, 1);   // También eliminar del array de archivos
+    } else {
+      this.images.splice(index, 1);  // Eliminar imagen permanente
+    }
+  }
+
+  convertToBase64(file: File): Promise<string | ArrayBuffer | null> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
+  async editCar() {
     if (this.carForm.valid) {
       const updatedCar = {
         ...this.carForm.value,
-        images: this.images,
+        images: [...this.images], // Mantener las imágenes existentes
         userId: this.car.userId
       };
+
+      // Convertir imágenes nuevas a base64 y agregarlas
+      for (let imageFile of this.newImages) {
+        const base64Image = await this.convertToBase64(imageFile);
+        if (base64Image) {
+          updatedCar.images.push(base64Image); // Agregar nuevas imágenes al array definitivo
+        }
+      }
+
       this.carService.updateCar(this.car.id, updatedCar).subscribe(
         (response) => {
           this.car = response;
+          this.images = updatedCar.images; // Actualizar imágenes permanentes
+          this.tempImages = []; // Limpiar imágenes temporales
+          this.newImages = []; // Limpiar las imágenes nuevas seleccionadas
           this.closeEditModal();
           console.log('Car updated', response);
         },
@@ -153,7 +311,6 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
 
   requestReview() {
     const updatedCar = { ...this.car, status: 'pending inspection' };
-
     this.carService.updateCar(this.car.id, updatedCar).subscribe(
       (response) => {
         this.car = response;
@@ -164,5 +321,4 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
       }
     );
   }
-
 }

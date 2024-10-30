@@ -14,25 +14,30 @@ export class CarListingComponent implements OnInit {
   cars: any[] = [];
   paginatedCars: any[] = [];
   defaultImage: string = 'assets/default_image.jpg';
-
-
   pageSize: number = 4;
   currentPage: number = 1;
 
   constructor(private router: Router, private carService: CarService, private favoriteService: FavoriteService) {}
 
   ngOnInit() {
-
     this.userRole = localStorage.getItem('userRole') || '';
-
 
     this.carService.getCars().subscribe(
       (data: any[]) => {
         this.cars = data.map(car => {
-          car.image = car.image || this.defaultImage;
-          car.images = car.images && car.images.length > 0 ? car.images : [this.defaultImage];
+          // Verifica si car.image es un array y tiene imágenes
+          if (Array.isArray(car.image) && car.image.length > 0) {
+            car.images = car.image;  // Mantiene las imágenes tal cual
+            car.mainImage = car.images[0];  // Asigna la primera imagen como principal
+          } else {
+            // Si no hay imágenes, usa una imagen predeterminada
+            car.mainImage = this.defaultImage;
+            car.images = [this.defaultImage];  // Asegura que haya un array de imágenes
+          }
           return car;
         });
+
+        // Actualiza la paginación después de cargar los autos
         this.updatePaginatedCars();
       },
       (error) => {
@@ -40,6 +45,7 @@ export class CarListingComponent implements OnInit {
       }
     );
   }
+
 
 
   updatePaginatedCars() {

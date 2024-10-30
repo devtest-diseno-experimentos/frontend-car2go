@@ -1,142 +1,165 @@
-<app-toolbar></app-toolbar>
-<section class="car-details" *ngIf="userRole === 'seller'">
-  <div class="back-button">
-  </div>
+<main xmlns="http://www.w3.org/1999/html">
+  <app-toolbar></app-toolbar>
+  <section class="car-details" *ngIf="userRole === 'ROLE_SELLER' && car">
+    <div class="back-button"></div>
 
-  <mat-card class="card">
-    <div class="car-gallery">
-      <div class="car-images">
-        <button (click)="prevImage()" class="carousel-nav prev">&#10094;</button>
-        <div class="main-image">
-          <img [src]="mainImage" alt="Imagen del producto" />
-        </div>
-        <button (click)="nextImage()" class="carousel-nav next">&#10095;</button>
-        <div class="thumbnails">
-          <img *ngFor="let image of images; let i = index"
-               [src]="image"
-               alt="Miniatura"
-               (click)="changeImage(i)"
-               [class.active]="i === currentIndex" />
-        </div>
-      </div>
-    </div>
+    <mat-card class="card">
+      <div class="car-gallery">
+        <div class="car-images">
+          <button (mousedown)="prevImage()" class="carousel-nav prev">&#10094;</button>
+          <div class="main-image"
+               (mousedown)="onMouseDown($event)"
+               (mousemove)="onMouseMove($event)"
+               (mouseup)="onMouseUp($event)">
+            <img [src]="mainImage" alt="Imagen del producto" (dragstart)="stopDragging()" />
+          </div>
 
-    <div class="car-information">
-      <div class="car-description">
-        <h4>
-          {{ car.title }}
-          <button (click)="openEditModal()" class="edit-button">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </h4>
-        <h5>${{ car.price }}</h5>
-        <p class="description">{{ car.description }}</p>
-      </div>
 
-      <div class="car-data">
-        <div class="column-list">
-          <ul>
-            <li><i class="material-symbols-outlined">event</i><span>{{ car.year }}</span></li>
-            <li><i class="material-symbols-outlined">auto_transmission</i><span>{{ car.transmission }}</span></li>
-            <li><i class="material-symbols-outlined">bolt</i><span>{{ car.engine }}</span></li>
-            <li><i class="material-symbols-outlined">location_on</i><span>{{ car.location }}</span></li>
-          </ul>
-        </div>
-        <div class="column-list">
-          <ul>
-            <li><i class="material-symbols-outlined">invert_colors</i><span>{{ car.color }}</span></li>
-            <li><i class="material-symbols-outlined">sensor_door</i><span>{{ car.doors }}</span></li>
-            <li><i class="material-symbols-outlined">road</i><span>{{ car.mileage }}</span></li>
-          </ul>
+          <button (mousedown)="nextImage()" class="carousel-nav next">&#10095;</button>
+
+          <div class="thumbnails"
+               #thumbnailsContainer
+               (mousedown)="startDragging($event)"
+               (mousemove)="dragThumbnails($event)"
+               (mouseup)="stopDragging()"
+               (mouseleave)="stopDragging()">
+            <img *ngFor="let image of images; let i = index"
+                 [src]="image"
+                 alt="Miniatura"
+                 (click)="changeImage(i)"
+                 [class.active]="i === currentIndex" />
+          </div>
+
         </div>
       </div>
 
-      <div class="buttons" *ngIf="car.status !== 'reviewed' && car.status !== 'pending inspection'">
-        <button (click)="requestReview()">REQUEST REVIEW</button>
-      </div>
-
-      <div *ngIf="car.status === 'reviewed'" class="reviewed-message">
-        <p>This car has already been reviewed.</p>
-      </div>
-
-      <div *ngIf="car.status === 'pending inspection'" class="pending-message">
-        <p>This car is pending review.</p>
-      </div>
-
-    </div>
-  </mat-card>
-</section>
-
-
-<section class="car-details" *ngIf="userRole === 'buyer'">
-
-  <mat-card class="card">
-    <div class="car-gallery">
-      <div class="car-images">
-        <button (click)="prevImage()" class="carousel-nav prev">&#10094;</button>
-        <div class="main-image">
-          <img [src]="mainImage" alt="Imagen del producto" />
+      <div class="car-information">
+        <div class="car-description">
+          <h4>
+            {{ car?.brand }} {{ car?.model }}
+            <button (click)="openEditModal()" class="edit-button">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </h4>
+          <h5>${{ car?.price }}</h5>
+          <p class="description">{{ car?.description }}</p>
         </div>
 
-        <button (click)="nextImage()" class="carousel-nav next">&#10095;</button>
-        <div class="thumbnails">
-          <img *ngFor="let image of images; let i = index"
-               [src]="image"
-               alt="Miniatura"
-               (click)="changeImage(i)"
-               [class.active]="i === currentIndex" />
+        <div class="car-data">
+          <div class="column-list">
+            <ul>
+              <li><i class="material-symbols-outlined">event</i><span>{{ car?.year }}</span></li>
+              <li><i class="material-symbols-outlined">auto_transmission</i><span>{{ car?.transmission }}</span></li>
+              <li><i class="material-symbols-outlined">bolt</i><span>{{ car?.engine }}</span></li>
+              <li><i class="material-symbols-outlined">location_on</i><span>{{ car?.location }}</span></li>
+            </ul>
+          </div>
+          <div class="column-list">
+            <ul>
+              <li><i class="material-symbols-outlined">invert_colors</i><span>{{ car?.color }}</span></li>
+              <li><i class="material-symbols-outlined">sensor_door</i><span>{{ car?.doors }}</span></li>
+              <li><i class="material-symbols-outlined">road</i><span>{{ car?.mileage }}</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="buttons" *ngIf="car?.status !== 'reviewed' && car?.status !== 'pending inspection'">
+          <button (click)="requestReview()">REQUEST REVIEW</button>
+        </div>
+
+        <div *ngIf="car?.status === 'reviewed'" class="reviewed-message">
+          <p>This car has already been reviewed.</p>
+        </div>
+
+        <div *ngIf="car?.status === 'pending inspection'" class="pending-message">
+          <p>This car is pending review.</p>
         </div>
       </div>
-    </div>
+    </mat-card>
+  </section>
 
-    <div class="car-information">
-      <div class="car-description">
-        <h4>
-          {{ car.title }}
-          <span class="safety-icon">
+
+
+  <section class="car-details" *ngIf="userRole === 'ROLE_BUYER'">
+
+    <mat-card class="card">
+      <div class="car-gallery">
+        <div class="car-images">
+          <button (mousedown)="prevImage()" class="carousel-nav prev">&#10094;</button>
+          <div class="main-image"
+               (mousedown)="onMouseDown($event)"
+               (mousemove)="onMouseMove($event)"
+               (mouseup)="onMouseUp($event)">
+            <img [src]="mainImage" alt="Imagen del producto" (dragstart)="stopDragging()" />
+          </div>
+
+
+          <button (mousedown)="nextImage()" class="carousel-nav next">&#10095;</button>
+
+          <div class="thumbnails"
+               #thumbnailsContainer
+               (mousedown)="startDragging($event)"
+               (mousemove)="dragThumbnails($event)"
+               (mouseup)="stopDragging()"
+               (mouseleave)="stopDragging()">
+            <img *ngFor="let image of images; let i = index"
+                 [src]="image"
+                 alt="Miniatura"
+                 (click)="changeImage(i)"
+                 [class.active]="i === currentIndex" />
+          </div>
+
+        </div>
+      </div>
+
+      <div class="car-information">
+        <div class="car-description">
+          <h4>
+            {{ car?.brand }} {{ car?.model }}
+            <span class="safety-icon">
         <mat-icon>shield</mat-icon>
         <div class="safety-message">
           For your safety this car has been inspected
           <button routerLink="/technical-review" class="review-button">REVIEW HERE</button>
         </div>
       </span>
-        </h4>
-        <h5>${{ car.price }}</h5>
-        <p class="description">{{ car.description }}</p>
-      </div>
-
-      <div class="car-data">
-        <div class="column-list">
-          <ul>
-            <li><i class="material-symbols-outlined">event</i><span>{{ car.year }}</span></li>
-            <li><i class="material-symbols-outlined">auto_transmission</i><span>{{ car.transmission }}</span></li>
-            <li><i class="material-symbols-outlined">bolt</i><span>{{ car.engine }}</span></li>
-            <li><i class="material-symbols-outlined">location_on</i><span>{{ car.location }}</span></li>
-          </ul>
+          </h4>
+          <h5>${{ car?.price }}</h5>
+          <p class="description">{{ car?.description }}</p>
         </div>
-        <div class="column-list">
-          <ul>
-            <li><i class="material-symbols-outlined">invert_colors</i><span>{{ car.color }}</span></li>
-            <li><i class="material-symbols-outlined">sensor_door</i><span>{{ car.doors }}</span></li>
-            <li><i class="material-symbols-outlined">road</i><span>{{ car.mileage }}</span></li>
-          </ul>
+
+        <div class="car-data">
+          <div class="column-list">
+            <ul>
+              <li><i class="material-symbols-outlined">event</i><span>{{ car?.year }}</span></li>
+              <li><i class="material-symbols-outlined">auto_transmission</i><span>{{ car?.transmission }}</span></li>
+              <li><i class="material-symbols-outlined">bolt</i><span>{{ car?.engine }}</span></li>
+              <li><i class="material-symbols-outlined">location_on</i><span>{{ car?.location }}</span></li>
+            </ul>
+          </div>
+          <div class="column-list">
+            <ul>
+              <li><i class="material-symbols-outlined">invert_colors</i><span>{{ car?.color }}</span></li>
+              <li><i class="material-symbols-outlined">sensor_door</i><span>{{ car?.doors }}</span></li>
+              <li><i class="material-symbols-outlined">road</i><span>{{ car?.mileage }}</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="buttons">
+          <button routerLink="/send-data" class="offer-button">ADD OFFER $</button>
         </div>
       </div>
+    </mat-card>
+  </section>
+  <app-footer></app-footer>
+</main>
 
-      <div class="buttons">
-        <button routerLink="/send-data" class="offer-button">ADD OFFER $</button>
-      </div>
-    </div>
-  </mat-card>
-</section>
-<app-footer></app-footer>
-
-<div class="modal" [ngClass]="{'show': isModalOpen}">
-  <div class="modal-content">
+<div class="modal" [ngClass]="{'show': isModalOpen}" (click)="closeOnOutsideClick($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
     <span class="close" (click)="closeEditModal()">&times;</span>
 
     <div class="container">
-
       <form [formGroup]="carForm" (ngSubmit)="editCar()">
         <div class="form-section">
           <div class="form-group">
@@ -153,6 +176,7 @@
           </div>
         </div>
 
+        <!-- PRICE Section -->
         <div class="section-header">
           <h3><span class="text-black">PRICE</span></h3>
         </div>
@@ -166,13 +190,9 @@
 
         <!-- CAR DATA Section -->
         <div class="section-header">
-          <h3><span class="text-black">CAR</span> <span class="text-yellow"> DATA</span></h3>
+          <h3><span class="text-black">CAR</span> <span class="text-yellow">DATA</span></h3>
         </div>
         <div class="form-section">
-          <div class="form-group">
-            <label for="title">Title</label>
-            <input id="title" formControlName="title" type="text">
-          </div>
           <div class="form-group">
             <label for="brand">Brand</label>
             <input formControlName="brand" id="brand" class="form-control" placeholder="Brand" />
@@ -238,20 +258,96 @@
             <label for="location">Location</label>
             <input formControlName="location" id="location" class="form-control" placeholder="Location" />
           </div>
-
-
           <div class="form-group full-width">
             <label for="description">Description</label>
             <textarea formControlName="description" id="description" class="form-control" placeholder="Description"></textarea>
           </div>
         </div>
 
-
-        <div class="submit-button">
-          <button type="submit" class="btn btn-primary">Update Car</button>
+        <!-- IMAGES Section -->
+        <div class="section-header">
+          <h3><span class="text-black">IMAGES</span></h3>
+        </div><div class="form-section full-width">
+        <!-- Imagen principal, mostrada primero -->
+        <div class="main-image-edit-container">
+          <div class="main-image-edit">
+            <img [src]="mainImage" alt="Main Image" />
+          </div>
         </div>
+
+        <!-- Sección de imágenes existentes con mensaje y botón para agregar imágenes -->
+        <div class="existing-images">
+          <p>
+            Existing Images:
+            <small>(Click on an image to set it as the main image)</small>
+          </p>
+          <div class="image-grid">
+            <!-- Mostrar imágenes permanentes -->
+            <div *ngFor="let image of images; let i = index" class="image-wrapper">
+              <img [src]="image" alt="Existing Image" class="thumbnail" (click)="changeMainImage(i)" />
+              <button type="button" class="button-remove-image" (click)="removeImage(i)"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Texto y sección para imágenes temporales -->
+        <div class="temporary-images">
+          <!-- Contenedor que incluye el texto y el botón -->
+          <div class="message-and-button">
+            <p class="temporary-message">
+              These images will be added when you click <span class="highlight"> 'Update Car'</span>:
+            </p>
+
+            <div class="new-images">
+              <button type="button" (click)="triggerFileInput()">
+                <svg
+                  aria-hidden="true"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-width="2"
+                    stroke="#ffffff"
+                    d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                  ></path>
+                  <path
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                    stroke-width="2"
+                    stroke="#ffffff"
+                    d="M17 15V18M17 21V18M17 18H14M17 18H20"
+                  ></path>
+                </svg>
+
+              </button>
+              <!-- Input para subir archivos oculto -->
+              <input id="newImages" type="file" (change)="onImageSelect($event)" class="hidden-file-input" multiple>
+            </div>
+          </div>
+
+          <div class="image-grid">
+            <!-- Mostrar imágenes temporales -->
+            <div *ngFor="let tempImage of tempImages; let i = index" class="image-wrapper">
+              <img [src]="tempImage" alt="New Image" class="thumbnail" />
+              <button type="button" class="button-remove-image" (click)="removeImage(i, true)"></button>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+
       </form>
     </div>
   </div>
 </div>
+
+
 

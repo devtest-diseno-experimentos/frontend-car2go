@@ -109,10 +109,38 @@ button svg {
   width: 1.25rem;
   height: 1.25rem;
 }
+.message-and-button {
+  display: flex;
+  justify-content: space-between; /* Asegura que el botón esté a la derecha del texto */
+  align-items: center; /* Alinea verticalmente el texto y el botón */
+  margin-bottom: 10px; /* Espacio debajo del contenedor */
+}
+
+.temporary-message {
+  margin-right: 10px; /* Espacio entre el texto y el botón */
+}
+
+.new-images .info-item button {
+  background-color: #3498db;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.new-images .info-item button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.new-images .info-item button:hover {
+  background-color: #2980b9;
+}
 
 .hidden-file-input {
   display: none;
 }
+
 
 @media screen and (max-width: 768px) {
   .profile-card {

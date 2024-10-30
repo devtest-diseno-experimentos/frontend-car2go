@@ -1,5 +1,5 @@
 <app-toolbar></app-toolbar>
-<section *ngIf="userRole === 'seller'">
+<section *ngIf="userRole === 'ROLE_SELLER'">
   <div class="car-wrapper">
     <div class="car-header">
       <div class="icon-wrapper">
@@ -17,10 +17,10 @@
     <div class="car-container">
       <div class="car-item-horizontal" *ngFor="let car of paginatedCars" (click)="viewCarDetails(car.id)">
         <div class="image-wrapper-horizontal">
-          <img [src]="car.image" alt="{{ car.title }}" class="img-thumbnail">
+          <img [src]="car.mainImage" alt="{{ car.brand }} {{car.model}}" class="img-thumbnail">
         </div>
         <div class="content-horizontal">
-          <h4>{{ car.title }}</h4>
+          <h4>{{ car.brand }} {{car.model}}</h4>
           <span>{{ car.price | currency }}</span>
           <p>{{ car.description }}</p>
           <ul class="car-info">
@@ -67,7 +67,7 @@
 </section>
 
 
-<section *ngIf="userRole === 'buyer'">
+<section *ngIf="userRole === 'ROLE_BUYER'">
   <div class="car-wrapper">
     <div class="car-header">
       <div class="icon-wrapper">
@@ -86,12 +86,12 @@
     <div class="car-container">
       <div class="car-item-horizontal" *ngFor="let car of paginatedCars" (click)="viewCarDetails(car.id)">
         <div class="image-wrapper-horizontal">
-          <img [src]="car.image" alt="{{ car.title }}" class="img-thumbnail">
+          <img [src]="car.mainImage" alt="{{ car.brand }} {{car.model}}" class="img-thumbnail">
         </div>
         <div class="content-horizontal">
           <div class="title-favorite-wrapper">
             <a>
-              <h4>{{ car.title }}</h4>
+              <h4>{{ car.brand }} {{car.model}}</h4>
             </a>
             <button class="favorite-button" (click)="addToFavorites(car.id); $event.stopPropagation()">
               <i class="fa fa-star"></i>

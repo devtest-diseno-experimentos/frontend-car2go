@@ -13,12 +13,20 @@ export class MyCarsComponent implements OnInit {
   constructor(private carService: CarService) {}
 
   ngOnInit() {
-    const userId = +localStorage.getItem('id')!;
+    const userId = +localStorage.getItem('userId')!;
+
     this.carService.getCarsByUserId(userId).subscribe(
       (data: any[]) => {
         this.cars = data.map(car => {
-          car.image = car.image || this.defaultImage;
-          car.images = car.images && car.images.length > 0 ? car.images : [this.defaultImage];
+          // Verifica si car.image es un array y tiene imágenes
+          if (Array.isArray(car.image) && car.image.length > 0) {
+            car.images = car.image;
+            car.mainImage = car.images[0];  // Asigna la primera imagen como principal
+          } else {
+            // Si no hay imágenes, usa una imagen predeterminada
+            car.mainImage = this.defaultImage;
+            car.images = [this.defaultImage];  // Asegura que haya un array de imágenes
+          }
           return car;
         });
       },
@@ -27,6 +35,7 @@ export class MyCarsComponent implements OnInit {
       }
     );
   }
+
 
   deleteCar(carId: number) {
     this.carService.deleteCar(carId).subscribe(

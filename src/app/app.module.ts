@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 
@@ -27,7 +27,6 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 
 // Feature Components Imports
@@ -36,7 +35,7 @@ import { HomeComponent } from './public/pages/home/home.component';
 import { PageNotFoundComponent } from './public/pages/page-not-found/page-not-found.component';
 import { FooterComponent } from './public/components/footer/footer.component';
 import { ToolbarComponent } from './public/components/toolbar/toolbar.component';
-import { LoginComponent } from './register/components/login/login.component';
+import {LoginComponent} from "./register/components/login/login.component";
 import { RegisterComponent } from './register/components/register/register.component';
 import { ForgotPasswordComponent } from './register/components/forgot-password/forgot-password.component';
 import { CarDetailsComponent } from './public/pages/car-details/car-details.component';
@@ -55,7 +54,9 @@ import { TechnicalReviewComponent } from './buyer/components/technical-review/te
 import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import { ProfileFormComponent } from './profiles/components/profile-form/profile-form.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {provideNativeDateAdapter} from "@angular/material/core";
+import {AuthenticationInterceptor} from "./register/services/authentication.interceptor.service";
+import {AuthenticationSectionComponent} from "./register/components/authentication-section/authentication-section.component";
 
 @NgModule({
   declarations: [
@@ -77,10 +78,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     ProfileComponent,
     FavoritesComponent,
     PayComponent,
+    LoginComponent,
     SendDataComponent,
     TechnicalReviewComponent,
     ProfileFormComponent,
-    LoginComponent,
+    AuthenticationSectionComponent
   ],
   imports: [
     BrowserModule,
@@ -112,12 +114,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     NgOptimizedImage,
     CdkDropList,
     CdkDrag,
-    MatProgressSpinner,
-    SlickCarouselModule,
-    MatSnackBarModule
+    MatProgressSpinner
   ],
   providers: [
     provideAnimationsAsync(),
+    provideNativeDateAdapter(),
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:AuthenticationInterceptor,
+      multi:true
+    }
   ],
   exports: [
   ],
