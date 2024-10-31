@@ -12,15 +12,15 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   car: any;
   userRole: string = '';
   mainImage: string = '';
-  images: string[] = []; // Imágenes permanentes
-  tempImages: string[] = []; // Imágenes temporales
+  images: string[] = [];
+  tempImages: string[] = [];
   defaultImage: string = 'assets/default_image.jpg';
   carForm: FormGroup;
   isModalOpen: boolean = false;
   currentIndex: number = 0;
   autoScrollInterval: any;
   autoScrollTime: number = 5000;
-  newImages: File[] = []; // Almacena las nuevas imágenes seleccionadas (no guardadas)
+  newImages: File[] = [];
   isDragging: boolean = false;
   startX: number = 0;
   scrollLeft: number = 0;
@@ -53,8 +53,10 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
       fuel: ['', Validators.required],
       speed: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       images: [[]],
-      userId: ['']
+      userId: [''],
+      status: ['', Validators.required]  // Nuevo campo agregado
     });
+
   }
 
   ngOnDestroy() {
@@ -190,7 +192,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
 
   closeEditModal(): void {
     this.isModalOpen = false;
-    this.tempImages = []; // Limpiar las imágenes temporales si se cierra el modal
+    this.tempImages = [];
     this.newImages = [];
     document.querySelector('main')?.classList.remove('blur-background');
     document.body.style.overflow = 'auto';
@@ -210,12 +212,11 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   }
 
   changeMainImage(index: number) {
-    // Solo permitir cambiar la imagen principal si es una imagen permanente (no temporal)
     if (index < this.images.length) {
       const selectedImage = this.images[index];
-      this.images.splice(index, 1); // Remover la imagen seleccionada del array
-      this.images.unshift(selectedImage); // Colocar la imagen seleccionada al principio
-      this.mainImage = selectedImage; // Actualizar la imagen principal
+      this.images.splice(index, 1);
+      this.images.unshift(selectedImage);
+      this.mainImage = selectedImage;
     }
   }
 
@@ -244,10 +245,10 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
       for (let file of event.target.files) {
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.tempImages.push(e.target.result); // Agregar imagen temporal
+          this.tempImages.push(e.target.result);
         };
         reader.readAsDataURL(file);
-        this.newImages.push(file); // Guardar los archivos seleccionados
+        this.newImages.push(file);
       }
     }
   }
@@ -261,10 +262,10 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
 
   removeImage(index: number, isTemporary: boolean = false) {
     if (isTemporary) {
-      this.tempImages.splice(index, 1);  // Eliminar imagen temporal
-      this.newImages.splice(index, 1);   // También eliminar del array de archivos
+      this.tempImages.splice(index, 1);
+      this.newImages.splice(index, 1);
     } else {
-      this.images.splice(index, 1);  // Eliminar imagen permanente
+      this.images.splice(index, 1);
     }
   }
 
@@ -281,24 +282,25 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     if (this.carForm.valid) {
       const updatedCar = {
         ...this.carForm.value,
-        images: [...this.images], // Mantener las imágenes existentes
-        userId: this.car.userId
+        images: [...this.images],
+        userId: this.car.userId,
+        status: this.car.status
+
       };
 
-      // Convertir imágenes nuevas a base64 y agregarlas
       for (let imageFile of this.newImages) {
         const base64Image = await this.convertToBase64(imageFile);
         if (base64Image) {
-          updatedCar.images.push(base64Image); // Agregar nuevas imágenes al array definitivo
+          updatedCar.images.push(base64Image);
         }
       }
 
       this.carService.updateCar(this.car.id, updatedCar).subscribe(
         (response) => {
           this.car = response;
-          this.images = updatedCar.images; // Actualizar imágenes permanentes
-          this.tempImages = []; // Limpiar imágenes temporales
-          this.newImages = []; // Limpiar las imágenes nuevas seleccionadas
+          this.images = updatedCar.images;
+          this.tempImages = [];
+          this.newImages = [];
           this.closeEditModal();
           console.log('Car updated', response);
         },

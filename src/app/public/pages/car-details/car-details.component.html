@@ -67,7 +67,7 @@
           <button (click)="requestReview()">REQUEST REVIEW</button>
         </div>
 
-        <div *ngIf="car?.status === 'reviewed'" class="reviewed-message">
+        <div *ngIf="car?.status === 'REVIEWED'" class="reviewed-message">
           <p>This car has already been reviewed.</p>
         </div>
 
@@ -250,6 +250,11 @@
               <option value="5">5</option>
             </select>
           </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <input formControlName="status" id="status" class="form-control" placeholder="Status" readonly />
+          </div>
+
           <div class="form-group">
             <label for="plate">Plate</label>
             <input formControlName="plate" id="plate" class="form-control" placeholder="This information will not be shown in the notice" />

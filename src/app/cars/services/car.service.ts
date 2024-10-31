@@ -28,7 +28,7 @@ export class CarService {
 
   // Añadir un coche nuevo
   addCar(newCar: any): Observable<any> {
-    const userId = +localStorage.getItem('id')!;
+    const userId = +localStorage.getItem('userId')!;
     newCar.userId = userId;
 
     return this.http.post<any>(this.apiUrl, newCar);
@@ -46,7 +46,7 @@ export class CarService {
 
   // Obtener coches pendientes de revisión (status: pending inspection)
   getPendingCars(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/location/pending inspection`);
+    return this.http.get<any[]>(`${this.apiUrl}/status/PENDING`);
   }
 
   // Marcar coche como revisado
