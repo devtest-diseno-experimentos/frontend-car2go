@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReviewService } from '../../services/review.service';
 import { CarService } from '../../../cars/services/car.service';
 
@@ -9,66 +10,61 @@ import { CarService } from '../../../cars/services/car.service';
 })
 export class MechanicRevisionComponent implements OnInit {
   pendingCars: any[] = [];
-  mechanicId: string = localStorage.getItem('id') || 'mechanic-123';
+  mechanicId: string = localStorage.getItem('userId') || 'mechanic-123';
+  defaultImage: string = 'assets/default_image.jpg';
 
-  constructor(private carService: CarService, private reviewService: ReviewService) {}
+  review = {
+    isApproved: false
+  };
+
+  constructor(
+    private carService: CarService,
+    private reviewService: ReviewService,
+    private snackBar: MatSnackBar // Inject MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.loadPendingCars();
   }
 
   loadPendingCars(): void {
-    this.carService.getPendingCars().subscribe(
+    this.carService.getCars().subscribe(
       (cars) => {
-        this.pendingCars = cars;
+        this.pendingCars = cars
+          .filter((car: any) => car.status === 'PENDING')
+          .map((car: any) => {
+            car.mainImage = car.image && car.image.length > 0 ? car.image[0] : this.defaultImage;
+            car.image = car.mainImage;
+            return car;
+          });
       },
       (error) => {
-        console.error('Error fetching pending cars:', error);
+        console.error('Error fetching cars:', error);
+        this.snackBar.open('Error fetching pending cars', 'Close', { duration: 3000 });
       }
     );
   }
 
-  updateCarStatus(car: any): void {
-    if (car.status === 'reviewed') {
-      alert(`Car ${car.brand} ${car.model} is already marked as reviewed.`);
+  createCarReview(car: any, reviewNotes: string | undefined): void {
+    if (!reviewNotes || !reviewNotes.trim()) {
+      this.snackBar.open('Please add review notes before creating the review.', 'Close', { duration: 3000 });
       return;
     }
-
-    this.carService.markAsReviewed(car.id).subscribe(
-      (carResponse) => {
-        console.log('Car status updated to reviewed:', carResponse);
-
-        car.status = 'reviewed';
-        alert(`Car ${car.brand} ${car.model} marked as reviewed.`);
-      },
-      (error) => {
-        console.error('Error updating car status:', error);
-      }
-    );
-  }
-
-  createCarReview(car: any, reviewNotes: string): void {
-    if (!reviewNotes.trim()) {
-      alert('Please add review notes before creating the review.');
-      return;
-    }
-
 
     const review = {
-      carId: car.id,
-      reviewedBy: this.mechanicId,
-      reviewDate: new Date().toISOString(),
-      notes: reviewNotes
+      vehicleId: car.id,
+      notes: reviewNotes,
+      approved: this.review.isApproved
     };
-
 
     this.reviewService.createReview(review).subscribe(
       (reviewResponse) => {
-        console.log('Review created successfully:', reviewResponse);
-        alert(`Review for ${car.brand} ${car.model} created.`);
+        this.snackBar.open(`Review for ${car.brand} ${car.model} created.`, 'Close', { duration: 3000 });
+        // Elimina el vehículo revisado de la lista de pendientes
+        this.pendingCars = this.pendingCars.filter((pendingCar) => pendingCar.id !== car.id);
       },
       (error) => {
-        console.error('Error creating review:', error);
+        this.snackBar.open('Error creating review', 'Close', { duration: 3000 });
       }
     );
   }

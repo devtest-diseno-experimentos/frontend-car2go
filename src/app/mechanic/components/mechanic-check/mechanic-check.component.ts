@@ -25,7 +25,7 @@ export class MechanicCheckComponent implements OnInit {
   }
 
   loadUserData(): void {
-    const userId = +localStorage.getItem('id')!;
+    const userId = +localStorage.getItem('userId')!;
     this.authService.getUserInfo(userId).subscribe(
       (data: any) => {
         this.user = data;

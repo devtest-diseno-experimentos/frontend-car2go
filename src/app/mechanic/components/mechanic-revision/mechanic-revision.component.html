@@ -10,7 +10,7 @@
       <div class="row">
         <div class="col-50 image-column">
           <div class="car-gallery">
-            <img [src]="car.image" alt="{{ car.title }}">
+            <img [src]="car.image" alt="{{ car.brand }} {{ car.model }}">
           </div>
         </div>
 
@@ -21,18 +21,16 @@
                 <li><i class="material-symbols-outlined">event</i><span>{{ car.year }}</span></li>
                 <li><i class="material-symbols-outlined">auto_transmission</i><span>{{ car.transmission }}</span></li>
                 <li><i class="material-symbols-outlined">bolt</i><span>{{ car.engine }}</span></li>
-                <li><i class="material-symbols-outlined">location_on</i><span>{{ car.location }}</span></li>
               </ul>
             </div>
             <div class="column-list">
               <ul>
+                <li><i class="material-symbols-outlined">location_on</i><span>{{ car.location }}</span></li>
                 <li><i class="material-symbols-outlined">invert_colors</i><span>{{ car.color }}</span></li>
-                <li><i class="material-symbols-outlined">sensor_door</i><span>{{ car.doors }}</span></li>
                 <li><i class="material-symbols-outlined">road</i><span>{{ car.mileage }}</span></li>
               </ul>
             </div>
           </div>
-
 
           <div class="owner-info">
             <h4>Owner Information</h4>
@@ -40,25 +38,26 @@
             <p><strong>Phone:</strong> {{ car.phone }}</p>
             <p><strong>Email:</strong> {{ car.email }}</p>
           </div>
-
-
-          <div class="review-action" (click)="updateCarStatus(car)">
-            <i
-              class="fa fa-check-circle review-icon"
-              [class.reviewed]="car.status === 'reviewed'"
-              title="{{ car.status === 'reviewed' ? 'Car already reviewed' : 'Click to mark as reviewed' }}">
-            </i>
-            <span class="review-text">{{ car.status === 'reviewed' ? 'Reviewed' : 'Mark as Reviewed' }}</span>
+          <div class="checkbox-container">
+            <label class="checkbox-label">
+              <input type="checkbox" [(ngModel)]="review.isApproved" class="styled-checkbox"/>
+              <span class="custom-checkbox"></span>
+              Approved
+            </label>
           </div>
+
         </div>
       </div>
 
+      <!-- Review Section -->
       <div class="row">
         <div class="review-section">
           <p><strong>Review Document</strong></p>
           <textarea [(ngModel)]="car.reviewNotes" placeholder="Add review notes here..."></textarea>
         </div>
 
+
+        <!-- Create Review Button -->
         <button (click)="createCarReview(car, car.reviewNotes)">Create Review</button>
       </div>
     </mat-card>
