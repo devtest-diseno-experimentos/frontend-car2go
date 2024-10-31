@@ -46,39 +46,51 @@ export class HomeComponent implements OnInit {
         this.user = data;
       },
       (error) => {
-        console.error('Error al obtener la información del usuario:', error);
+        console.error('Error fetching user info:', error);
       }
     );
   }
+
+  reviews: any[] = []; // Nueva variable para almacenar reviews
 
   loadAllCars() {
     this.loading = true;
     this.carService.getCars().subscribe(
       (data: any[]) => {
         this.cars = this.processCars(data);
+        this.loadAllReviews(); // Cargar reviews después de cargar los autos
         this.loading = false;
       },
       (error) => {
-        console.error('Error al obtener los autos:', error);
+        console.error('Error fetching cars:', error);
         this.loading = false;
       }
     );
   }
 
+  loadAllReviews(): void {
+    this.reviewService.getAllReviews().subscribe(
+      (reviewsData) => {
+        this.reviews = reviewsData;
+      },
+      (error) => {
+        console.error('Error fetching reviews:', error);
+      }
+    );
+  }
+
+
   loadPendingAndCertifiedCars() {
     this.loading = true;
-    forkJoin({
-      pendingCars: this.carService.getPendingCars(),
-      certifiedCars: this.carService.getReviewedCars(),
-    }).subscribe(
-      (results) => {
-        this.pendingCars = this.processCars(results.pendingCars);
-        this.certifiedCars = this.processCars(results.certifiedCars);
+    this.carService.getCars().subscribe(
+      (cars: any[]) => {
+        this.pendingCars = this.processCars(cars.filter(car => car.status === 'PENDING'));
+        this.certifiedCars = this.processCars(cars.filter(car => car.status === 'REVIEWED'));
         this.loadReviewsForCertifiedCars(this.certifiedCars);
         this.loading = false;
       },
       (error) => {
-        console.error('Error al cargar coches pendientes/certificados:', error);
+        console.error('Error loading cars:', error);
         this.loading = false;
       }
     );
@@ -86,16 +98,11 @@ export class HomeComponent implements OnInit {
 
   processCars(cars: any[]): any[] {
     return cars.map(car => {
-      // Si car.images existe y tiene elementos, utiliza la primera imagen como imagen principal.
       car.mainImage = car.image && car.image.length > 0 ? car.image[0] : this.defaultImage;
-
-      // Por si acaso car.image se usa en algún lugar, asignamos también la imagen principal a esa propiedad.
       car.image = car.mainImage;
-
       return car;
     });
   }
-
 
   loadReviewsForCertifiedCars(certifiedCars: any[]): void {
     certifiedCars.forEach(car => {
@@ -116,13 +123,13 @@ export class HomeComponent implements OnInit {
                 car.reviews = reviewsWithUserInfo;
               },
               (error) => {
-                console.error('Error al obtener información del revisor:', error);
+                console.error('Error fetching reviewer info:', error);
               }
             );
           }
         },
         (error) => {
-          console.error('Error al cargar las reseñas:', error);
+          console.error('Error fetching reviews:', error);
         }
       );
     });
@@ -143,10 +150,10 @@ export class HomeComponent implements OnInit {
   addToFavorites(carId: number): void {
     this.favoriteService.addFavorite(carId).subscribe(
       response => {
-        console.log('Coche añadido a favoritos:', response);
+        console.log('Car added to favorites:', response);
       },
       error => {
-        console.error('Error al añadir coche a favoritos:', error);
+        console.error('Error adding car to favorites:', error);
       }
     );
   }

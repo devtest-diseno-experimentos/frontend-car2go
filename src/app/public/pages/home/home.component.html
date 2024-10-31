@@ -177,6 +177,10 @@
     <section class="vehicle-list" *ngIf="!loading && pendingCars.length > 0; else noPendingCars">
       <h2>Assigned Vehicles</h2>
       <table mat-table [dataSource]="pendingCars" class="mat-elevation-z1">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let car"> {{ car.id }} </td>
+        </ng-container>
         <ng-container matColumnDef="brand">
           <th mat-header-cell *matHeaderCellDef> Vehicle </th>
           <td mat-cell *matCellDef="let car"> {{ car.brand }} {{ car.model }} </td>
@@ -189,11 +193,11 @@
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-cell *matCellDef="let car"> Pending Inspection </td>
+          <td mat-cell *matCellDef="let car"> {{ car.status }}</td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="['brand', 'year', 'status']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['brand', 'year', 'status'];"></tr>
+        <tr mat-header-row *matHeaderRowDef="['id', 'brand', 'year', 'status']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['id','brand', 'year', 'status'];"></tr>
       </table>
     </section>
 
@@ -203,37 +207,32 @@
 
     <section class="vehicle-list" *ngIf="!loading && certifiedCars.length > 0; else noCertifiedCars">
       <h2>Certified Vehicles</h2>
-      <table mat-table [dataSource]="certifiedCars" class="mat-elevation-z8">
-        <ng-container matColumnDef="brand">
+      <table mat-table [dataSource]="reviews" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let review"> {{ review.vehicle.id }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="notes">
+          <th mat-header-cell *matHeaderCellDef> Notes </th>
+          <td mat-cell *matCellDef="let review"> {{ review.notes }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reviewedBy">
+          <th mat-header-cell *matHeaderCellDef> Reviewed By </th>
+          <td mat-cell *matCellDef="let review"> {{ review.reviewedBy }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="vehicle">
           <th mat-header-cell *matHeaderCellDef> Vehicle </th>
-          <td mat-cell *matCellDef="let car"> {{ car.brand }} {{ car.model }} </td>
+          <td mat-cell *matCellDef="let review"> {{ review.vehicle?.status}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="year">
-          <th mat-header-cell *matHeaderCellDef> Model </th>
-          <td mat-cell *matCellDef="let car"> {{ car.year }} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-cell *matCellDef="let car"> Certified </td>
-        </ng-container>
-
-        <ng-container matColumnDef="reviewer">
-          <th mat-header-cell *matHeaderCellDef> Reviewer </th>
-          <td mat-cell *matCellDef="let car">
-            <div *ngIf="car.reviews && car.reviews.length > 0">
-              {{ car.reviews[car.reviews.length - 1].reviewerInfo.name }}
-            </div>
-            <div *ngIf="!car.reviews || car.reviews.length === 0">
-              <p>No reviews available</p>
-            </div>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="['brand', 'year', 'status', 'reviewer']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['brand', 'year', 'status', 'reviewer'];"></tr>
+        <tr mat-header-row *matHeaderRowDef="['id', 'notes', 'reviewedBy', 'vehicle']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['id', 'notes', 'reviewedBy', 'vehicle'];"></tr>
       </table>
+
+
     </section>
 
     <ng-template #noCertifiedCars>
