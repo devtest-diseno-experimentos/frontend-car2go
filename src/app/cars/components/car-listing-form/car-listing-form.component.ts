@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CarService } from '../../services/car.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -11,7 +12,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class CarListingFormComponent {
   @Output() formClosed = new EventEmitter<void>();
-  @Output() carAdded = new EventEmitter<any>();
+  @Output() carAdded = new EventEmitter<any>(); // Para emitir el nuevo vehículo
   carForm: FormGroup;
   photos: File[] = [];
   photoPreviews: string[] = [];
@@ -19,8 +20,14 @@ export class CarListingFormComponent {
   showPublicationModal: boolean = false;
   currentImageIndex: number = 0;
   previewImageIndex: number = 0;
+  defaultImage: string = 'assets/default_image.jpg';
 
-  constructor(private fb: FormBuilder, private carService: CarService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private carService: CarService,
+    private router: Router,
+    private snackBar: MatSnackBar // Inyectar MatSnackBar
+  ) {
     this.carForm = this.fb.group({
       name: ['Juan Pérez', Validators.required],
       phone: ['5551234567', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
@@ -37,7 +44,7 @@ export class CarListingFormComponent {
       plate: ['ABC1234', Validators.required],
       location: ['Mexico City', Validators.required],
       description: ['Vehicle in excellent condition, single owner, all services done at the dealership. Includes 4 new tires.', Validators.required],
-      image: ['assets/default_image.jpg'],
+      image: [this.defaultImage],
       fuel: ['Gasoline', Validators.required],
       speed: [180, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
     });
@@ -69,18 +76,14 @@ export class CarListingFormComponent {
     }
   }
 
-
   openPreviewModal(index: number) {
     this.showPreviewModal = true;
     this.previewImageIndex = index;
-
     document.body.style.overflow = 'hidden';
   }
 
-
   closePreviewModal() {
     this.showPreviewModal = false;
-
     document.body.style.overflow = 'auto';
   }
 
@@ -129,12 +132,10 @@ export class CarListingFormComponent {
     document.body.style.overflow = 'hidden';
   }
 
-
   closePublicationModal() {
     this.showPublicationModal = false;
     document.body.style.overflow = 'auto';
   }
-
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.photoPreviews, event.previousIndex, event.currentIndex);
@@ -144,30 +145,29 @@ export class CarListingFormComponent {
   onSubmit() {
     if (this.carForm.valid) {
       const newCar = this.carForm.value;
-      newCar.id = Date.now();
-      newCar.title = `${newCar.brand} ${newCar.model}`;
-      newCar.status = 'not reviewed';
 
       if (this.photoPreviews.length > 0) {
         newCar.image = this.photoPreviews[0];
         newCar.images = this.photoPreviews;
       } else {
-        newCar.image = 'assets/default_image.jpg';
-        newCar.images = ['assets/default_image.jpg'];
+        newCar.image = this.defaultImage;
+        newCar.images = [this.defaultImage];
       }
 
       this.carService.addCar(newCar).subscribe(
-          (response) => {
-            this.carForm.reset();
-            this.photos = [];
-            this.photoPreviews = [];
-            this.carAdded.emit(response);
-            this.formClosed.emit();
-            this.router.navigate(['/home']);
-          },
-          (error) => {
-            console.error('Error adding car:', error);
-          }
+        (response) => {
+          this.snackBar.open('Car added successfully!', 'Close', { duration: 3000 }); // Usar snackbar
+          this.carForm.reset();
+          this.photos = [];
+          this.photoPreviews = [];
+          this.carAdded.emit(response); // Emitir el nuevo vehículo
+          this.formClosed.emit();
+          this.router.navigate(['/home']);
+        },
+        (error) => {
+          console.error('Error adding car:', error);
+          this.snackBar.open('Error adding car', 'Close', { duration: 3000 }); // Usar snackbar para el error
+        }
       );
     }
   }
