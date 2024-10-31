@@ -19,7 +19,7 @@
       <div class="icon-wrapper">
         <i class="fa fa-heart-broken"></i>
       </div>
-      <p>You have not listed any cars yet. <a routerLink="/home">Create a new car listing</a>.</p>
+      <p>You have not listed any cars yet. <a routerLink="/car-listing-form">Create a new car</a>.</p>
     </div>
     <div *ngFor="let car of cars" class="car-item">
       <div class="thumb-content">
@@ -33,7 +33,7 @@
       <div class="down-content">
         <div class="title-favorite-wrapper">
           <a>
-            <h4>{{ car.title }}</h4>
+            <h4>{{ car.status }}</h4>
           </a>
           <button class="delete-button" (click)="deleteCar(car.id); $event.stopPropagation()">
             <i class="fa fa-trash"></i>

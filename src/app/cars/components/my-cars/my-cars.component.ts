@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from "../../services/car.service";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-my-cars',
@@ -10,7 +11,7 @@ export class MyCarsComponent implements OnInit {
   cars: any[] = [];
   defaultImage: string = 'assets/default_image.jpg';
 
-  constructor(private carService: CarService) {}
+  constructor(private carService: CarService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     const userId = +localStorage.getItem('userId')!;
@@ -18,36 +19,33 @@ export class MyCarsComponent implements OnInit {
     this.carService.getCarsByUserId(userId).subscribe(
       (data: any[]) => {
         this.cars = data.map(car => {
-          // Verifica si car.image es un array y tiene imágenes
           if (Array.isArray(car.image) && car.image.length > 0) {
             car.images = car.image;
-            car.mainImage = car.images[0];  // Asigna la primera imagen como principal
+            car.mainImage = car.images[0];
           } else {
-            // Si no hay imágenes, usa una imagen predeterminada
             car.mainImage = this.defaultImage;
-            car.images = [this.defaultImage];  // Asegura que haya un array de imágenes
+            car.images = [this.defaultImage];
           }
           return car;
         });
       },
       (error) => {
-        console.error('Error al obtener los autos:', error);
+        this.snackBar.open('Error fetching cars. Please try again.', 'Close', { duration: 3000 });
       }
     );
   }
 
-
   deleteCar(carId: number) {
     this.carService.deleteCar(carId).subscribe(
       () => {
-        console.log('Car deleted successfully');
         this.cars = this.cars.filter(car => car.id !== carId);
+        this.snackBar.open('Car deleted successfully.', 'Close', { duration: 3000 });
       },
       (error) => {
         if (error.status === 404) {
-          console.error('Car not found:', error);
+          this.snackBar.open('Car not found.', 'Close', { duration: 3000 });
         } else {
-          console.error('Error deleting car:', error);
+          this.snackBar.open('Error deleting car. Please try again.', 'Close', { duration: 3000 });
         }
       }
     );
