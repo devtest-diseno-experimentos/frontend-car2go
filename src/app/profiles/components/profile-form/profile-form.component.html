@@ -1,63 +1,71 @@
 <div class="space">
-<div class="profile-container">
+  <div class="profile-container">
+    <form (ngSubmit)="onSubmit()" class="profile-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">Full Name</label>
+          <input id="firstName" type="text" [(ngModel)]="profile.firstName" name="firstName" placeholder="Your Full Name" class="form-control" required />
+        </div>
 
- <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="profile-form">
-   <div class="form-row">
-
-     <div class="form-group">
-       <label for="names">Full Name</label>
-       <input id="names" type="text" formControlName="names" placeholder="Your Full Name" class="form-control" />
-     </div>
-
-      <div class="form-group">
-        <label for="lastName">Nick Name</label>
-        <input id="lastName" type="text" formControlName="lastName" placeholder="Your Nick Name" class="form-control" />
-      </div>
-    </div>
-
-    <div class="form-row">
-
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input id="email" type="email" formControlName="email" placeholder="Your Email" class="form-control" />
+        <div class="form-group">
+          <label for="lastName">Nick Name</label>
+          <input id="lastName" type="text" [(ngModel)]="profile.lastName" name="lastName" placeholder="Your Nick Name" class="form-control" required />
+        </div>
       </div>
 
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input id="email" type="email" [(ngModel)]="profile.email" name="email" placeholder="Your Email" class="form-control" required />
+        </div>
 
-      <div class="form-group">
-        <label for="dni">DNI</label>
-        <input id="dni" type="text" formControlName="dni" placeholder="Your DNI" class="form-control" />
-      </div>
-    </div>
-
-    <div class="form-row">
-
-      <div class="form-group">
-        <label for="address">Address</label>
-        <input id="address" type="text" formControlName="address" placeholder="Your Address" class="form-control" />
+        <div class="form-group">
+          <label for="dni">DNI</label>
+          <input id="dni" type="text" [(ngModel)]="profile.dni" name="dni" placeholder="Your DNI" class="form-control" required />
+        </div>
       </div>
 
+      <div class="form-row">
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input id="address" type="text" [(ngModel)]="profile.address" name="address" placeholder="Your Address" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input id="phone" type="text" [(ngModel)]="profile.phone" name="phone" placeholder="Your Phone Number" class="form-control" required />
+        </div>
+      </div>
 
       <div class="form-group">
-        <label for="phoneNumber">Phone Number</label>
-        <input id="phoneNumber" type="text" formControlName="phoneNumber" placeholder="Your Phone Number" class="form-control" />
+        <label for="photo">Profile Photo</label>
+        <input id="photo" type="file" (change)="onFileSelected($event)" class="form-control-file" />
       </div>
-    </div>
 
+      <div class="form-group image-preview-container">
+        <img *ngIf="photoPreview" [src]="photoPreview" alt="Profile photo preview" class="image-preview" />
+      </div>
 
-    <div class="form-group">
-      <label for="photo">Profile Photo</label>
-      <input id="photo" type="file" (change)="onFileSelected($event)" class="form-control-file" />
-    </div>
+      <div *ngIf="userRole === 'ROLE_SELLER'">
+        <h3>Payment Methods</h3>
+        <div *ngFor="let method of profile.paymentMethods; let i = index" class="form-row">
+          <div class="form-group">
+            <label for="type-{{i}}">Type</label>
+            <input id="type-{{i}}" type="text" [(ngModel)]="method.type" name="type-{{i}}" placeholder="Payment Type" class="form-control" required />
+          </div>
+          <div class="form-group">
+            <label for="details-{{i}}">Details</label>
+            <input id="details-{{i}}" type="text" [(ngModel)]="method.details" name="details-{{i}}" placeholder="Payment Details" class="form-control" required />
+          </div>
+          <button type="button" (click)="removePaymentMethod(i)" class="remove-button">Remove</button>
+        </div>
+        <button type="button" (click)="addPaymentMethod()" class="add-button">Add Payment Method</button>
+      </div>
 
-    <div class="form-group image-preview-container">
-      <img *ngIf="photoPreview" [src]="photoPreview" alt="Profile photo preview" class="image-preview" />
-    </div>
-
-
-    <div class="form-actions">
-      <button type="submit" [disabled]="profileForm.invalid" class="submit-button">Save Changes</button>
-      <button type="button" class="cancel-button" (click)="closeForm()">Cancel</button>
-    </div>
-  </form>
- </div>
+      <div class="form-actions">
+        <button type="submit" class="submit-button">Save Changes</button>
+        <button type="button" class="cancel-button" (click)="closeForm()">Cancel</button>
+      </div>
+    </form>
+  </div>
 </div>

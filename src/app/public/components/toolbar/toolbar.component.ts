@@ -1,7 +1,9 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { AuthService } from '../../../register/service/auth.service';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { catchError, of, forkJoin } from "rxjs";
 import { Router } from '@angular/router';
-import {ProfileService} from "../../../profiles/services/profile.service";
+import { environment } from "../../../../environments/environment";
+import {AuthenticationService} from "../../../register/services/authentication.service";
 
 @Component({
   selector: 'app-toolbar',
@@ -9,40 +11,61 @@ import {ProfileService} from "../../../profiles/services/profile.service";
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit {
-  isScrolled = false;
-  isMenuOpen = false;
   userRole: string = '';
   userPhoto: string | null = null;
+  isScrolled = false;
+  isMenuOpen = false;
 
   constructor(
-    private authService: AuthService,
+    private http: HttpClient,
     private router: Router,
-    private profileService: ProfileService
+    private authService: AuthenticationService
   ) {}
 
-  logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    if (!token || !userId) {
+      console.error('Token or user ID not found');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+
+    forkJoin({
+      userProfile: this.http.get<any>(`${environment.serverBasePath}/users/${userId}`, { headers }).pipe(
+        catchError(error => {
+          console.error('Error fetching user profile:', error);
+          return of(null);
+        })
+      ),
+      profileData: this.http.get<any>(`${environment.serverBasePath}/profiles/me`, { headers }).pipe(
+        catchError(error => {
+          console.error('Error fetching profile data:', error);
+          return of(null);
+        })
+      )
+    }).subscribe(({ userProfile, profileData }) => {
+      if (userProfile) {
+        this.userRole = userProfile.roles[0] || 'User';
+      } else {
+        console.warn('No user profile data returned');
+      }
+
+      if (profileData) {
+        this.userPhoto = profileData.image;
+      } else {
+        console.warn('No profile data returned');
+      }
+    });
   }
 
-  ngOnInit() {
-    this.userRole = localStorage.getItem('userRole') || '';
-
-    const userId = +localStorage.getItem('id')!;
-    if (userId) {
-      this.profileService.getProfileByUserId(userId).subscribe(
-        (profile) => {
-          if (profile && profile.length > 0) {
-            this.userPhoto = profile[0].photo;
-          } else if (profile && profile.userId === userId) {
-            this.userPhoto = profile.photo;
-          }
-        },
-        (error) => {
-          console.error('Error al obtener el perfil del usuario:', error);
-        }
-      );
-    }
+  logout(): void {
+    this.authService.signOut();
   }
 
   @HostListener('window:scroll', [])
@@ -55,11 +78,7 @@ export class ToolbarComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
     const navLinks = document.querySelector('.nav-links');
     if (navLinks) {
-      if (this.isMenuOpen) {
-        navLinks.classList.add('active');
-      } else {
-        navLinks.classList.remove('active');
-      }
+      navLinks.classList.toggle('active', this.isMenuOpen);
     }
   }
 }

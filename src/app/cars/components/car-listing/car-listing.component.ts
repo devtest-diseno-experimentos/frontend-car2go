@@ -25,19 +25,16 @@ export class CarListingComponent implements OnInit {
     this.carService.getCars().subscribe(
       (data: any[]) => {
         this.cars = data.map(car => {
-          // Verifica si car.image es un array y tiene imágenes
           if (Array.isArray(car.image) && car.image.length > 0) {
-            car.images = car.image;  // Mantiene las imágenes tal cual
-            car.mainImage = car.images[0];  // Asigna la primera imagen como principal
+            car.images = car.image;
+            car.mainImage = car.images[0];
           } else {
-            // Si no hay imágenes, usa una imagen predeterminada
             car.mainImage = this.defaultImage;
-            car.images = [this.defaultImage];  // Asegura que haya un array de imágenes
+            car.images = [this.defaultImage];
           }
           return car;
         });
 
-        // Actualiza la paginación después de cargar los autos
         this.updatePaginatedCars();
       },
       (error) => {

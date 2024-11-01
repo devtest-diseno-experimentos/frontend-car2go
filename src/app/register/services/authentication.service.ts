@@ -17,7 +17,7 @@ export class AuthenticationService {
   isProfileCreated: boolean = false;
   private varToken: BehaviorSubject<string> = new BehaviorSubject<string>('');
   private idSignIn = new BehaviorSubject<string>('');
-  private userRole = new BehaviorSubject<string>(''); // BehaviorSubject para el rol del usuario
+  private userRole = new BehaviorSubject<string>('');
 
   setProfileCreated(value: boolean) {
     this.isProfileCreated = value;
@@ -95,7 +95,7 @@ export class AuthenticationService {
           localStorage.removeItem('isSignedIn'); // Eliminar el estado de la sesión de localStorage
           localStorage.removeItem('userRole'); // Eliminar el rol del usuario de localStorage
           localStorage.removeItem('userId'); // Eliminar el ID del usuario de localStorage
-          this.router.navigate(['/sign-in']).then();
+          this.router.navigate(['/login']).then();
           return throwError(error);
         })
       );
@@ -109,7 +109,7 @@ export class AuthenticationService {
     localStorage.removeItem('isSignedIn'); // Eliminar el estado de la sesión de localStorage
     localStorage.removeItem('userRole'); // Eliminar el rol del usuario de localStorage
     localStorage.removeItem('userId'); // Eliminar el ID del usuario de localStorage
-    this.router.navigate(['/sign-in']).then();
+    this.router.navigate(['/login']).then();
     this.setProfileCreated(false);
     this.setToken('');
     this.setIdSignIn('');
@@ -126,10 +126,10 @@ export class AuthenticationService {
       // @ts-ignore
       this.setToken(token);
       if (userRole) {
-        this.setUserRole(userRole); // Establecer el rol del usuario desde localStorage
+        this.setUserRole(userRole);
       }
       if (userId) {
-        this.setIdSignIn(userId); // Establecer el ID del usuario desde localStorage
+        this.setIdSignIn(userId);
       }
     } else {
       this.signedIn.next(false);
@@ -147,6 +147,16 @@ export class AuthenticationService {
     return this.userRole.asObservable();
   }
 
+  // Método para decodificar el token JWT
+  decodeToken(token: string): any {
+    try {
+      const payload = token.split('.')[1];
+      return JSON.parse(atob(payload));
+    } catch (e) {
+      console.error('Error decoding token:', e);
+      return null;
+    }
+  }
   setIdSignIn(id: string) {
     this.idSignIn.next(id);
   }

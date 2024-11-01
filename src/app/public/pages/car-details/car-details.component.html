@@ -269,18 +269,15 @@
           </div>
         </div>
 
-        <!-- IMAGES Section -->
         <div class="section-header">
           <h3><span class="text-black">IMAGES</span></h3>
         </div><div class="form-section full-width">
-        <!-- Imagen principal, mostrada primero -->
         <div class="main-image-edit-container">
           <div class="main-image-edit">
             <img [src]="mainImage" alt="Main Image" />
           </div>
         </div>
 
-        <!-- Sección de imágenes existentes con mensaje y botón para agregar imágenes -->
         <div class="existing-images">
           <p>
             Existing Images:
@@ -295,9 +292,7 @@
           </div>
         </div>
 
-        <!-- Texto y sección para imágenes temporales -->
         <div class="temporary-images">
-          <!-- Contenedor que incluye el texto y el botón -->
           <div class="message-and-button">
             <p class="temporary-message">
               These images will be added when you click <span class="highlight"> 'Update Car'</span>:
@@ -330,13 +325,11 @@
                 </svg>
 
               </button>
-              <!-- Input para subir archivos oculto -->
               <input id="newImages" type="file" (change)="onImageSelect($event)" class="hidden-file-input" multiple>
             </div>
           </div>
 
           <div class="image-grid">
-            <!-- Mostrar imágenes temporales -->
             <div *ngFor="let tempImage of tempImages; let i = index" class="image-wrapper">
               <img [src]="tempImage" alt="New Image" class="thumbnail" />
               <button type="button" class="button-remove-image" (click)="removeImage(i, true)"></button>

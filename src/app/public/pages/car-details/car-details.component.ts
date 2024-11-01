@@ -54,7 +54,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
       speed: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       images: [[]],
       userId: [''],
-      status: ['', Validators.required]  // Nuevo campo agregado
+      status: ['', Validators.required]
     });
 
   }

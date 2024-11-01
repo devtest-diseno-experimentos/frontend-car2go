@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { AuthenticationService} from "../../services/authentication.service";
+import { AuthenticationService } from "../../services/authentication.service";
 import { SignInRequest } from "../../model/sign-in.request";
-import { HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "../../../../environments/environment";
+import {catchError, map, of} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -12,14 +14,17 @@ import { HttpHeaders } from "@angular/common/http";
 })
 export class LoginComponent implements OnInit {
   signInForm!: FormGroup;
-  hide: boolean = true;  // Controlar visibilidad de la contraseña
+  hide: boolean = true;
   isSignedIn: boolean = false;
   httpOptions: any;
+
+  private baseURL = environment.serverBasePath;
 
   constructor(
     private builder: FormBuilder,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private http: HttpClient
   ) {
     this.authenticationService.isSignedIn.subscribe((isSignedIn) => {
       this.isSignedIn = isSignedIn;
@@ -27,7 +32,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Configurar encabezados de autenticación
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -35,14 +39,12 @@ export class LoginComponent implements OnInit {
       })
     };
 
-    // Inicializar el formulario de inicio de sesión
     this.signInForm = this.builder.group({
-      username: ['', [Validators.required]],  // Se valida que sea un email
+      username: ['', [Validators.required]],
       password: ['', Validators.required],
     });
   }
 
-  // Manejar el inicio de sesión
   onSignInSubmit() {
     if (this.signInForm.invalid) return;
 
@@ -53,7 +55,19 @@ export class LoginComponent implements OnInit {
 
     this.authenticationService.signIn(signInRequest).subscribe({
       next: () => {
-        this.router.navigate(['/home']);
+        const userRole = localStorage.getItem('userRole');
+
+        this.checkUserProfile().subscribe(hasProfile => {
+          if (hasProfile) {
+            if (userRole === 'ROLE_SELLER') {
+              this.router.navigate(['/plan']);
+            } else {
+              this.router.navigate(['/home']);
+            }
+          } else {
+            this.router.navigate(['/profile-form']);
+          }
+        });
       },
       error: (error) => {
         console.error('Error during sign-in:', error);
@@ -61,12 +75,20 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // Alternar la visibilidad de la contraseña
+  private checkUserProfile() {
+    return this.http.get<any>(`${this.baseURL}/profiles/me`, this.httpOptions).pipe(
+      catchError(error => {
+        console.error('Error fetching user profile:', error);
+        return of(null);
+      }),
+      map(profile => !!profile)
+    );
+  }
+
   togglePasswordVisibility(): void {
     this.hide = !this.hide;
   }
 
-  // Cerrar sesión del usuario
   onSignOut() {
     this.authenticationService.signOut();
   }

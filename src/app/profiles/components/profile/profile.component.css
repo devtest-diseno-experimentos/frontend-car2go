@@ -1,154 +1,153 @@
-.profile-background {
-  background-image: url('/assets/background-profile.jpg');
-  background-size: cover;
-  background-position: center;
-  height: 68vh;
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* Contenedor de la tarjeta de perfil */
+.profile-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
   padding: 20px;
-  border-radius: 15px;
-  width: 50%;
+  background-size: cover;
+  background-position: center;
 }
 
 .profile-card {
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 15px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  padding: 40px;
-  max-width: 400px;
   width: 100%;
-  text-align: center;
-  position: relative;
-  padding-top: 80px;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: white;
 }
 
+/* Imagen de perfil */
 .profile-picture {
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
 .profile-picture img {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
+  border: 3px solid #3f51b5;
   object-fit: cover;
-  border: 5px solid #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.edit-name-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.info-item {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin: 10px 0;
-}
-
-.info-content p {
-  margin: 0;
-  font-size: 16px;
-  color: #333;
-}
-
-span.material-symbols-outlined {
-  font-size: 24px;
-  color: #4F889E;
-}
-
-hr {
-  width: 100%;
-  border: none;
-  border-top: 1px solid #ccc;
-}
-
-button {
-  border: none;
-  display: flex;
-  padding: 0.75rem 1.5rem;
-  background-color: #488aec;
-  color: #ffffff;
-  font-size: 0.75rem;
-  line-height: 1rem;
-  font-weight: 700;
+/* Información del perfil */
+.profile-info {
   text-align: center;
-  cursor: pointer;
-  text-transform: uppercase;
-  vertical-align: middle;
+  margin-bottom: 20px;
+}
+
+.profile-info h2 {
+  font-size: 1.5rem;
+  color: #3f51b5;
+  margin: 0;
+}
+
+.profile-info h3 {
+  font-size: 1.25rem;
+  color: #333;
+  margin-top: 5px;
+}
+
+.profile-info p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 5px 0;
+}
+
+/* Campos de entrada en modo edición */
+.mat-form-field.full-width {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Botones */
+button {
+  display: inline-flex;
   align-items: center;
-  border-radius: 0.5rem;
-  user-select: none;
-  gap: 0.75rem;
-  box-shadow:
-    0 4px 6px -1px #488aec31,
-    0 2px 4px -1px #488aec17;
-  transition: all 0.6s ease;
-}
-
-button:hover {
-  box-shadow:
-    0 10px 15px -3px #488aec4f,
-    0 4px 6px -2px #488aec17;
-}
-
-button:focus,
-button:active {
-  opacity: 0.85;
-  box-shadow: none;
-}
-
-button svg {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-.message-and-button {
-  display: flex;
-  justify-content: space-between; /* Asegura que el botón esté a la derecha del texto */
-  align-items: center; /* Alinea verticalmente el texto y el botón */
-  margin-bottom: 10px; /* Espacio debajo del contenedor */
-}
-
-.temporary-message {
-  margin-right: 10px; /* Espacio entre el texto y el botón */
-}
-
-.new-images .info-item button {
-  background-color: #3498db;
-  border: none;
-  padding: 8px;
-  border-radius: 5px;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: bold;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  margin-top: 15px;
 }
 
-.new-images .info-item button svg {
-  width: 24px;
-  height: 24px;
+button[mat-raised-button] {
+  background-color: #3f51b5;
+  color: white;
+  transition: background-color 0.3s ease;
 }
 
-.new-images .info-item button:hover {
-  background-color: #2980b9;
+button[mat-raised-button]:hover {
+  background-color: #303f9f;
 }
 
-.hidden-file-input {
-  display: none;
+button[mat-icon-button] {
+  background-color: transparent;
+  color: #f44336;
+  transition: color 0.3s ease;
 }
 
+button[mat-icon-button]:hover {
+  color: #d32f2f;
+}
 
-@media screen and (max-width: 768px) {
-  .profile-card {
-    max-width: 90%;
-  }
+/* Métodos de pago */
+.payment-methods-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  margin-top: 15px;
+}
 
-  .profile-picture img {
-    width: 100px;
-    height: 100px;
-  }
+.payment-method {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 30%;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #fafafa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bank-logo img {
+  width: 60px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* Texto de los métodos de pago */
+.payment-method p {
+  font-size: 0.85rem;
+  color: #444;
+  margin: 5px 0;
+}
+
+/* Ocultar botón de eliminar cuando haya solo 3 métodos */
+.payment-method button[mat-icon-button] {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }

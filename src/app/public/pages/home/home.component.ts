@@ -34,6 +34,8 @@ export class HomeComponent implements OnInit {
 
     if (this.userRole === 'ROLE_MECHANIC') {
       this.loadPendingAndCertifiedCars();
+      this.loadAllReviews();
+
     }
 
     this.loadUserData();
@@ -51,14 +53,14 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  reviews: any[] = []; // Nueva variable para almacenar reviews
+  reviews: any[] = [];
 
   loadAllCars() {
     this.loading = true;
     this.carService.getCars().subscribe(
       (data: any[]) => {
         this.cars = this.processCars(data);
-        this.loadAllReviews(); // Cargar reviews después de cargar los autos
+
         this.loading = false;
       },
       (error) => {

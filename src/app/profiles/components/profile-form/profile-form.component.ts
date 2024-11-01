@@ -1,113 +1,121 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from "../../../register/service/auth.service";
-import { ProfileService } from '../../services/profile.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { catchError, Observable, switchMap, of } from "rxjs";
+import { environment } from "../../../../environments/environment";
+import { AuthenticationService } from "../../../register/services/authentication.service";
 
 @Component({
   selector: 'app-profile-form',
   templateUrl: './profile-form.component.html',
   styleUrls: ['./profile-form.component.css']
 })
-export class ProfileFormComponent implements OnInit {
-  @Output() formClosed = new EventEmitter<void>();
-  @Output() profileUpdated = new EventEmitter<any>();
-
-  profileForm: FormGroup;
-  selectedFile: File | null = null;
+export class ProfileFormComponent {
+  isProfileCreated = false;
   photoPreview: string | ArrayBuffer | null = null;
-  userId: number | null = null;
-  isNewProfile: boolean = false; // Indica si se debe crear un nuevo perfil
+  userRole = localStorage.getItem('userRole');
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private profileService: ProfileService,
-    private router: Router
-  ) {
-    this.profileForm = this.fb.group({
-      names: [{ value: '', disabled: true }, Validators.required],
-      lastName: ['', Validators.required],
-      email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
-      dni: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
-      address: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.maxLength(10)]],
-      photo: ['', Validators.required]
+  private baseURL = environment.serverBasePath;
+
+  profile = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    image: '',
+    dni: '',
+    address: '',
+    phone: '',
+    paymentMethods: [
+      { type: '', details: '' }
+    ]
+  };
+
+  constructor(private http: HttpClient, private authService: AuthenticationService, private router: Router) { }
+
+  addProfile(profileRequest: any): Observable<any> {
+    return this.authService.getToken().pipe(
+      switchMap(token => {
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          })
+        };
+
+        return this.http.post<any>(`${this.baseURL}/profiles`, profileRequest, httpOptions);
+      }),
+      catchError(error => {
+        console.error('Error al crear el perfil:', error);
+        return of(null);
+      })
+    );
+  }
+
+  onSubmit() {
+    const { paymentMethods, ...profileData } = this.profile;
+
+    this.addProfile(profileData).subscribe(
+      createdProfile => {
+        console.log('Perfil creado o actualizado con éxito:', createdProfile);
+        this.isProfileCreated = true;
+
+        if (this.profile.paymentMethods.length > 0) {
+          this.addPaymentMethods();
+        }
+
+        this.router.navigate(['/home']);
+      },
+      error => {
+        console.error('Ocurrió un error al crear o actualizar el perfil:', error);
+        this.router.navigate(['/error']);
+      }
+    );
+  }
+
+
+  addPaymentMethods() {
+    this.authService.getToken().subscribe(token => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        })
+      };
+
+      this.profile.paymentMethods.forEach(method => {
+        this.http.put<any>(`${this.baseURL}/profiles/me/payment-methods/add`, method, httpOptions).subscribe(
+          response => {
+            console.log('Método de pago añadido:', response);
+          },
+          error => {
+            console.error('Error al añadir método de pago:', error);
+          }
+        );
+      });
     });
   }
 
-  ngOnInit(): void {
-
-    const userId = +localStorage.getItem('id')!;
-
-    if (userId) {
-      this.authService.getUserById(userId).subscribe(
-        (user) => {
-          if (user) {
-            this.userId = user.id;
-
-            this.profileForm.patchValue({
-              names: user.name,
-              email: user.email,
-              lastName: user.lastName,
-              dni: user.dni,
-              address: user.address,
-              phoneNumber: user.phoneNumber
-            });
-
-            this.profileForm.get('names')?.disable();
-            this.profileForm.get('email')?.disable();
-
-            if (user.photoUrl) {
-              this.photoPreview = user.photoUrl;
-            }
-          } else {
-            console.error('No se encontró el usuario con ese ID');
-          }
-        },
-        (error) => {
-          console.error('Error al obtener los datos del usuario:', error);
-        }
-      );
-    } else {
-      console.error('No se encontró el ID del usuario en el localStorage.');
-    }
-  }
-  onFileSelected(event: any) {
-    const file: File = event.target.files[0];
+  onFileSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.photoPreview = e.target.result;
-        this.profileForm.patchValue({ photo: e.target.result });
+      reader.onload = () => {
+        this.photoPreview = reader.result;
+        this.profile.image = this.photoPreview as string;
       };
       reader.readAsDataURL(file);
     }
   }
 
-  onSubmit(): void {
-    if (this.profileForm.valid && this.userId) {
-      this.profileForm.get('names')?.enable();
-      this.profileForm.get('email')?.enable();
-
-      const profileData = this.profileForm.value;
-      profileData.userId = this.userId;
-
-       this.profileService.createUserProfile(profileData).subscribe(
-          (response) => {
-            console.log('Perfil creado exitosamente', response);
-            this.router.navigate(['/home']);
-          },
-          (error) => {
-            this.router.navigate(['/home']);
-            console.error('Error al crear el perfil:', error);
-          }
-        );
-      }
-
+  closeForm(): void {
+    this.router.navigate(['/home']);
   }
 
-  closeForm() {
-    this.formClosed.emit();
+  addPaymentMethod() {
+    this.profile.paymentMethods.push({ type: '', details: '' });
+  }
+
+  removePaymentMethod(index: number) {
+    this.profile.paymentMethods.splice(index, 1);
   }
 }

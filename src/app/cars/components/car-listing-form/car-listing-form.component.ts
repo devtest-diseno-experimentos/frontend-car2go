@@ -12,7 +12,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 })
 export class CarListingFormComponent {
   @Output() formClosed = new EventEmitter<void>();
-  @Output() carAdded = new EventEmitter<any>(); // Para emitir el nuevo vehículo
+  @Output() carAdded = new EventEmitter<any>();
   carForm: FormGroup;
   photos: File[] = [];
   photoPreviews: string[] = [];
@@ -26,7 +26,7 @@ export class CarListingFormComponent {
     private fb: FormBuilder,
     private carService: CarService,
     private router: Router,
-    private snackBar: MatSnackBar // Inyectar MatSnackBar
+    private snackBar: MatSnackBar
   ) {
     this.carForm = this.fb.group({
       name: ['Juan Pérez', Validators.required],
@@ -156,17 +156,17 @@ export class CarListingFormComponent {
 
       this.carService.addCar(newCar).subscribe(
         (response) => {
-          this.snackBar.open('Car added successfully!', 'Close', { duration: 3000 }); // Usar snackbar
+          this.snackBar.open('Car added successfully!', 'Close', { duration: 3000 });
           this.carForm.reset();
           this.photos = [];
           this.photoPreviews = [];
-          this.carAdded.emit(response); // Emitir el nuevo vehículo
+          this.carAdded.emit(response);
           this.formClosed.emit();
           this.router.navigate(['/home']);
         },
         (error) => {
           console.error('Error adding car:', error);
-          this.snackBar.open('Error adding car', 'Close', { duration: 3000 }); // Usar snackbar para el error
+          this.snackBar.open('Error adding car', 'Close', { duration: 3000 });
         }
       );
     }

@@ -10,7 +10,6 @@ import { CarService } from '../../../cars/services/car.service';
 })
 export class MechanicRevisionComponent implements OnInit {
   pendingCars: any[] = [];
-  mechanicId: string = localStorage.getItem('userId') || 'mechanic-123';
   defaultImage: string = 'assets/default_image.jpg';
 
   review = {
@@ -20,7 +19,7 @@ export class MechanicRevisionComponent implements OnInit {
   constructor(
     private carService: CarService,
     private reviewService: ReviewService,
-    private snackBar: MatSnackBar // Inject MatSnackBar
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -60,7 +59,6 @@ export class MechanicRevisionComponent implements OnInit {
     this.reviewService.createReview(review).subscribe(
       (reviewResponse) => {
         this.snackBar.open(`Review for ${car.brand} ${car.model} created.`, 'Close', { duration: 3000 });
-        // Elimina el vehículo revisado de la lista de pendientes
         this.pendingCars = this.pendingCars.filter((pendingCar) => pendingCar.id !== car.id);
       },
       (error) => {

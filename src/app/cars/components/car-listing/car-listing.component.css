@@ -132,6 +132,7 @@
 .favorite-button:hover i {
   color: #fff;
 }
+
 /* Paginación */
 .pagination {
   display: flex;

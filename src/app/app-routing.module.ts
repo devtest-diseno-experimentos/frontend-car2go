@@ -21,6 +21,7 @@ import {SendDataComponent} from "./buyer/components/send-data/send-data.componen
 import {TechnicalReviewComponent} from "./buyer/components/technical-review/technical-review.component";
 import {ProfileFormComponent} from "./profiles/components/profile-form/profile-form.component";
 
+
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {path: 'home', component:HomeComponent },

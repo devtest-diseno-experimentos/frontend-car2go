@@ -1,17 +1,19 @@
 <app-toolbar></app-toolbar>
+
 <div class="profile-background">
   <div class="profile-card">
     <div class="profile-picture">
-      <img *ngIf="imagePreview" [src]="imagePreview" alt="{{ userData.names }} {{ userData.lastName }}">
+      <img *ngIf="imagePreview" [src]="imagePreview" alt="{{ userData.firstName }} {{ userData.lastName }}">
     </div>
 
     <div class="profile-info">
-      <h2 *ngIf="!editMode">{{ userData.names }} {{ userData.lastName }}</h2>
+      <h2 *ngIf="currentRole">{{ getRoleDisplayName(currentRole) }}</h2>
+      <h3 *ngIf="!editMode">{{ userData.firstName }} {{ userData.lastName }}</h3>
 
-      <div class="edit-name-row" *ngIf="editMode">
+      <div *ngIf="editMode">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Name</mat-label>
-          <input matInput [(ngModel)]="userData.names" placeholder="Enter your name">
+          <mat-label>First Name</mat-label>
+          <input matInput [(ngModel)]="userData.firstName" placeholder="Enter your first name">
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Last Name</mat-label>
@@ -19,78 +21,64 @@
         </mat-form-field>
       </div>
 
-      <p *ngIf="!editMode">{{ userData.email }}</p>
+      <div *ngIf="!editMode">
+        <p><strong>Email:</strong> {{ userData.email }}</p>
+        <p><strong>Address:</strong> {{ userData.address }}</p>
+        <p><strong>Phone:</strong> {{ userData.phone }}</p>
+        <p><strong>DNI:</strong> {{ userData.dni }}</p>
+      </div>
     </div>
 
-    <div class="profile-extra">
-      <div class="info-item">
-        <span class="material-symbols-outlined">home</span>
-        <div class="info-content">
-          <mat-form-field *ngIf="editMode" appearance="outline" class="full-width">
-            <mat-label>Address</mat-label>
-            <input matInput [(ngModel)]="userData.address" placeholder="Enter your address">
-          </mat-form-field>
-          <p *ngIf="!editMode">{{ userData.address }}</p>
+    <div *ngIf="currentRole === 'ROLE_SELLER'">
+
+      <h3>Payment Methods</h3>
+
+      <div class="payment-methods-container" *ngIf="!editMode && userData.paymentMethods && userData.paymentMethods.length > 0">
+        <div *ngFor="let method of userData.paymentMethods" class="payment-method">
+          <div class="bank-logo">
+            <img *ngIf="method.type === 'BBVA' || method.type === 'bbva'" src="assets/bbva.jpg" alt="BBVA">
+            <img *ngIf="method.type === 'BCP' || method.type === 'bcp'" src="assets/bcp.jpg" alt="BCP">
+            <img *ngIf="method.type === 'Scotiabank' || method.type === 'scotiabank'" src="assets/scotiabank.png" alt="Scotiabank">
+            <img *ngIf="method.type === 'Interbank' || method.type === 'interbank'" src="assets/interbank.jpg" alt="Interbank">
+            <img *ngIf="method.type === 'Banco de la Nación' || method.type === 'banco de la nacion'" src="assets/bn.jpg" alt="Banco de la Nación">
+          </div>
+          <p><strong></strong> {{ method.type }}</p>
+          <p><strong>Account Number:</strong> {{ method.details }}</p>
         </div>
       </div>
 
-      <hr *ngIf="!editMode">
-
-      <div class="info-item">
-        <span class="material-symbols-outlined">phone</span>
-        <div class="info-content">
-          <mat-form-field *ngIf="editMode" appearance="outline" class="full-width">
-            <mat-label>Phone Number</mat-label>
-            <input matInput [(ngModel)]="userData.phoneNumber" placeholder="Enter your phone number">
-          </mat-form-field>
-          <p *ngIf="!editMode">{{ userData.phoneNumber }}</p>
-        </div>
+      <div *ngIf="!editMode && userData.paymentMethods?.length === 0">
+        No payment methods available.
       </div>
 
-      <hr *ngIf="!editMode">
 
-      <div class="info-item">
-        <span class="material-symbols-outlined">credit_card</span>
-        <div class="info-content">
-          <mat-form-field *ngIf="editMode" appearance="outline" class="full-width">
-            <mat-label>DNI</mat-label>
-            <input matInput [(ngModel)]="userData.dni" placeholder="Enter your DNI">
-          </mat-form-field>
-          <p *ngIf="!editMode">{{ userData.dni }}</p>
+      <div *ngIf="editMode">
+        <div *ngFor="let method of userData.paymentMethods; let i = index" class="payment-method">
+          <ng-container *ngIf="!method.markedForDeletion">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Type</mat-label>
+              <input matInput [(ngModel)]="method.type" placeholder="Payment Type">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Details</mat-label>
+              <input matInput [(ngModel)]="method.details" placeholder="Payment Details">
+            </mat-form-field>
+            <button mat-icon-button color="warn" (click)="markForDeletion(i)">
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+          </ng-container>
         </div>
-      </div>
 
-      <div class="info-item" *ngIf="editMode">
-        <button type="button" (click)="triggerFileInput()">
-          <svg
-            aria-hidden="true"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-width="2"
-              stroke="#ffffff"
-              d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
-              stroke-linejoin="round"
-              stroke-linecap="round"
-            ></path>
-            <path
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              stroke-width="2"
-              stroke="#ffffff"
-              d="M17 15V18M17 21V18M17 18H14M17 18H20"
-            ></path>
-          </svg>
-          ADD FILE
+        <button mat-raised-button color="primary" (click)="addNewPaymentMethod()" [disabled]="userData.paymentMethods.length >= 3">
+          Add Payment Method
         </button>
-        <input id="photo" type="file" (change)="onFileSelected($event)" class="hidden-file-input">
       </div>
-    </div>
 
-    <button mat-raised-button color="primary" (click)="toggleEditMode()">{{ editMode ? 'Save' : 'Edit' }}</button>
+
+
+    <button mat-raised-button color="primary" (click)="editMode ? onSave() : toggleEditMode()">
+      {{ editMode ? 'Save' : 'Edit' }}
+    </button>
   </div>
+ </div>
 </div>
