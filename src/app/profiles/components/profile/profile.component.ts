@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit {
     image: '',
     paymentMethods: [] as PaymentMethod[]
   };
+  recentFavorites: any[] = [];  // Almacena los 3 favoritos recientes
   tempUserData: any = {};
   tempPaymentMethods: PaymentMethod[] = [];
   editMode: boolean = false;
@@ -58,8 +59,14 @@ export class ProfileComponent implements OnInit {
           console.error('Error fetching profile data:', error);
           return of(null);
         })
+      ),
+      favorites: this.http.get<any[]>(`${environment.serverBasePath}/favorites/my-favorites`, { headers }).pipe(
+        catchError(error => {
+          console.error('Error fetching favorites:', error);
+          return of([]);
+        })
       )
-    }).subscribe(({ userProfile, profileData }) => {
+    }).subscribe(({ userProfile, profileData, favorites }) => {
       if (userProfile) {
         this.userData = userProfile;
         this.currentRole = this.getRoleFromUser(userProfile);
@@ -68,6 +75,11 @@ export class ProfileComponent implements OnInit {
       if (profileData) {
         this.userData = { ...profileData, paymentMethods: profileData.paymentMethods || [] };
         this.imagePreview = profileData.image;
+      }
+
+      if (favorites && favorites.length > 0) {
+        // Obtener solo los 3 favoritos más recientes
+        this.recentFavorites = favorites.slice(-3).reverse();
       }
     });
   }
