@@ -11,7 +11,7 @@
                (mousedown)="onMouseDown($event)"
                (mousemove)="onMouseMove($event)"
                (mouseup)="onMouseUp($event)">
-            <img [src]="mainImage" alt="Imagen del producto" (dragstart)="stopDragging()" />
+            <img [src]="mainImage" alt="Car image" (dragstart)="stopDragging()" />
           </div>
 
 
@@ -25,7 +25,7 @@
                (mouseleave)="stopDragging()">
             <img *ngFor="let image of images; let i = index"
                  [src]="image"
-                 alt="Miniatura"
+                 alt="dots"
                  (click)="changeImage(i)"
                  [class.active]="i === currentIndex" />
           </div>

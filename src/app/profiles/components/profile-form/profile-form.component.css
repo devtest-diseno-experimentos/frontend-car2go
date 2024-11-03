@@ -10,8 +10,8 @@ body{
   margin-top: 200px;
 
 }
-.profile-container {
 
+.profile-container {
   max-width: 700px;
   margin: 0 auto;
   width: 100%;
@@ -67,7 +67,13 @@ label {
 .image-preview-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  position: relative;
   margin-top: 15px;
+}
+
+.image-preview-wrapper {
+  position: relative;
 }
 
 .image-preview {
@@ -76,6 +82,23 @@ label {
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.delete-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #ff4d4d;
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.delete-icon:hover {
+  background-color: #ff1a1a;
 }
 
 .form-actions {
@@ -103,19 +126,53 @@ label {
   background-color: #ccc;
 }
 
-.cancel-button {
-  background-color: #f44336;
-  color: #fff;
-  padding: 10px 20px;
+.new-images button {
   border: none;
-  border-radius: 5px;
+  display: flex;
+  padding: 0.5rem 1rem;
+  background-color: #488aec;
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-align: center;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+  align-items: center;
+  border-radius: 0.5rem;
+  user-select: none;
+  gap: 0.5rem;
+  box-shadow:
+    0 4px 6px -1px #488aec31,
+    0 2px 4px -1px #488aec17;
+  transition: all 0.3s ease;
+}
+.highlight {
+  color: #488aec;
+  font-weight: 700;
 }
 
-.cancel-button:hover {
-  background-color: #d32f2f;
+.new-images button:hover {
+  box-shadow:
+    0 10px 15px -3px #488aec4f,
+    0 4px 6px -2px #488aec17;
 }
+
+.new-images button:focus,
+.new-images button:active {
+  opacity: 0.85;
+  box-shadow: none;
+}
+
+.new-images button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+
 
 @media (max-width: 600px) {
   .form-row {

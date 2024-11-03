@@ -5,7 +5,9 @@ import { AuthenticationService } from "../../services/authentication.service";
 import { SignInRequest } from "../../model/sign-in.request";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../../environments/environment";
-import {catchError, map, of} from "rxjs";
+import { catchError, map, of, switchMap } from "rxjs";
+import { SubscriptionService } from "../../../plans/service/subscription.service";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +26,9 @@ export class LoginComponent implements OnInit {
     private builder: FormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private http: HttpClient
+    private http: HttpClient,
+    private subscriptionService: SubscriptionService,
+    private snackBar: MatSnackBar // Inject MatSnackBar
   ) {
     this.authenticationService.isSignedIn.subscribe((isSignedIn) => {
       this.isSignedIn = isSignedIn;
@@ -57,31 +61,63 @@ export class LoginComponent implements OnInit {
       next: () => {
         const userRole = localStorage.getItem('userRole');
 
-        this.checkUserProfile().subscribe(hasProfile => {
-          if (hasProfile) {
-            if (userRole === 'ROLE_SELLER') {
-              this.router.navigate(['/plan']);
+        this.checkUserProfile().pipe(
+          switchMap(hasProfile => {
+            if (!hasProfile) {
+              // If the user doesn't have a profile, redirect to the profile creation page
+              this.router.navigate(['/profile-form']);
+              return of(null); // End the operation here if no profile exists
+            } else if (userRole === 'ROLE_SELLER') {
+              // If the user is a seller and has a profile, check the subscription
+              return this.checkUserSubscription();
             } else {
+              // For other roles, redirect to home if they have a profile
               this.router.navigate(['/home']);
+              return of(null);
             }
-          } else {
-            this.router.navigate(['/profile-form']);
+          })
+        ).subscribe(subscriptionStatus => {
+          if (subscriptionStatus === 'has-subscription') {
+            // If the user already has an active subscription, send them to home
+            this.router.navigate(['/home']);
+            this.snackBar.open('Login successful! Redirecting to home.', 'Close', { duration: 3000 });
+          } else if (subscriptionStatus === 'no-subscription') {
+            // If they have a profile but no subscription, redirect to the plans page
+            this.router.navigate(['/plan']);
+            this.snackBar.open('You need a subscription. Redirecting to plans.', 'Close', { duration: 3000 });
           }
         });
       },
       error: (error) => {
-        console.error('Error during sign-in:', error);
+        this.snackBar.open('Error during sign-in: Invalid credentials.', 'Close', { duration: 3000 });
       }
     });
   }
 
+  // Check if the user has a profile
   private checkUserProfile() {
     return this.http.get<any>(`${this.baseURL}/profiles/me`, this.httpOptions).pipe(
       catchError(error => {
-        console.error('Error fetching user profile:', error);
+        this.snackBar.open('Error fetching user profile', 'Close', { duration: 3000 });
         return of(null);
       }),
-      map(profile => !!profile)
+      map(profile => !!profile) // Return true if there is a profile, false if not
+    );
+  }
+
+  // Check if the user has an active subscription (with status 'PAID')
+  private checkUserSubscription() {
+    return this.subscriptionService.getMySubscription().pipe(
+      map(subscription => {
+        if (subscription && subscription.status === 'PAID') {
+          return 'has-subscription';
+        }
+        return 'no-subscription';
+      }),
+      catchError(error => {
+        this.snackBar.open('Error fetching user subscription', 'Close', { duration: 3000 });
+        return of('no-subscription');
+      })
     );
   }
 

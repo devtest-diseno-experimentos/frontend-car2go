@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {CarService} from "../../services/car.service";
+import {CarService} from "../../services/car/car.service";
 import {FavoriteService} from "../../services/favorite-service/favorite.service";
 
 @Component({

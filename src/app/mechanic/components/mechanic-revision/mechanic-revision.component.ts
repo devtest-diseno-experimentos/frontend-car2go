@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReviewService } from '../../services/review.service';
-import { CarService } from '../../../cars/services/car.service';
+import { CarService } from '../../../cars/services/car/car.service';
 
 @Component({
   selector: 'app-mechanic-revision',

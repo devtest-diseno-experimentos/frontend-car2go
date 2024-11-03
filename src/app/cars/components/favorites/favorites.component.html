@@ -22,7 +22,7 @@
         <div class="content-horizontal">
           <div class="title-favorite-wrapper">
             <a>
-              <h4>{{ favorite.vehicle.name }}</h4>
+              <h4>{{ favorite.vehicle.brand }}   {{favorite.vehicle.model}}</h4>
             </a>
             <button class="delete-button" (click)="removeFavorite(favorite.vehicle.id); $event.stopPropagation()">
               <i class="fa fa-trash"></i>

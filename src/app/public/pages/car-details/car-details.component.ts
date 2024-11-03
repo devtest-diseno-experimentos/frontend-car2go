@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CarService } from '../../../cars/services/car.service';
+import { CarService } from '../../../cars/services/car/car.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({

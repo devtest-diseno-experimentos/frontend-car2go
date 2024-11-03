@@ -3,9 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 
 // Angular Material Imports
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -26,24 +26,23 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {MatExpansionModule} from '@angular/material/expansion';
-
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // Feature Components Imports
-import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 import { HomeComponent } from './public/pages/home/home.component';
 import { PageNotFoundComponent } from './public/pages/page-not-found/page-not-found.component';
 import { FooterComponent } from './public/components/footer/footer.component';
 import { ToolbarComponent } from './public/components/toolbar/toolbar.component';
-import {LoginComponent} from "./register/components/login/login.component";
+import { LoginComponent } from "./register/components/login/login.component";
 import { RegisterComponent } from './register/components/register/register.component';
 import { ForgotPasswordComponent } from './register/components/forgot-password/forgot-password.component';
 import { CarDetailsComponent } from './public/pages/car-details/car-details.component';
 import { CarListingFormComponent } from './cars/components/car-listing-form/car-listing-form.component';
 import { MechanicRevisionComponent } from './mechanic/components/mechanic-revision/mechanic-revision.component';
 import { MechanicCheckComponent } from './mechanic/components/mechanic-check/mechanic-check.component';
-import {PlanComponent} from "./plans/components/plan/plan.component";
-import {PaymentFormComponent} from "./plans/components/payment-form/payment-form.component";
+import { PlanComponent } from "./plans/components/plan/plan.component";
+import { PaymentFormComponent } from "./plans/components/payment-form/payment-form.component";
 import { MyCarsComponent } from './cars/components/my-cars/my-cars.component';
 import { CarListingComponent } from './cars/components/car-listing/car-listing.component';
 import { FavoritesComponent } from './cars/components/favorites/favorites.component';
@@ -51,12 +50,11 @@ import { ProfileComponent } from './profiles/components/profile/profile.componen
 import { PayComponent } from './buyer/components/pay/pay.component';
 import { SendDataComponent } from './buyer/components/send-data/send-data.component';
 import { TechnicalReviewComponent } from './buyer/components/technical-review/technical-review.component';
-import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
-import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
 import { ProfileFormComponent } from './profiles/components/profile-form/profile-form.component';
-import {provideNativeDateAdapter} from "@angular/material/core";
-import {AuthenticationInterceptor} from "./register/services/authentication.interceptor.service";
-import {AuthenticationSectionComponent} from "./register/components/authentication-section/authentication-section.component";
+import { AuthenticationInterceptor } from "./register/services/authentication.interceptor.service";
+import { AuthenticationSectionComponent } from "./register/components/authentication-section/authentication-section.component";
+
 
 @NgModule({
   declarations: [
@@ -91,6 +89,7 @@ import {AuthenticationSectionComponent} from "./register/components/authenticati
     HttpClientModule,
     FormsModule,
     CommonModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -109,23 +108,18 @@ import {AuthenticationSectionComponent} from "./register/components/authenticati
     MatGridListModule,
     MatMenuModule,
     MatCheckboxModule,
-    ReactiveFormsModule,
     MatExpansionModule,
     NgOptimizedImage,
     CdkDropList,
     CdkDrag,
-    MatProgressSpinner
+    MatProgressSpinnerModule // Usar el nombre correcto del módulo de Angular Material
   ],
   providers: [
-    provideAnimationsAsync(),
-    provideNativeDateAdapter(),
     {
-      provide:HTTP_INTERCEPTORS,
-      useClass:AuthenticationInterceptor,
-      multi:true
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
     }
-  ],
-  exports: [
   ],
   bootstrap: [AppComponent]
 })

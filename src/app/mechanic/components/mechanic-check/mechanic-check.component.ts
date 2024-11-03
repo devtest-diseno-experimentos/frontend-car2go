@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReviewService } from '../../services/review.service';
-import { CarService } from '../../../cars/services/car.service';
+import { CarService } from '../../../cars/services/car/car.service';
 import { AuthService } from '../../../register/service/auth.service';
 import { forkJoin, map, switchMap } from 'rxjs';
 
