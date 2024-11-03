@@ -91,57 +91,63 @@
     </div>
 
     <div class="car-container">
-      <div class="car-item" *ngFor="let car of cars | slice:0:6" (click)="viewCarDetails(car.id)">
-        <div class="thumb-content">
-          <div class="car-banner"></div>
-          <div class="thumb-inner">
-            <div class="image-wrapper">
-              <a>
-                <img [src]="car.image" alt="{{ car.brand }} {{car.model}}" class="img-thumbnail" width="150">
-              </a>
+      <ng-container *ngFor="let car of cars | slice:0:6">
+        <div
+          class="car-item"
+          *ngIf="car.status === 'REVIEWED'"
+          (click)="viewCarDetails(car.id)"
+        >
+          <div class="thumb-content">
+            <div class="car-banner"></div>
+            <div class="thumb-inner">
+              <div class="image-wrapper">
+                <a>
+                  <img [src]="car.image" alt="{{ car.brand }} {{car.model}}" class="img-thumbnail" width="150">
+                </a>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="down-content">
-          <div class="title-favorite-wrapper">
-            <a>
-              <h4>{{ car.brand }} {{car.model}}</h4>
-            </a>
-            <button class="favorite-button" (click)="addToFavorites(car.id); $event.stopPropagation()">
-              <i class="fa fa-star"></i>
-            </button>
+          <div class="down-content">
+            <div class="title-favorite-wrapper">
+              <a>
+                <h4>{{ car.brand }} {{car.model}}</h4>
+              </a>
+              <button class="favorite-button" (click)="addToFavorites(car.id); $event.stopPropagation()">
+                <i class="fa fa-star"></i>
+              </button>
+            </div>
+            <span>{{ car.price | currency }}</span>
+            <p>{{ car.description }}</p>
+            <ul class="car-info">
+              <li>
+                <div class="item">
+                  <i class="fas fa-calendar"></i>
+                  <p>{{ car.year }}</p>
+                </div>
+              </li>
+              <li>
+                <div class="item">
+                  <i class="fas fa-road"></i>
+                  <p>{{ car.speed }}p/h</p>
+                </div>
+              </li>
+              <li>
+                <div class="item">
+                  <i class="fas fa-gas-pump"></i>
+                  <p>{{ car.mileage }}km</p>
+                </div>
+              </li>
+              <li>
+                <div class="item">
+                  <i class="fas fa-gas-pump"></i>
+                  <p>{{ car.fuel }}</p>
+                </div>
+              </li>
+            </ul>
           </div>
-          <span>{{ car.price | currency }}</span>
-          <p>{{ car.description }}</p>
-          <ul class="car-info">
-            <li>
-              <div class="item">
-                <i class="fas fa-calendar"></i>
-                <p>{{ car.year }}</p>
-              </div>
-            </li>
-            <li>
-              <div class="item">
-                <i class="fas fa-road"></i>
-                <p>{{ car.speed }}p/h</p>
-              </div>
-            </li>
-            <li>
-              <div class="item">
-                <i class="fas fa-gas-pump"></i>
-                <p>{{ car.mileage }}km</p>
-              </div>
-            </li>
-            <li>
-              <div class="item">
-                <i class="fas fa-gas-pump"></i>
-                <p>{{ car.fuel }}</p>
-              </div>
-            </li>
-          </ul>
         </div>
-      </div>
+      </ng-container>
     </div>
 
     <div class="cta-section">
@@ -149,6 +155,7 @@
     </div>
   </div>
 </section>
+
 
 
 <section *ngIf="userRole === 'ROLE_MECHANIC'">

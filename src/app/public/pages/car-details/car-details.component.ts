@@ -311,16 +311,4 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  requestReview() {
-    const updatedCar = { ...this.car, status: 'pending inspection' };
-    this.carService.updateCar(this.car.id, updatedCar).subscribe(
-      (response) => {
-        this.car = response;
-        console.log('Car status updated to pending inspection');
-      },
-      (error) => {
-        console.error('Error updating car status:', error);
-      }
-    );
-  }
 }

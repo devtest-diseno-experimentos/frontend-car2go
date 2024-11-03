@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {CarService} from "../../services/car/car.service";
-import {FavoriteService} from "../../services/favorite-service/favorite.service";
+import { Component, OnInit } from '@angular/core';
+import { Router } from "@angular/router";
+import { CarService } from "../../services/car/car.service";
+import { FavoriteService } from "../../services/favorite-service/favorite.service";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-car-listing',
@@ -10,14 +11,18 @@ import {FavoriteService} from "../../services/favorite-service/favorite.service"
 })
 export class CarListingComponent implements OnInit {
   userRole: string = '';
-  showForm: boolean = false;
   cars: any[] = [];
   paginatedCars: any[] = [];
   defaultImage: string = 'assets/default_image.jpg';
   pageSize: number = 4;
   currentPage: number = 1;
 
-  constructor(private router: Router, private carService: CarService, private favoriteService: FavoriteService) {}
+  constructor(
+    private router: Router,
+    private carService: CarService,
+    private favoriteService: FavoriteService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.userRole = localStorage.getItem('userRole') || '';
@@ -38,18 +43,15 @@ export class CarListingComponent implements OnInit {
         this.updatePaginatedCars();
       },
       (error) => {
-        console.error('Error al obtener los autos:', error);
+        this.showSnackBar('Error fetching cars');
       }
     );
   }
-
-
 
   updatePaginatedCars() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     this.paginatedCars = this.cars.slice(startIndex, startIndex + this.pageSize);
   }
-
 
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
@@ -58,7 +60,6 @@ export class CarListingComponent implements OnInit {
     }
   }
 
-
   get totalPages(): number {
     return Math.ceil(this.cars.length / this.pageSize);
   }
@@ -66,14 +67,21 @@ export class CarListingComponent implements OnInit {
   addToFavorites(carId: number): void {
     this.favoriteService.addFavorite(carId).subscribe(
       response => {
-        console.log('Car added to favorites:', response);
+        this.showSnackBar('Car added to favorites');
       },
       error => {
-        console.error('Error adding car to favorites:', error);
+        this.showSnackBar('Error adding car to favorites');
       }
     );
   }
+
   viewCarDetails(carId: number) {
     this.router.navigate(['/car-details', carId]);
+  }
+
+  private showSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000
+    });
   }
 }

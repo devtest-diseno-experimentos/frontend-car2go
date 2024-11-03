@@ -63,17 +63,17 @@
           </div>
         </div>
 
-        <div class="buttons" *ngIf="car?.status !== 'reviewed' && car?.status !== 'pending inspection'">
-          <button (click)="requestReview()">REQUEST REVIEW</button>
-        </div>
 
+        <div *ngIf="car?.status === 'PENDING'" class="pending-message">
+          <p>This car is pending review.</p>
+        </div>
         <div *ngIf="car?.status === 'REVIEWED'" class="reviewed-message">
           <p>This car has already been reviewed.</p>
         </div>
-
-        <div *ngIf="car?.status === 'pending inspection'" class="pending-message">
-          <p>This car is pending review.</p>
+        <div *ngIf="car?.status === 'REJECTED'" class="pending-message">
+          <p>This car has been rejected</p>
         </div>
+
       </div>
     </mat-card>
   </section>

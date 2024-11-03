@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { MatSnackBar } from '@angular/material/snack-bar';  // Importa MatSnackBar
 import { CarService } from "../../../cars/services/car/car.service";
 import { FavoriteService } from "../../../cars/services/favorite-service/favorite.service";
 import { AuthService } from "../../../register/service/auth.service";
@@ -19,13 +20,15 @@ export class HomeComponent implements OnInit {
   defaultImage: string = 'assets/default_image.jpg';
   loading: boolean = true;
   user: any;
+  reviews: any[] = [];
 
   constructor(
     private router: Router,
     private carService: CarService,
     private favoriteService: FavoriteService,
     private authService: AuthService,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private snackBar: MatSnackBar  // Inyecta MatSnackBar aquí
   ) {}
 
   ngOnInit() {
@@ -35,7 +38,6 @@ export class HomeComponent implements OnInit {
     if (this.userRole === 'ROLE_MECHANIC') {
       this.loadPendingAndCertifiedCars();
       this.loadAllReviews();
-
     }
 
     this.loadUserData();
@@ -48,23 +50,20 @@ export class HomeComponent implements OnInit {
         this.user = data;
       },
       (error) => {
-        console.error('Error fetching user info:', error);
+        this.showSnackBar('Error fetching user info');
       }
     );
   }
-
-  reviews: any[] = [];
 
   loadAllCars() {
     this.loading = true;
     this.carService.getCars().subscribe(
       (data: any[]) => {
         this.cars = this.processCars(data);
-
         this.loading = false;
       },
       (error) => {
-        console.error('Error fetching cars:', error);
+        this.showSnackBar('Error fetching cars');
         this.loading = false;
       }
     );
@@ -76,11 +75,10 @@ export class HomeComponent implements OnInit {
         this.reviews = reviewsData;
       },
       (error) => {
-        console.error('Error fetching reviews:', error);
+        this.showSnackBar('Error fetching reviews');
       }
     );
   }
-
 
   loadPendingAndCertifiedCars() {
     this.loading = true;
@@ -92,7 +90,7 @@ export class HomeComponent implements OnInit {
         this.loading = false;
       },
       (error) => {
-        console.error('Error loading cars:', error);
+        this.showSnackBar('Error loading cars');
         this.loading = false;
       }
     );
@@ -125,13 +123,13 @@ export class HomeComponent implements OnInit {
                 car.reviews = reviewsWithUserInfo;
               },
               (error) => {
-                console.error('Error fetching reviewer info:', error);
+                this.showSnackBar('Error fetching reviewer info');
               }
             );
           }
         },
         (error) => {
-          console.error('Error fetching reviews:', error);
+          this.showSnackBar('Error fetching reviews');
         }
       );
     });
@@ -152,15 +150,21 @@ export class HomeComponent implements OnInit {
   addToFavorites(carId: number): void {
     this.favoriteService.addFavorite(carId).subscribe(
       response => {
-        console.log('Car added to favorites:', response);
+        this.showSnackBar('Car added to favorites');
       },
       error => {
-        console.error('Error adding car to favorites:', error);
+        this.showSnackBar('Error adding car to favorites');
       }
     );
   }
 
   trackByCarId(index: number, car: any): number {
     return car.id;
+  }
+
+  private showSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000
+    });
   }
 }

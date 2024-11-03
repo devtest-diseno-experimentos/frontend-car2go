@@ -5,10 +5,14 @@ body{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-.space{
-  margin-top: 200px;
 
+}
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
 }
 
 .profile-container {
@@ -23,6 +27,7 @@ body{
 }
 
 .profile-form {
+
   display: grid;
   gap: 15px;
 }
@@ -172,7 +177,11 @@ label {
   display: none;
 }
 
-
+h3{
+  color: #333;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
 
 @media (max-width: 600px) {
   .form-row {

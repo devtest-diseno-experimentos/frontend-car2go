@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { catchError, forkJoin, Observable, of, switchMap, tap } from "rxjs";
+import { Observable, of, forkJoin, switchMap, tap, catchError } from "rxjs";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { environment } from "../../../../environments/environment";
 import { AuthenticationService } from "../../../register/services/authentication.service";
@@ -16,7 +16,7 @@ export class ProfileFormComponent {
   isProfileCreated = false;
   photoPreview: string | ArrayBuffer | null = null;
   userRole = localStorage.getItem('userRole');
-  isFormValid = false; // Controla el estado del botón
+  isFormValid = false;
 
   private baseURL = environment.serverBasePath;
 
@@ -32,6 +32,7 @@ export class ProfileFormComponent {
       { type: '', details: '' }
     ]
   };
+  banks = ['BBVA', 'BCP', 'Scotiabank', 'Interbank', 'Banco de la Nación'];
 
   constructor(
     private http: HttpClient,
@@ -41,28 +42,59 @@ export class ProfileFormComponent {
     private snackBar: MatSnackBar
   ) {}
 
+  removeImage() {
+    this.photoPreview = null;
+    const fileInput = document.getElementById('newImages') as HTMLInputElement;
+    if (fileInput) fileInput.value = "";
+    this.checkFormValidity();
+  }
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('newImages') as HTMLInputElement;
+    if (fileInput) fileInput.click();
+  }
+
   onSubmit() {
     const { paymentMethods, ...profileData } = this.profile;
-
-    // Crear perfil de usuario
     this.addProfile(profileData).subscribe(
       createdProfile => {
         this.snackBar.open('Profile created or updated successfully', 'Close', { duration: 3000 });
         this.isProfileCreated = true;
 
-
-        this.addPaymentMethods(paymentMethods).subscribe(() => {
-          if (this.userRole === 'ROLE_SELLER') {
-            this.checkAndRedirectBasedOnSubscription();
-          } else {
-            this.router.navigate(['/home']);
-          }
-        });
+        if (paymentMethods.length > 0) {
+          this.addPaymentMethods(paymentMethods).subscribe(() => {
+            if (this.userRole === 'ROLE_SELLER') {
+              this.checkAndRedirectBasedOnSubscription();
+            } else {
+              this.router.navigate(['/home']);
+            }
+          });
+        } else {
+          this.router.navigate(['/home']);
+        }
       },
       error => {
         this.snackBar.open('Error creating or updating profile', 'Close', { duration: 3000 });
         this.router.navigate(['/error']);
       }
+    );
+  }
+
+  addProfile(profileRequest: any): Observable<any> {
+    return this.authService.getToken().pipe(
+      switchMap(token => {
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          })
+        };
+        return this.http.post<any>(`${this.baseURL}/profiles`, profileRequest, httpOptions);
+      }),
+      catchError(error => {
+        this.snackBar.open('Error creating profile', 'Close', { duration: 3000 });
+        return of(null);
+      })
     );
   }
 
@@ -72,7 +104,7 @@ export class ProfileFormComponent {
         const httpOptions = {
           headers: new HttpHeaders({
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`
           })
         };
 
@@ -96,7 +128,7 @@ export class ProfileFormComponent {
   }
 
   checkFormValidity() {
-    this.isFormValid = !!(
+    const isProfileValid = !!(
       this.profile.firstName &&
       this.profile.lastName &&
       this.profile.email &&
@@ -106,12 +138,17 @@ export class ProfileFormComponent {
       this.photoPreview
     );
 
-    if (this.userRole === 'ROLE_SELLER') {
-      this.isFormValid = this.isFormValid && this.profile.paymentMethods.every(
-        method => method.type && method.details
-      );
-    }
+    // Verifica los métodos de pago si el usuario es vendedor
+    const isPaymentMethodsValid = this.profile.paymentMethods.every(
+      method =>
+        method.type &&
+        method.details &&
+        /^[0-9]{12,16}$/.test(method.details)
+    );
+
+    this.isFormValid = isProfileValid && (this.userRole !== 'ROLE_SELLER' || isPaymentMethodsValid);
   }
+
 
   onFileSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -126,13 +163,13 @@ export class ProfileFormComponent {
     }
   }
 
-  closeForm(): void {
-    this.router.navigate(['/home']);
-  }
-
   addPaymentMethod() {
-    this.profile.paymentMethods.push({ type: '', details: '' });
-    this.checkFormValidity();
+    if (this.profile.paymentMethods.length >= 3) {
+      this.snackBar.open('You can only add up to 3 payment methods', 'Close', { duration: 3000 });
+    } else {
+      this.profile.paymentMethods.push({ type: '', details: '' });
+      this.checkFormValidity();
+    }
   }
 
   removePaymentMethod(index: number) {
@@ -153,25 +190,6 @@ export class ProfileFormComponent {
         this.snackBar.open('Error checking subscription', 'Close', { duration: 3000 });
         this.router.navigate(['/plan']);
       }
-    );
-  }
-
-  addProfile(profileRequest: any): Observable<any> {
-    return this.authService.getToken().pipe(
-      switchMap(token => {
-        const httpOptions = {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          })
-        };
-
-        return this.http.post<any>(`${this.baseURL}/profiles`, profileRequest, httpOptions);
-      }),
-      catchError(error => {
-        this.snackBar.open('Error creating profile', 'Close', { duration: 3000 });
-        return of(null);
-      })
     );
   }
 }

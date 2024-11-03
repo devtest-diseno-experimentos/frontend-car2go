@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FavoriteService } from '../../services/favorite-service/favorite.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-favorites',
@@ -13,7 +14,11 @@ export class FavoritesComponent implements OnInit {
   pageSize: number = 4;
   currentPage: number = 1;
 
-  constructor(private router: Router, private favoriteService: FavoriteService) {}
+  constructor(
+    private router: Router,
+    private favoriteService: FavoriteService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.favoriteService.getMyFavorites().subscribe(
@@ -22,7 +27,7 @@ export class FavoritesComponent implements OnInit {
         this.updatePaginatedCars();
       },
       (error) => {
-        console.error('Error al obtener los favoritos:', error);
+        this.showSnackBar('Error fetching favorites');
       }
     );
   }
@@ -52,11 +57,17 @@ export class FavoritesComponent implements OnInit {
       (response) => {
         this.favorites = this.favorites.filter(fav => fav.vehicle.id !== vehicleId);
         this.updatePaginatedCars();
-        console.log('Favorito eliminado:', response);
+        this.showSnackBar('Favorite removed');
       },
       (error) => {
-        console.error('Error al eliminar el favorito:', error);
+        this.showSnackBar('Error removing favorite');
       }
     );
+  }
+
+  private showSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000
+    });
   }
 }

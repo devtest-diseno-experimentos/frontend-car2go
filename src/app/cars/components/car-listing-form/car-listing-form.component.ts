@@ -165,7 +165,6 @@ export class CarListingFormComponent {
           this.router.navigate(['/home']);
         },
         (error) => {
-          console.error('Error adding car:', error);
           this.snackBar.open('Error adding car', 'Close', { duration: 3000 });
         }
       );
