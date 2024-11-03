@@ -152,7 +152,7 @@ h2 span {
 .main-image img {
   width: 100%;
   max-width: 600px;
-  height: 300px;
+  height: 330px;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -271,15 +271,15 @@ ul li {
 
 li i {
   margin-right: 20px;
-  border-radius: 5px;
-  background-color: #f4c23d;
+  background-color: #ffcf02;
   font-size: 20px;
+  border-radius: 50%;
   padding: 5px;
   font-weight: 600;
 }
 
 li span {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
 }
 

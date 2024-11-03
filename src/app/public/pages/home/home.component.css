@@ -210,7 +210,7 @@
   font-size: 16px;
   font-weight: 500;
   border-radius: 10px;
-
+  cursor: pointer;
   transition: background-color 0.3s ease;
   display: inline-block;
 }
@@ -218,6 +218,7 @@
 .cta-button-top:hover {
   background-color: #f4c23d;
 }
+
 .title-favorite-wrapper {
   display: flex;
   justify-content: space-between;

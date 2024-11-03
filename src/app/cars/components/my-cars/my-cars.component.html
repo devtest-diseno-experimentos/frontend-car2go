@@ -33,12 +33,14 @@
       <div class="down-content">
         <div class="title-favorite-wrapper">
           <a>
-            <h4>{{ car.status }}</h4>
+            <h4>{{ car.brand }} {{ car.model }}</h4>
+
           </a>
           <button class="delete-button" (click)="deleteCar(car.id); $event.stopPropagation()">
             <i class="fa fa-trash"></i>
           </button>
         </div>
+        <p>{{ car.status }}</p>
         <span>{{ car.price | currency }}</span>
         <p>{{ car.description }}</p>
         <ul class="car-info">
