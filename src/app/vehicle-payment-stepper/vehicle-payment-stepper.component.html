@@ -1,0 +1,71 @@
+<div class="stepper-container">
+  <div class="steps-indicator">
+    <div class="progress-bar" [style.width]="getProgressWidth()"></div>
+    <div class="step" [class.active]="currentStep === 1">1. <i class="material-icons">person</i> Confirmar Datos</div>
+    <div class="step" [class.active]="currentStep === 2">2. <i class="material-icons">shopping_cart</i> Información de Compra</div>
+    <div class="step" [class.active]="currentStep === 3">3. <i class="material-icons">check_circle</i> Confirmación</div>
+  </div>
+
+  <div *ngIf="isLoading" class="loader-container">
+    <div class="loader"></div>
+    <p>Procesando pago...</p>
+  </div>
+
+  <div *ngIf="currentStep === 1 && !isLoading" class="step-content slide-in">
+    <h2>Datos del Usuario</h2>
+    <div class="user-info-card">
+      <p><strong>Nombre:</strong> {{ userData.name }}</p>
+      <p><strong>Email:</strong> {{ userData.email }}</p>
+    </div>
+    <label for="telephone">Teléfono</label>
+    <input type="text" id="telephone" [(ngModel)]="userData.telephone" placeholder="Ej. +51 123 456 789">
+    <label for="dni">DNI</label>
+    <input type="text" id="dni" [(ngModel)]="userData.dni" placeholder="Ej. 12345678">
+    <div class="button-container">
+      <button type="button" (click)="nextStep()">Siguiente</button>
+    </div>
+  </div>
+
+  <div *ngIf="currentStep === 2 && !isLoading" class="step-content slide-in">
+    <h2>Datos del Comprador y Vendedor</h2>
+    <div class="data-container">
+      <div class="info-card wide">
+        <h3>Datos - Comprador</h3>
+        <p><strong>Nombre:</strong> {{ buyerData.name }}</p>
+        <p><strong>Email:</strong> {{ buyerData.email }}</p>
+        <p><strong>Teléfono:</strong> {{ buyerData.telephone }}</p>
+        <p><strong>DNI:</strong> {{ buyerData.dni }}</p>
+      </div>
+      <div class="info-card wide">
+        <h3>Datos - Vendedor</h3>
+        <p><strong>Nombre:</strong> {{ sellerData.name }}</p>
+        <p><strong>Email:</strong> {{ sellerData.email }}</p>
+        <p><strong>Teléfono:</strong> {{ sellerData.telephone }}</p>
+        <p><strong>DNI:</strong> {{ sellerData.dni }}</p>
+      </div>
+    </div>
+    <h3>Información de Pago</h3>
+    <label for="accountNumber">Número de Cuenta</label>
+    <input type="text" id="accountNumber" [(ngModel)]="paymentMethods.accountNumber" placeholder="Ej. 1234567890">
+    <label for="transactionNumber">Número de Transacción</label>
+    <input type="text" id="transactionNumber" [(ngModel)]="paymentMethods.transactionNumber" placeholder="Ej. 0987654321">
+    <div class="button-container">
+      <button type="button" (click)="prevStep()">Anterior</button>
+      <button type="button" (click)="nextStep()">Siguiente</button>
+    </div>
+  </div>
+
+  <div *ngIf="currentStep === 3 && !isLoading" class="step-content slide-in">
+    <h2>Resumen de Pago</h2>
+    <div class="confirmation-info">
+      <p><strong>Nombre del Comprador:</strong> {{ buyerData.name }}</p>
+      <p><strong>Correo Electrónico:</strong> {{ buyerData.email }}</p>
+      <p><strong>Número de Cuenta:</strong> {{ paymentMethods.accountNumber }}</p>
+      <p><strong>Número de Transacción:</strong> {{ paymentMethods.transactionNumber }}</p>
+      <p>El pago ha sido procesado exitosamente. Confirme su compra.</p>
+    </div>
+    <div class="button-container">
+      <button type="button" (click)="confirmPayment()">Confirmar Pago</button>
+    </div>
+  </div>
+</div>

@@ -19,6 +19,7 @@ import { PayComponent } from "./buyer/components/pay/pay.component";
 import { SendDataComponent } from "./buyer/components/send-data/send-data.component";
 import { TechnicalReviewComponent } from "./buyer/components/technical-review/technical-review.component";
 import { ProfileFormComponent } from "./profiles/components/profile-form/profile-form.component";
+import {VehiclePaymentStepperComponent} from "./vehicle-payment-stepper/vehicle-payment-stepper.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'pay', component: PayComponent },
   { path: 'send-data', component: SendDataComponent },
   { path: 'technical-review', component: TechnicalReviewComponent },
+  {path: 'vehicle-payment-stepper', component: VehiclePaymentStepperComponent},
   { path: '**', component: PageNotFoundComponent }
 ];
 

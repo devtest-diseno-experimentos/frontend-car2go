@@ -57,6 +57,8 @@ import { ProfileFormComponent } from './profiles/components/profile-form/profile
 import { AuthenticationInterceptor } from "./register/services/authentication.interceptor.service";
 import { AuthenticationSectionComponent } from "./register/components/authentication-section/authentication-section.component";
 import { LanguageSwitcherComponent } from './public/components/language-switcher/language-switcher.component';
+import { VehiclePaymentStepperComponent } from './vehicle-payment-stepper/vehicle-payment-stepper.component';
+import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from "@angular/material/stepper";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -87,7 +89,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TechnicalReviewComponent,
     ProfileFormComponent,
     AuthenticationSectionComponent,
-    LanguageSwitcherComponent
+    LanguageSwitcherComponent,
+    VehiclePaymentStepperComponent
   ],
   imports: [
     BrowserModule,
@@ -126,7 +129,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgOptimizedImage,
     CdkDropList,
     CdkDrag,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatStep,
+    MatStepLabel,
+    MatStepper,
+    MatStepperNext,
+    MatStepperPrevious
   ],
   providers: [
     {
