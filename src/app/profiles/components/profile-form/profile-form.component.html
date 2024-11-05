@@ -1,40 +1,41 @@
 <div class="container">
   <div class="profile-container">
+    <app-language-switcher></app-language-switcher>
     <form (ngSubmit)="onSubmit()" class="profile-form">
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="form-group">
-          <mat-label>First Name</mat-label>
-          <input matInput id="firstName" type="text" [(ngModel)]="profile.firstName" name="firstName" placeholder="Your First Name" required />
+          <mat-label>{{ 'FIRST_NAME' | translate }}</mat-label>
+          <input matInput id="firstName" type="text" [(ngModel)]="profile.firstName" name="firstName" placeholder="{{ 'FIRST_NAME' | translate }}" required />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-group">
-          <mat-label>Last Name</mat-label>
-          <input matInput id="lastName" type="text" [(ngModel)]="profile.lastName" name="lastName" placeholder="Your Last Name" required />
-        </mat-form-field>
-      </div>
-
-      <div class="form-row">
-        <mat-form-field appearance="outline" class="form-group">
-          <mat-label>Email</mat-label>
-          <input matInput id="email" type="email" [(ngModel)]="profile.email" name="email" placeholder="Your Email" required />
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="form-group">
-          <mat-label>DNI</mat-label>
-          <input matInput id="dni" type="text" [(ngModel)]="profile.dni" name="dni" placeholder="Your DNI" required />
+          <mat-label>{{ 'LAST_NAME' | translate }}</mat-label>
+          <input matInput id="lastName" type="text" [(ngModel)]="profile.lastName" name="lastName" placeholder="{{ 'LAST_NAME' | translate }}" required />
         </mat-form-field>
       </div>
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="form-group">
-          <mat-label>Address</mat-label>
-          <input matInput id="address" type="text" [(ngModel)]="profile.address" name="address" placeholder="Your Address" required />
+          <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+          <input matInput id="email" type="email" [(ngModel)]="profile.email" name="email" placeholder="{{ 'EMAIL' | translate }}" required />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="form-group">
-          <mat-label>Phone Number</mat-label>
-          <input matInput id="phone" type="text" [(ngModel)]="profile.phone" name="phone" placeholder="Your Phone Number" required />
+          <mat-label>{{ 'DNI' | translate }}</mat-label>
+          <input matInput id="dni" type="text" [(ngModel)]="profile.dni" name="dni" placeholder="{{ 'DNI' | translate }}" required />
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-group">
+          <mat-label>{{ 'ADDRESS' | translate }}</mat-label>
+          <input matInput id="address" type="text" [(ngModel)]="profile.address" name="address" placeholder="{{ 'ADDRESS' | translate }}" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-group">
+          <mat-label>{{ 'PHONE_NUMBER' | translate }}</mat-label>
+          <input matInput id="phone" type="text" [(ngModel)]="profile.phone" name="phone" placeholder="{{ 'PHONE_NUMBER' | translate }}" required />
         </mat-form-field>
       </div>
 
@@ -63,23 +64,23 @@
               d="M17 15V18M17 21V18M17 18H14M17 18H20"
             ></path>
           </svg>
-          Add Photo
+          {{ 'ADD_PHOTO' | translate }}
         </button>
         <input id="newImages" type="file" (change)="onFileSelected($event)" class="hidden-file-input">
 
         <div *ngIf="photoPreview" class="image-preview-container">
           <img [src]="photoPreview" alt="Preview" class="image-preview" />
           <span class="delete-icon material-symbols-outlined" (click)="removeImage()">
-           delete
+          delete
           </span>
         </div>
       </div>
 
       <div *ngIf="userRole === 'ROLE_SELLER'">
-        <h3>Payment Methods</h3>
+        <h3>{{ 'PAYMENT_METHODS' | translate }}</h3>
         <div *ngFor="let method of profile.paymentMethods; let i = index" class="form-row">
           <mat-form-field appearance="outline" class="form-group">
-            <mat-label>Type</mat-label>
+            <mat-label>{{ 'PAYMENT_TYPE' | translate }}</mat-label>
             <mat-select [(ngModel)]="method.type" name="type-{{i}}" required (ngModelChange)="checkFormValidity()">
               <mat-option *ngFor="let bank of banks" [value]="bank">
                 {{ bank }}
@@ -88,38 +89,35 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="form-group">
-            <mat-label>Details</mat-label>
+            <mat-label>{{ 'PAYMENT_DETAILS' | translate }}</mat-label>
             <input
               matInput
               id="details-{{i}}"
               type="text"
               [(ngModel)]="method.details"
               name="details-{{i}}"
-              placeholder="Payment Details"
+              placeholder="{{ 'PAYMENT_DETAILS_PLACEHOLDER' | translate }}"
               required
               pattern="^[0-9]{12,20}$"
-            (ngModelChange)="checkFormValidity()"
+              (ngModelChange)="checkFormValidity()"
             />
             <mat-error *ngIf="method.details && !method.details.match('^[0-9]{12,20}$')">
-              Account number must be between 12 and 20 digits and contain only numbers.
+              {{ 'PAYMENT_DETAILS_ERROR' | translate }}
             </mat-error>
           </mat-form-field>
 
-
-
-
-          <button mat-icon-button color="warn" type="button"  (click)="removePaymentMethod(i)">
+          <button mat-icon-button color="warn" type="button" (click)="removePaymentMethod(i)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>
 
         <button mat-button color="primary" type="button" (click)="addPaymentMethod()" [disabled]="profile.paymentMethods.length >= 3">
-          Add Payment Method
+          {{ 'ADD_PAYMENT_METHOD' | translate }}
         </button>
       </div>
 
       <div class="form-actions">
-        <button mat-raised-button color="primary" type="submit" [disabled]="!isFormValid">Save Changes</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!isFormValid">{{ 'SAVE_CHANGES' | translate }}</button>
       </div>
     </form>
   </div>

@@ -67,10 +67,8 @@
         tap(userProfile => {
           this.userData = userProfile;
           this.currentRole = this.getRoleFromUser(userProfile);
-          this.snackBar.open("User profile data loaded successfully", 'Close', { duration: 3000 });
         }),
         catchError(error => {
-          this.snackBar.open('Error fetching user profile', 'Close', { duration: 3000 });
           return of(null);
         })
       );
@@ -79,10 +77,8 @@
         tap(profileData => {
           this.userData = { ...profileData, paymentMethods: this.currentRole === 'ROLE_SELLER' ? profileData.paymentMethods || [] : [] };
           this.imagePreview = profileData.image;
-          this.snackBar.open("Profile data loaded successfully", 'Close', { duration: 3000 });
         }),
         catchError(error => {
-          this.snackBar.open('Error fetching profile data', 'Close', { duration: 3000 });
           return of(null);
         })
       );
@@ -91,10 +87,8 @@
         this.http.get<any>(`${environment.serverBasePath}/subscription/me`, { headers }).pipe(
           tap(subscription => {
             this.subscriptionData = subscription;
-            this.snackBar.open("Subscription data loaded successfully", 'Close', { duration: 3000 });
           }),
           catchError(error => {
-            this.snackBar.open('Error fetching subscription data', 'Close', { duration: 3000 });
             return of(null);
           })
         )
@@ -122,7 +116,6 @@
                       }
                     }),
                     catchError(error => {
-                      console.error(`Error fetching image for vehicle ID ${review.vehicle.id}`, error);
                       return of(null);
                     })
                   )
@@ -130,11 +123,7 @@
 
                 return forkJoin(vehicleImageRequests);
               }),
-              tap(() => {
-                this.snackBar.open("Recent reviews loaded successfully", 'Close', { duration: 3000 });
-              }),
               catchError(error => {
-                this.snackBar.open('Error fetching recent reviews', 'Close', { duration: 3000 });
                 return of([]);
               })
             );
@@ -143,9 +132,6 @@
               tap(favorites => {
                 if (favorites && favorites.length > 0) {
                   this.recentFavorites = favorites.slice(-3).reverse();
-                  this.snackBar.open("Favorites data loaded successfully", 'Close', { duration: 3000 });
-                } else {
-                  this.snackBar.open("No recent favorites available", 'Close', { duration: 3000 });
                 }
               }),
               catchError(error => {
@@ -232,11 +218,9 @@
         phone: this.userData.phone
       };
 
-      // Actualizar perfil sin importar el rol
       this.http.put<any>(`${environment.serverBasePath}/profiles/me/edit`, profileUpdateData, { headers })
         .pipe(
           switchMap(() => {
-            // Solo para `ROLE_SELLER`, manejar métodos de pago
             if (this.currentRole === 'ROLE_SELLER') {
               const deleteRequests = this.userData.paymentMethods
                 .filter((method: PaymentMethod) => method.markedForDeletion && method.id)
@@ -279,10 +263,9 @@
 
               return forkJoin([...deleteRequests, ...saveRequests]);
             } else {
-              return of([]); // Para `ROLE_BUYER`, no hay métodos de pago que manejar
+              return of([]);
             }
           }),
-          // Recargar los datos del perfil para reflejar los cambios inmediatamente
           switchMap(() => this.http.get<any>(`${environment.serverBasePath}/profiles/me`, { headers })),
           tap(profileData => {
             this.userData = { ...profileData };

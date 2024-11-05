@@ -1,72 +1,3 @@
-<app-toolbar></app-toolbar>
-<section *ngIf="userRole === 'ROLE_SELLER'">
-  <div class="car-wrapper">
-    <div class="car-header">
-      <div class="icon-wrapper">
-        <div class="icon-circle">
-          <i class="fa fa-car"></i>
-        </div>
-        <div class="header-underline"></div>
-      </div>
-      <div class="text-content">
-        <h2>FEATURED CARS</h2>
-        <span>Explore our top cars picked just for you</span>
-      </div>
-    </div>
-
-    <div class="car-container">
-      <div class="car-item-horizontal" *ngFor="let car of paginatedCars" (click)="viewCarDetails(car.id)">
-        <div class="image-wrapper-horizontal">
-          <img [src]="car.mainImage" alt="{{ car.brand }} {{car.model}}" class="img-thumbnail">
-        </div>
-        <div class="content-horizontal">
-          <h4>{{ car.brand }} {{car.model}}</h4>
-          <span>{{ car.price | currency }}</span>
-          <p>{{ car.description }}</p>
-          <ul class="car-info">
-            <li>
-              <div class="item">
-                <i class="fas fa-calendar"></i>
-                <p>{{ car.year }}</p>
-              </div>
-            </li>
-            <li>
-              <div class="item">
-                <i class="fas fa-road"></i>
-                <p>{{ car.speed }}p/h</p>
-              </div>
-            </li>
-            <li>
-              <div class="item">
-                <i class="fas fa-gas-pump"></i>
-                <p>{{ car.mileage }}km</p>
-              </div>
-            </li>
-            <li>
-              <div class="item">
-                <i class="fas fa-gas-pump"></i>
-                <p>{{ car.fuel }}</p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="pagination">
-      <button
-        class="page-button"
-        [class.active]="currentPage === page"
-        *ngFor="let page of [].constructor(totalPages); let i = index"
-        (click)="changePage(i + 1)">
-        {{ i + 1 }}
-      </button>
-    </div>
-  </div>
-</section>
-
-
 <section *ngIf="userRole === 'ROLE_BUYER'">
   <div class="car-wrapper">
     <div class="car-header">
@@ -77,21 +8,24 @@
         <div class="header-underline"></div>
       </div>
       <div class="text-content">
-        <h2>FEATURED CARS</h2>
-        <span>Explore our top cars picked just for you</span>
+        <h2>{{ 'LISTING_CARS' | translate }}</h2>
+        <span>{{ 'EXPLORE_LISTING_CARS' | translate }}</span>
       </div>
     </div>
 
-
     <div class="car-container">
-      <div class="car-item-horizontal" *ngFor="let car of paginatedCars" (click)="viewCarDetails(car.id)">
+      <div
+        class="car-item-horizontal"
+        *ngFor="let car of filteredCars()"
+        (click)="viewCarDetails(car.id)"
+      >
         <div class="image-wrapper-horizontal">
-          <img [src]="car.mainImage" alt="{{ car.brand }} {{car.model}}" class="img-thumbnail">
+          <img [src]="car.mainImage" alt="{{ car.brand }} {{car.model }}" class="img-thumbnail">
         </div>
         <div class="content-horizontal">
           <div class="title-favorite-wrapper">
             <a>
-              <h4>{{ car.brand }} {{car.model}}</h4>
+              <h4>{{ car.brand }} {{ car.model }}</h4>
             </a>
             <button class="favorite-button" (click)="addToFavorites(car.id); $event.stopPropagation()">
               <i class="fa fa-star"></i>
@@ -108,14 +42,14 @@
             </li>
             <li>
               <div class="item">
-                <i class="fas fa-road"></i>
-                <p>{{ car.speed }}p/h</p>
+                <i class="fas fa-tachometer-alt"></i>
+                <p>{{ car.speed }} {{ 'SPEED_UNIT' | translate }}</p>
               </div>
             </li>
             <li>
               <div class="item">
-                <i class="fas fa-gas-pump"></i>
-                <p>{{ car.mileage }}km</p>
+                <i class="fas fa-road"></i>
+                <p>{{ car.mileage }} {{ 'MILEAGE_UNIT' | translate }}</p>
               </div>
             </li>
             <li>
@@ -129,16 +63,15 @@
       </div>
     </div>
 
-
     <div class="pagination">
       <button
         class="page-button"
         [class.active]="currentPage === page"
         *ngFor="let page of [].constructor(totalPages); let i = index"
-        (click)="changePage(i + 1)">
+        (click)="changePage(i + 1)"
+      >
         {{ i + 1 }}
       </button>
     </div>
   </div>
 </section>
-<app-footer></app-footer>

@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { catchError, of, forkJoin } from "rxjs";
 import { Router } from '@angular/router';
 import { environment } from "../../../../environments/environment";
-import {AuthenticationService} from "../../../register/services/authentication.service";
+import { AuthenticationService } from "../../../register/services/authentication.service";
 
 @Component({
   selector: 'app-toolbar',
@@ -13,8 +13,11 @@ import {AuthenticationService} from "../../../register/services/authentication.s
 export class ToolbarComponent implements OnInit {
   userRole: string = '';
   userPhoto: string | null = null;
+  profileData: any;
   isScrolled = false;
   isMenuOpen = false;
+  showDropdown = false;
+  private hideDropdownTimeout: any;
 
   constructor(
     private http: HttpClient,
@@ -23,6 +26,13 @@ export class ToolbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+      window.addEventListener('resize', () => {
+        this.isMenuOpen = false;
+      });
+    this.authService.currentUserRole.subscribe(role => {
+      this.userRole = role;
+    });
+
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
 
@@ -58,14 +68,19 @@ export class ToolbarComponent implements OnInit {
 
       if (profileData) {
         this.userPhoto = profileData.image;
+        this.profileData = profileData;
       } else {
         console.warn('No profile data returned');
       }
     });
   }
 
-  logout(): void {
-    this.authService.signOut();
+  logout() {
+    this.router.navigate(['/login']);
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('isSignedIn');
   }
 
   @HostListener('window:scroll', [])
@@ -76,9 +91,29 @@ export class ToolbarComponent implements OnInit {
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
-    const navLinks = document.querySelector('.nav-links');
-    if (navLinks) {
-      navLinks.classList.toggle('active', this.isMenuOpen);
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
+  }
+
+  showDropdownMenu() {
+    clearTimeout(this.hideDropdownTimeout);
+    this.showDropdown = true;
+  }
+
+  hideDropdownMenu() {
+    this.hideDropdownTimeout = setTimeout(() => {
+      this.showDropdown = false;
+    }, 200);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    const target = event.target as HTMLElement;
+    const isClickInside = target.closest('.navbar') || target.closest('.hamburger');
+    if (!isClickInside && this.isMenuOpen) {
+      this.closeMenu();
     }
   }
 }

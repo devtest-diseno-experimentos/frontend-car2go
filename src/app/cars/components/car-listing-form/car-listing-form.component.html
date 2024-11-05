@@ -1,129 +1,128 @@
-<app-toolbar></app-toolbar>
 <div class="container my-5">
-    <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
 
-        <div class="section-header">
-            <h3><span class="text-black">SALES</span> <span class="text-yellow">DATA</span></h3>
-        </div>
-        <div class="form-section">
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Name</mat-label>
-                <input matInput formControlName="name" placeholder="Name">
-            </mat-form-field>
+    <div class="section-header">
+      <h3><span class="text-black">{{ 'SALES' | translate }}</span> <span class="text-yellow">{{ 'DATA' | translate }}</span></h3>
+    </div>
+    <div class="form-section">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'NAME' | translate }}</mat-label>
+        <input matInput formControlName="name" placeholder="{{ 'NAME_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Phone</mat-label>
-                <input matInput formControlName="phone" placeholder="Telephone">
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'PHONE' | translate }}</mat-label>
+        <input matInput formControlName="phone" placeholder="{{ 'PHONE_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Email</mat-label>
-                <input matInput formControlName="email" placeholder="Email">
-            </mat-form-field>
-        </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+        <input matInput formControlName="email" placeholder="{{ 'EMAIL_PLACEHOLDER' | translate }}">
+      </mat-form-field>
+    </div>
 
-        <div class="section-header">
-            <h3><span class="text-black">PRICE</span></h3>
-        </div>
-        <div class="form-section">
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Offer</mat-label>
-                <input matInput formControlName="price" placeholder="Offer">
-                <mat-hint>PAYMENT INCLUDES 5% COMMISSION</mat-hint>
-            </mat-form-field>
-        </div>
+    <div class="section-header">
+      <h3><span class="text-black">{{ 'PRICE' | translate }}</span></h3>
+    </div>
+    <div class="form-section">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'OFFER' | translate }}</mat-label>
+        <input matInput formControlName="price" placeholder="{{ 'OFFER_PLACEHOLDER' | translate }}">
+        <mat-hint>{{ 'PAYMENT_INCLUDES_COMMISSION' | translate }}</mat-hint>
+      </mat-form-field>
+    </div>
 
-        <!-- Car Data Section -->
-        <div class="section-header">
-            <h3><span class="text-black">CAR</span> <span class="text-yellow">DATA</span></h3>
-        </div>
-        <div class="form-section form-group">
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Brand</mat-label>
-                <input matInput formControlName="brand" placeholder="Brand">
-            </mat-form-field>
+    <div class="section-header">
+      <h3><span class="text-black">{{ 'CAR' | translate }}</span> <span class="text-yellow">{{ 'CAR_DATOS' | translate }}</span></h3>
+    </div>
+    <div class="form-section form-group">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'BRAND' | translate }}</mat-label>
+        <input matInput formControlName="brand" placeholder="{{ 'BRAND_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Model</mat-label>
-                <input matInput formControlName="model" placeholder="Model">
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'MODEL' | translate }}</mat-label>
+        <input matInput formControlName="model" placeholder="{{ 'MODEL_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Color</mat-label>
-                <input matInput formControlName="color" placeholder="Color">
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'COLOR' | translate }}</mat-label>
+        <input matInput formControlName="color" placeholder="{{ 'COLOR_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Year of Manufacture</mat-label>
-                <input matInput formControlName="year" placeholder="Year of Manufacture">
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'YEAR_MANUFACTURE' | translate }}</mat-label>
+        <input matInput formControlName="year" placeholder="{{ 'YEAR_MANUFACTURE_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Transmission Type</mat-label>
-                <mat-select formControlName="transmission">
-                    <mat-option value="">Select Transmission</mat-option>
-                    <mat-option value="Manual">Manual</mat-option>
-                    <mat-option value="Automatic">Automatic</mat-option>
-                    <mat-option value="Semi-automatic">Semi-automatic</mat-option>
-                </mat-select>
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'TRANSMISSION_TYPE' | translate }}</mat-label>
+        <mat-select formControlName="transmission">
+          <mat-option value="">{{ 'SELECT_TRANSMISSION' | translate }}</mat-option>
+          <mat-option value="Manual">{{ 'MANUAL' | translate }}</mat-option>
+          <mat-option value="Automatic">{{ 'AUTOMATIC' | translate }}</mat-option>
+          <mat-option value="Semi-automatic">{{ 'SEMI_AUTOMATIC' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Engine (Cylinder Capacity)</mat-label>
-                <input matInput formControlName="engine" placeholder="Engine (Cylinder Capacity)">
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'ENGINE' | translate }}</mat-label>
+        <input matInput formControlName="engine" placeholder="{{ 'ENGINE_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Mileage</mat-label>
-                <input matInput formControlName="mileage" placeholder="Mileage">
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'MILEAGE' | translate }}</mat-label>
+        <input matInput formControlName="mileage" placeholder="{{ 'MILEAGE_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Fuel Type</mat-label>
-                <mat-select formControlName="fuel">
-                    <mat-option value="">Select Fuel Type</mat-option>
-                    <mat-option value="Gasoline">Gasoline</mat-option>
-                    <mat-option value="Diesel">Diesel</mat-option>
-                    <mat-option value="Electric">Electric</mat-option>
-                    <mat-option value="Hybrid">Hybrid</mat-option>
-                </mat-select>
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'FUEL_TYPE' | translate }}</mat-label>
+        <mat-select formControlName="fuel">
+          <mat-option value="">{{ 'SELECT_FUEL_TYPE' | translate }}</mat-option>
+          <mat-option value="Gasoline">{{ 'GASOLINE' | translate }}</mat-option>
+          <mat-option value="Diesel">{{ 'DIESEL' | translate }}</mat-option>
+          <mat-option value="Electric">{{ 'ELECTRIC' | translate }}</mat-option>
+          <mat-option value="Hybrid">{{ 'HYBRID' | translate }}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Speed</mat-label>
-                <input matInput formControlName="speed" placeholder="Speed">
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'SPEED' | translate }}</mat-label>
+        <input matInput formControlName="speed" placeholder="{{ 'SPEED_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Number of Doors</mat-label>
-                <mat-select formControlName="doors">
-                    <mat-option value="">Select Number of Doors</mat-option>
-                    <mat-option value="2">2</mat-option>
-                    <mat-option value="3">3</mat-option>
-                    <mat-option value="4">4</mat-option>
-                    <mat-option value="5">5</mat-option>
-                </mat-select>
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'DOORS' | translate }}</mat-label>
+        <mat-select formControlName="doors">
+          <mat-option value="">{{ 'SELECT_DOORS' | translate }}</mat-option>
+          <mat-option value="2">2</mat-option>
+          <mat-option value="3">3</mat-option>
+          <mat-option value="4">4</mat-option>
+          <mat-option value="5">5</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Plate</mat-label>
-                <input matInput formControlName="plate" placeholder="This information will not be shown in the notice">
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'PLATE' | translate }}</mat-label>
+        <input matInput formControlName="plate" placeholder="{{ 'PLATE_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Location</mat-label>
-                <input matInput formControlName="location" placeholder="Location">
-            </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'LOCATION' | translate }}</mat-label>
+        <input matInput formControlName="location" placeholder="{{ 'LOCATION_PLACEHOLDER' | translate }}">
+      </mat-form-field>
 
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Description</mat-label>
-                <textarea matInput formControlName="description" placeholder="Description"></textarea>
-            </mat-form-field>
-        </div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
+        <textarea matInput formControlName="description" placeholder="{{ 'DESCRIPTION_PLACEHOLDER' | translate }}"></textarea>
+      </mat-form-field>
+    </div>
 
-        <div class="section-header">
-            <h3><span class="text-black">PHOTOS</span></h3>
-        </div>
+    <div class="section-header">
+      <h3><span class="text-black">{{ 'PHOTOS' | translate }}</span></h3>
+    </div>
+
 
         <div class="form-section photo-section">
             <label class="custum-file-upload" for="file">
@@ -133,7 +132,7 @@
                     </svg>
                 </div>
                 <div class="text">
-                    <span>Click to upload image</span>
+                  <span>{{ 'CLICK_TO_UPLOAD_IMAGE' | translate }}</span>
                 </div>
                 <input type="file" id="file" (change)="onFileSelected($event)" multiple>
             </label>
@@ -149,10 +148,10 @@
         </div>
     </form>
 
-    <div class="submit-button">
-        <button mat-raised-button color="primary" type="button" (click)="openPublicationPreview()">Preview Car</button>
-        <button mat-raised-button color="accent" type="submit" (click)="onSubmit()">Publish Car</button>
-    </div>
+  <div class="submit-button">
+    <button mat-raised-button color="primary" type="button" (click)="openPublicationPreview()">{{ 'PREVIEW_CAR' | translate }}</button>
+    <button mat-raised-button color="accent" type="submit" (click)="onSubmit()">{{ 'PUBLISH_CAR' | translate }}</button>
+  </div>
 
 
     <div class="modal-overlay" *ngIf="showPreviewModal" (click)="closePreviewModal()">
@@ -194,13 +193,13 @@
                                 </li>
                                 <li>
                                     <div class="item">
-                                        <i class="fas fa-road"></i>
+                                      <i class="fas fa-tachometer-alt"></i>
                                         <p>{{ carForm.value.speed || 'Speed' }}p/h</p>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="item">
-                                        <i class="fas fa-gas-pump"></i>
+                                      <i class="fas fa-road"></i>
                                         <p>{{ carForm.value.mileage || 'Mileage' }}km</p>
                                     </div>
                                 </li>
@@ -216,20 +215,19 @@
                 </div>
 
                 <div class="additional-info-column">
-                    <h3 class="additional-title">Additional Information</h3>
+                    <h3 class="additional-title">{{ 'ADDITIONAL_INFORMATION' | translate }}</h3>
                     <ul class="additional-info-list">
-                        <li><strong>Name:</strong> {{ carForm.value.name || 'N/A' }}</li>
-                        <li><strong>Phone:</strong> {{ carForm.value.phone || 'N/A' }}</li>
-                        <li><strong>Email:</strong> {{ carForm.value.email || 'N/A' }}</li>
-                        <li><strong>Transmission:</strong> {{ carForm.value.transmission || 'N/A' }}</li>
-                        <li><strong>Engine Capacity:</strong> {{ carForm.value.engine || 'N/A' }}</li>
-                        <li><strong>Number of Doors:</strong> {{ carForm.value.doors || 'N/A' }}</li>
-                        <li><strong>Plate:</strong> {{ carForm.value.plate || 'N/A' }}</li>
-                        <li><strong>Location:</strong> {{ carForm.value.location || 'N/A' }}</li>
+                      <li><strong>{{ 'NAME' | translate }}:</strong> {{ carForm.value.name || 'N/A' }}</li>
+                      <li><strong>{{ 'PHONE' | translate }}:</strong> {{ carForm.value.phone || 'N/A' }}</li>
+                      <li><strong>{{ 'EMAIL' | translate }}:</strong> {{ carForm.value.email || 'N/A' }}</li>
+                      <li><strong>{{ 'TRANSMISSION' | translate }}:</strong> {{ carForm.value.transmission || 'N/A' }}</li>
+                      <li><strong>{{ 'ENGINE_CAPACITY' | translate }}:</strong> {{ carForm.value.engine || 'N/A' }}</li>
+                      <li><strong>{{ 'DOORS' | translate }}:</strong> {{ carForm.value.doors || 'N/A' }}</li>
+                      <li><strong>{{ 'PLATE' | translate }}:</strong> {{ carForm.value.plate || 'N/A' }}</li>
+                      <li><strong>{{ 'LOCATION' | translate }}:</strong> {{ carForm.value.location || 'N/A' }}</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<app-footer></app-footer>

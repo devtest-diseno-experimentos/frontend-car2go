@@ -109,7 +109,7 @@
 
 
 .down-content {
-  padding: 20px;
+  padding: 10px;
   text-align: left;
 }
 
@@ -423,6 +423,7 @@ td {
     display: block;
     width: 100%;
   }
+
 }
 
 @media (min-width: 768px) {
@@ -439,7 +440,7 @@ td {
 
 @media (max-width: 600px) {
   .car-item {
-    width: 90%;
-    max-width: 300px;
+    width: 100%;
+    max-width: 400px;
   }
 }

@@ -1,45 +1,21 @@
-<app-toolbar></app-toolbar>
 <div class="container">
   <div class="header">
     <div>
       <h1 class="title">
-        <span class="black-text">TECHNICAL</span>
-        <span class="yellow-text">REVIEW</span>
+        <span class="black-text">{{ 'TECHNICAL' | translate }}</span>
+        <span class="yellow-text">{{ 'REVIEW' | translate }}</span>
       </h1>
       <div class="underline"></div>
     </div>
     <div class="button-container">
-      <button class="redirect-button" (click)="redirectToMTC()">Technical Document</button>
+      <button class="redirect-button" (click)="redirectToMTC()">{{ 'TECHNICAL_DOCUMENT' | translate }}</button>
     </div>
   </div>
 
   <div class="content">
-    <p>
-      La aplicación del Sello de Vehículo Certificado está disponible exclusivamente para los anuncios de tipo Premium o Destacado en la categoría de autos.
-      La verificación es realizada por IBR PERU S.A. e incluye: la búsqueda de papeletas en ocho (08) ciudades del país (Lima, Callao, Trujillo, Cusco, Cajamarca,
-      Piura, Ica y Arequipa), el estado de pago del impuesto vehicular, la revisión técnica vigente, el SOAT activo y el estado de inscripción del vehículo y sus
-      asientos registrales en la Superintendencia Nacional de Registros Públicos (SUNARP). Además, se incluye una revisión mecánica, coordinada directamente por
-      Car2Go S.A.C. con talleres especializados.
-    </p>
-
-    <p>
-      En el caso de los usuarios que opten por nuestros planes de suscripción, Car2Go S.A.C. cubre el costo de la revisión técnica de los vehículos, lo que garantiza
-      que tu auto siempre estará en regla y con todos los documentos al día. Car2Go S.A.C. no se hace responsable por cargas, gravámenes, sanciones u otros aspectos
-      similares que se generen con posterioridad a la fecha de verificación indicada.
-    </p>
-
-    <p>
-      En caso de que el estudio presente observaciones, se podrá realizar la regularización del pago de papeletas, impuesto vehicular, revisión técnica o SOAT dentro de
-      un plazo máximo de siete (07) días calendario, contados a partir de la recepción del primer informe de verificación. Para realizar esta subsanación, se deberá adjuntar
-      el PDF del estudio de placa enviado, la fecha de recepción del correo de verificación, el comprobante de pago de la regularización correspondiente, la tarjeta de propiedad
-      del vehículo y el detalle del documento a verificar.
-    </p>
-
-    <p>
-      Es importante señalar que la adquisición de un anuncio de tipo Premium o Destacado incluye un (1) estudio de placa para la obtención del Sello de Vehículo Certificado.
-      Por lo tanto, si es necesario subsanar o regularizar el estudio de placas observado, se deberá abonar un monto de S/.10.00 (Diez y 00/100 soles), incluido IGV, por cada
-      proceso de revalidación.
-    </p>
+    <p>{{ 'CERTIFIED_VEHICLE_SEAL_INFO' | translate }}</p>
+    <p>{{ 'SUBSCRIPTION_PLAN_BENEFITS' | translate }}</p>
+    <p>{{ 'OBSERVATION_REGULARIZATION_INFO' | translate }}</p>
+    <p>{{ 'PREMIUM_ANNOUNCEMENT_INFO' | translate }}</p>
   </div>
 </div>
-<app-footer></app-footer>

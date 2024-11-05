@@ -1,7 +1,5 @@
-<app-toolbar></app-toolbar>
-
-<div class="car-wrapper">
-  <div class="car-header">
+<div  class="car-wrapper">
+  <div *ngIf="cars.length > 0" class="car-header">
     <div class="icon-wrapper">
       <div class="icon-circle">
         <i class="fa fa-car"></i>
@@ -9,8 +7,8 @@
       <div class="header-underline"></div>
     </div>
     <div class="text-content">
-      <h2>MY CARS</h2>
-      <span>Here are the cars you have listed</span>
+      <h2>{{ 'MY_CARS' | translate }}</h2>
+      <span>{{ 'CARS_LISTED_MESSAGE' | translate }}</span>
     </div>
   </div>
 
@@ -19,9 +17,9 @@
       <div class="icon-wrapper">
         <i class="fa fa-heart-broken"></i>
       </div>
-      <p>You have not listed any cars yet. <a routerLink="/car-listing-form">Create a new car</a>.</p>
+      <p>{{ 'NO_CARS_LISTED' | translate }} <a routerLink="/car-listing-form">{{ 'CREATE_NEW_CAR' | translate }}</a>.</p>
     </div>
-    <div *ngFor="let car of cars" class="car-item">
+    <div *ngFor="let car of cars" class="car-item" (click)="navigateToCarDetails(car.id)">
       <div class="thumb-content">
         <div class="car-banner"></div>
         <div class="thumb-inner">
@@ -34,7 +32,6 @@
         <div class="title-favorite-wrapper">
           <a>
             <h4>{{ car.brand }} {{ car.model }}</h4>
-
           </a>
           <button class="delete-button" (click)="deleteCar(car.id); $event.stopPropagation()">
             <i class="fa fa-trash"></i>
@@ -53,13 +50,13 @@
           <li>
             <div class="item">
               <i class="fas fa-road"></i>
-              <p>{{ car.speed }}p/h</p>
+              <p>{{ car.speed }}{{ 'SPEED_UNIT' | translate }}</p>
             </div>
           </li>
           <li>
             <div class="item">
               <i class="fas fa-gas-pump"></i>
-              <p>{{ car.mileage }}km</p>
+              <p>{{ car.mileage }}{{ 'MILEAGE_UNIT' | translate }}</p>
             </div>
           </li>
           <li>
@@ -69,9 +66,7 @@
             </div>
           </li>
         </ul>
-
       </div>
     </div>
   </div>
 </div>
-<app-footer></app-footer>

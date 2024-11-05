@@ -542,14 +542,38 @@ body.modal-open {
   .modal-content {
     width: 50%;
   }
+
 }
 
 @media (max-width: 991px) {
   .car-item {
     width: 300px;
   }
-  .full-width {
-    flex: 1 1 100%;
+
+
+
+  .modal-preview-car {
+    max-width: 60%;
+    max-height: 80vh;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .preview-columns {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .additional-info-column {
+    padding-left: 0;
+    padding-top: 10px;
+  }
+
+  .close-button {
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
   }
 }
 
@@ -560,5 +584,38 @@ body.modal-open {
   }
   .full-width {
     flex: 1 1 100%;
+  }
+  .modal-preview-car {
+    margin-top: 230px;
+    width: 90%;
+    max-width: 90%;
+    max-height: 60vh;
+    padding: 10px;
+  }
+
+  .modal-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .preview-columns {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .additional-info-list li {
+    font-size: 14px;
+  }
+
+  .additional-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .close-button {
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
   }
 }

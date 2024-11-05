@@ -1,5 +1,3 @@
-<app-toolbar></app-toolbar>
-
 <section class="profile-background">
   <div class="profile-banner">
     <img src="assets/background-profile.png" alt="Background Banner" class="banner-image">
@@ -18,22 +16,22 @@
           <h2 *ngIf="!editMode" class="profile-name">{{ userData.firstName }} {{ userData.lastName }}</h2>
           <div *ngIf="editMode">
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>First Name</mat-label>
-              <input matInput [(ngModel)]="userData.firstName" placeholder="Enter your first name">
+              <mat-label>{{ 'FIRST_NAME' | translate }}</mat-label>
+              <input matInput [(ngModel)]="userData.firstName" placeholder="{{ 'FIRST_NAME_PLACEHOLDER' | translate }}">
             </mat-form-field>
             <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Last Name</mat-label>
-              <input matInput [(ngModel)]="userData.lastName" placeholder="Enter your last name">
+              <mat-label>{{ 'LAST_NAME' | translate }}</mat-label>
+              <input matInput [(ngModel)]="userData.lastName" placeholder="{{ 'LAST_NAME_PLACEHOLDER' | translate }}">
             </mat-form-field>
           </div>
           <p class="profile-role">
             <span class="role">
             <span class="material-symbols-outlined role-icon">
             {{  currentRole === 'ROLE_SELLER' ? 'store' :
-                currentRole === 'ROLE_MECHANIC' ? 'build' :
+              currentRole === 'ROLE_MECHANIC' ? 'build' :
                 currentRole === 'ROLE_BUYER' ? 'car_tag' : 'person' }}
             </span>
-            {{ getRoleDisplayName(currentRole) }}
+              {{ getRoleDisplayName(currentRole) }}
                 </span>
             <span class="email">
             <span class="material-symbols-outlined email-icon">email</span>
@@ -42,29 +40,29 @@
             <ng-container *ngIf="currentRole === 'ROLE_SELLER' && subscriptionData">
               <span class="subscription">
                 <span class="material-symbols-outlined subscription-icon">credit_card</span>
-                {{ subscriptionData.description }}
+                {{ subscriptionData.description | translate  }}
               </span>
             </ng-container>
           </p>
         </div>
         <button mat-raised-button color="primary" class="edit-button" (click)="editMode ? onSave() : toggleEditMode()">
-          {{ editMode ? 'Save' : 'Edit' }}
+          {{ editMode ? ('SAVE' | translate) : ('EDIT' | translate) }}
         </button>
       </div>
 
       <hr class="profile-divider">
-      <h3 class="personal-data">PERSONAL DATA</h3>
+      <h3 class="personal-data">{{ 'PERSONAL_DATA' | translate }}</h3>
       <div class="profile-info-row">
         <div class="profile-info-item">
-          <p><strong>DNI</strong></p>
+          <p><strong>{{ 'DNI' | translate }}</strong></p>
           <p>{{ userData.dni }}</p>
         </div>
         <div class="profile-info-item">
-          <p><strong>Phone</strong></p>
+          <p><strong>{{ 'PHONE' | translate }}</strong></p>
           <p>{{ userData.phone }}</p>
         </div>
         <div class="profile-info-item">
-          <p><strong>Address</strong></p>
+          <p><strong>{{ 'ADDRESS' | translate }}</strong></p>
           <p>{{ userData.address }}</p>
         </div>
       </div>
@@ -74,7 +72,7 @@
 
     <ng-container *ngIf="currentRole === 'ROLE_BUYER'">
       <div class="profile-payment-methods">
-        <h3>RECENT FAVORITES</h3>
+        <h3>{{ 'RECENT_FAVORITES' | translate }}</h3>
         <div class="payment-methods-container">
           <div *ngFor="let favorite of recentFavorites" class="payment-method" (click)="navigateToCarDetails(favorite.vehicle.id)">
             <div class="bank-logo">
@@ -91,7 +89,7 @@
 
     <ng-container *ngIf="currentRole === 'ROLE_SELLER'">
       <div class="profile-payment-methods">
-        <h3>PAYMENT METHODS</h3>
+        <h3>{{ 'PAYMENT_METHODS' | translate }}</h3>
 
         <div class="payment-methods-container" *ngIf="!editMode && userData.paymentMethods && userData.paymentMethods.length > 0">
           <div *ngFor="let method of userData.paymentMethods" class="payment-method">
@@ -103,8 +101,8 @@
               <img *ngIf="method.type === 'Banco de la Nación'" src="assets/bn.jpg" alt="Banco de la Nación">
             </div>
             <div class="payment-info">
-            <p>{{ method.type }}</p>
-            <p><strong>Account Number:</strong> {{ method.details }}</p>
+              <p>{{ method.type }}</p>
+              <p><strong>{{ 'ACCOUNT_NUMBER' | translate }}:</strong> {{ method.details }}</p>
             </div>
           </div>
         </div>
@@ -114,8 +112,8 @@
             <ng-container *ngIf="!method.markedForDeletion">
               <div class="payment-edit-fields">
                 <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Type</mat-label>
-                  <mat-select [(ngModel)]="method.type" placeholder="Select Bank Type">
+                  <mat-label>{{ 'TYPE' | translate }}</mat-label>
+                  <mat-select [(ngModel)]="method.type" placeholder="{{ 'SELECT_BANK_TYPE' | translate }}">
                     <mat-option value="BBVA">BBVA</mat-option>
                     <mat-option value="BCP">BCP</mat-option>
                     <mat-option value="Scotiabank">Scotiabank</mat-option>
@@ -125,8 +123,8 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Account Number</mat-label>
-                  <input matInput [(ngModel)]="method.details" placeholder="Enter account number">
+                  <mat-label>{{ 'ACCOUNT_NUMBER' | translate }}</mat-label>
+                  <input matInput [(ngModel)]="method.details" placeholder="{{ 'ACCOUNT_NUMBER_PLACEHOLDER' | translate }}">
                 </mat-form-field>
               </div>
 
@@ -136,7 +134,7 @@
             </ng-container>
           </div>
           <button mat-raised-button color="primary" class="add-payment-button" (click)="handleAddPaymentClick()">
-            Add
+            {{ 'ADD' | translate }}
           </button>
         </div>
       </div>
@@ -144,7 +142,7 @@
 
     <ng-container *ngIf="currentRole === 'ROLE_MECHANIC'">
       <div class="profile-payment-methods">
-        <h3>RECENT REVIEWS</h3>
+        <h3>{{ 'RECENT_REVIEWS' | translate }}</h3>
         <div class="payment-methods-container">
           <div *ngFor="let review of recentReviews" class="payment-method">
             <div class="bank-logo">
@@ -158,7 +156,5 @@
         </div>
       </div>
     </ng-container>
-
-
   </div>
 </section>

@@ -1,7 +1,6 @@
-<app-toolbar></app-toolbar>
 <section>
   <div class="car-wrapper">
-    <div class="car-header">
+    <div *ngIf="favorites.length > 0" class="car-header">
       <div class="icon-wrapper">
         <div class="icon-circle">
           <i class="fa fa-star"></i>
@@ -9,9 +8,16 @@
         <div class="header-underline"></div>
       </div>
       <div class="text-content">
-        <h2>MY FAVORITES</h2>
-        <span>Here are your favorite cars</span>
+        <h2>{{ 'MY_FAVORITES' | translate }}</h2>
+        <span>{{ 'YOUR_FAVORITE_CARS' | translate }}</span>
       </div>
+    </div>
+
+    <div *ngIf="favorites.length === 0" class="no-cars-message">
+      <div class="icon-wrapper">
+        <i class="fa fa-heart-broken"></i>
+      </div>
+      <p>{{ 'NO_FAVORITES_MESSAGE' | translate }} <a routerLink="/car-listing">{{ 'EXPLORE_CARS' | translate }}</a> {{ 'TO_ADD_FAVORITES' | translate }}</p>
     </div>
 
     <div class="car-container">
@@ -22,7 +28,7 @@
         <div class="content-horizontal">
           <div class="title-favorite-wrapper">
             <a>
-              <h4>{{ favorite.vehicle.brand }}   {{favorite.vehicle.model}}</h4>
+              <h4>{{ favorite.vehicle.brand }} {{ favorite.vehicle.model }}</h4>
             </a>
             <button class="delete-button" (click)="removeFavorite(favorite.vehicle.id); $event.stopPropagation()">
               <i class="fa fa-trash"></i>
@@ -39,14 +45,14 @@
             </li>
             <li>
               <div class="item">
-                <i class="fas fa-road"></i>
-                <p>{{ favorite.vehicle.speed }} p/h</p>
+                <i class="fas fa-tachometer-alt"></i>
+                <p>{{ favorite.vehicle.speed }} {{ 'SPEED_UNIT' | translate }}</p>
               </div>
             </li>
             <li>
               <div class="item">
-                <i class="fas fa-gas-pump"></i>
-                <p>{{ favorite.vehicle.mileage }} km</p>
+                <i class="fas fa-road"></i>
+                <p>{{ favorite.vehicle.mileage }} {{ 'MILEAGE_UNIT' | translate }}</p>
               </div>
             </li>
             <li>
@@ -71,4 +77,3 @@
     </div>
   </div>
 </section>
-<app-footer></app-footer>

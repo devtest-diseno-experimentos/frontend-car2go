@@ -1,8 +1,6 @@
-<app-toolbar></app-toolbar>
-
 <div class="container">
   <div *ngIf="pendingCars.length === 0">
-    <p>No cars pending for review.</p>
+    <p>{{ 'NO_CARS_PENDING_REVIEW' | translate }}</p>
   </div>
 
   <div *ngFor="let car of pendingCars">
@@ -33,30 +31,28 @@
           </div>
 
           <div class="owner-info">
-            <h4>Owner Information</h4>
-            <p><strong>Name:</strong> {{ car.name }}</p>
-            <p><strong>Phone:</strong> {{ car.phone }}</p>
-            <p><strong>Email:</strong> {{ car.email }}</p>
+            <h4>{{ 'OWNER_INFORMATION' | translate }}</h4>
+            <p><strong>{{ 'OWNER_NAME' | translate }}:</strong> {{ car.name }}</p>
+            <p><strong>{{ 'OWNER_PHONE' | translate }}:</strong> {{ car.phone }}</p>
+            <p><strong>{{ 'OWNER_EMAIL' | translate }}:</strong> {{ car.email }}</p>
           </div>
           <div class="checkbox-container">
             <label class="checkbox-label">
               <input type="checkbox" [(ngModel)]="review.isApproved" class="styled-checkbox"/>
               <span class="custom-checkbox"></span>
-              Approved
+              {{ 'APPROVED' | translate }}
             </label>
           </div>
-
         </div>
       </div>
 
       <div class="row">
         <div class="review-section">
-          <p><strong>Review Document</strong></p>
-          <textarea [(ngModel)]="car.reviewNotes" placeholder="Add review notes here..."></textarea>
+          <p><strong>{{ 'REVIEW_DOCUMENT' | translate }}</strong></p>
+          <textarea [(ngModel)]="car.reviewNotes" placeholder="{{ 'REVIEW_NOTES_PLACEHOLDER' | translate }}"></textarea>
         </div>
 
-
-        <button (click)="createCarReview(car, car.reviewNotes)">Create Review</button>
+        <button (click)="createCarReview(car, car.reviewNotes)">{{ 'CREATE_REVIEW' | translate }}</button>
       </div>
     </mat-card>
   </div>

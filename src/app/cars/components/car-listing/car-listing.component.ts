@@ -48,6 +48,10 @@ export class CarListingComponent implements OnInit {
     );
   }
 
+  filteredCars() {
+    return this.paginatedCars.filter(car => car.status === 'REVIEWED');
+  }
+
   updatePaginatedCars() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     this.paginatedCars = this.cars.slice(startIndex, startIndex + this.pageSize);

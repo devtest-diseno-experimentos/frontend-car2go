@@ -187,7 +187,6 @@ export class ProfileFormComponent {
         }
       },
       error => {
-        this.snackBar.open('Error checking subscription', 'Close', { duration: 3000 });
         this.router.navigate(['/plan']);
       }
     );

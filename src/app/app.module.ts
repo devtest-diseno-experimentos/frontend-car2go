@@ -3,7 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 
@@ -54,7 +56,11 @@ import { CdkDrag, CdkDropList } from "@angular/cdk/drag-drop";
 import { ProfileFormComponent } from './profiles/components/profile-form/profile-form.component';
 import { AuthenticationInterceptor } from "./register/services/authentication.interceptor.service";
 import { AuthenticationSectionComponent } from "./register/components/authentication-section/authentication-section.component";
+import { LanguageSwitcherComponent } from './public/components/language-switcher/language-switcher.component';
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -80,13 +86,21 @@ import { AuthenticationSectionComponent } from "./register/components/authentica
     SendDataComponent,
     TechnicalReviewComponent,
     ProfileFormComponent,
-    AuthenticationSectionComponent
+    AuthenticationSectionComponent,
+    LanguageSwitcherComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -112,7 +126,7 @@ import { AuthenticationSectionComponent } from "./register/components/authentica
     NgOptimizedImage,
     CdkDropList,
     CdkDrag,
-    MatProgressSpinnerModule // Usar el nombre correcto del módulo de Angular Material
+    MatProgressSpinnerModule
   ],
   providers: [
     {

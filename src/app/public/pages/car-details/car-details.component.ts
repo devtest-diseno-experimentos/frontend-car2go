@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { ActivatedRoute } from '@angular/router';
 import { CarService } from '../../../cars/services/car/car.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-car-details',
@@ -31,12 +32,13 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private carService: CarService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackBar: MatSnackBar
   ) {
     this.carForm = this.fb.group({
-      name: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-      email: ['', [Validators.required, Validators.email]],
+      name: [{ value: '', disabled: true }, Validators.required],
+      phone: [{ value: '', disabled: true }, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+      email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
       brand: ['', Validators.required],
       model: ['', Validators.required],
       color: ['', Validators.required],
@@ -280,12 +282,15 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
 
   async editCar() {
     if (this.carForm.valid) {
+      this.carForm.get('name')?.enable();
+      this.carForm.get('phone')?.enable();
+      this.carForm.get('email')?.enable();
+
       const updatedCar = {
         ...this.carForm.value,
         images: [...this.images],
         userId: this.car.userId,
         status: this.car.status
-
       };
 
       for (let imageFile of this.newImages) {
@@ -301,13 +306,19 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
           this.images = updatedCar.images;
           this.tempImages = [];
           this.newImages = [];
+          this.updateImages();
           this.closeEditModal();
-          console.log('Car updated', response);
+          this.snackBar.open('Car updated successfully!', 'Close', {duration: 3000});
         },
         (error) => {
+          this.snackBar.open('Error updating car', 'Close', {duration: 3000});
           console.error('Error', error);
         }
       );
+
+      this.carForm.get('name')?.disable();
+      this.carForm.get('phone')?.disable();
+      this.carForm.get('email')?.disable();
     }
   }
 

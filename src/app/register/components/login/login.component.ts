@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   isSignedIn: boolean = false;
   httpOptions: any;
 
+
   private baseURL = environment.serverBasePath;
 
   constructor(
@@ -64,25 +65,21 @@ export class LoginComponent implements OnInit {
         this.checkUserProfile().pipe(
           switchMap(hasProfile => {
             if (!hasProfile) {
-              // If the user doesn't have a profile, redirect to the profile creation page
               this.router.navigate(['/profile-form']);
-              return of(null); // End the operation here if no profile exists
+              return of(null);
             } else if (userRole === 'ROLE_SELLER') {
-              // If the user is a seller and has a profile, check the subscription
-              return this.checkUserSubscription();
+              this.router.navigate(['/my-cars']);
+              return of(null);
             } else {
-              // For other roles, redirect to home if they have a profile
               this.router.navigate(['/home']);
               return of(null);
             }
           })
-        ).subscribe(subscriptionStatus => {
+      ).subscribe(subscriptionStatus => {
           if (subscriptionStatus === 'has-subscription') {
-            // If the user already has an active subscription, send them to home
-            this.router.navigate(['/home']);
-            this.snackBar.open('Login successful! Redirecting to home.', 'Close', { duration: 3000 });
+            this.router.navigate(['/my-cars']);
+            this.snackBar.open('Login successful! ENJOY :) .', 'Close', { duration: 3000 });
           } else if (subscriptionStatus === 'no-subscription') {
-            // If they have a profile but no subscription, redirect to the plans page
             this.router.navigate(['/plan']);
             this.snackBar.open('You need a subscription. Redirecting to plans.', 'Close', { duration: 3000 });
           }
@@ -101,11 +98,10 @@ export class LoginComponent implements OnInit {
         this.snackBar.open('Error fetching user profile', 'Close', { duration: 3000 });
         return of(null);
       }),
-      map(profile => !!profile) // Return true if there is a profile, false if not
+      map(profile => !!profile)
     );
   }
 
-  // Check if the user has an active subscription (with status 'PAID')
   private checkUserSubscription() {
     return this.subscriptionService.getMySubscription().pipe(
       map(subscription => {
@@ -128,4 +124,6 @@ export class LoginComponent implements OnInit {
   onSignOut() {
     this.authenticationService.signOut();
   }
+
+
 }
