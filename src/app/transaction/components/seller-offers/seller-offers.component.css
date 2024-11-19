@@ -1,0 +1,153 @@
+/* General Styles */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.transaction-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.transaction-card {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.horizontal-card {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding: 16px;
+}
+
+.horizontal-card-content {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 16px;
+  flex: 1;
+}
+
+.vehicle-image {
+  width: 250px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-details,
+.buyer-details,
+.seller-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background-color: #f9f9f9;
+}
+
+.transaction-details {
+  background-color: #eef7ff;
+}
+
+.buyer-details,
+.seller-details {
+  background-color: #f9f9f9;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+mat-card-actions {
+  margin-top: 16px;
+}
+
+.pending-status {
+  color: orange;
+}
+
+.completed-status {
+  color: green;
+  font-weight: bold;
+}
+
+.cancelled-status {
+  color: red;
+  font-weight: bold;
+}
+
+.no-transactions {
+  text-align: center;
+  color: gray;
+  margin-top: 20px;
+}
+
+h4 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: #333;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 4px;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filter-dropdown {
+  width: 300px;
+}
+
+@media (max-width: 768px) {
+  .transaction-container {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .horizontal-card {
+    flex-direction: column !important;
+    width: 90% !important;
+  }
+
+  .vehicle-image {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .transaction-details,
+  .buyer-details,
+  .seller-details {
+    flex: none !important;
+    width: 100% !important;
+    margin-top: 16px !important;
+  }
+
+  h4 {
+    font-size: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-dropdown {
+    width: 100% !important;
+  }
+}
+

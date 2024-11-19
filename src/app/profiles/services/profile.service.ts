@@ -11,16 +11,20 @@ export class ProfileService {
 
   constructor(private http: HttpClient) {}
 
-  getProfileByUserId(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}?userId=${userId}`);
+  getProfileById(profileId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${profileId}`);
   }
+
 
   updateUserProfile(id: number, userData: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, userData);
   }
 
-  // Método para actualizar el perfil
   createUserProfile(userData: any): Observable<any> {
     return this.http.post(this.apiUrl, userData);
+  }
+
+  getCurrentProfile(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/me`);
   }
 }

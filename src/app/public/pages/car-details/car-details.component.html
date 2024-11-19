@@ -137,8 +137,11 @@
         </div>
 
         <div class="buttons">
-          <button routerLink="/send-data" class="offer-button">{{ 'ADD_OFFER' | translate }}</button>
+          <button [routerLink]="['/send-data', car?.id]" class="offer-button">
+            {{ 'ADD_OFFER' | translate }}
+          </button>
         </div>
+
       </div>
     </mat-card>
   </section>

@@ -31,19 +31,27 @@
     <div class="data-container">
       <div class="info-card wide">
         <h3>Datos - Comprador</h3>
-        <p><strong>Nombre:</strong> {{ buyerData.name }}</p>
-        <p><strong>Email:</strong> {{ buyerData.email }}</p>
-        <p><strong>Teléfono:</strong> {{ buyerData.telephone }}</p>
-        <p><strong>DNI:</strong> {{ buyerData.dni }}</p>
+        <p><strong>Nombre:</strong> {{ userData.name }}</p>
+        <p><strong>Email:</strong> {{ userData.email }}</p>
+        <p><strong>Teléfono:</strong> {{ userData.telephone }}</p>
+        <p><strong>DNI:</strong> {{ userData.dni }}</p>
       </div>
       <div class="info-card wide">
         <h3>Datos - Vendedor</h3>
         <p><strong>Nombre:</strong> {{ sellerData.name }}</p>
         <p><strong>Email:</strong> {{ sellerData.email }}</p>
         <p><strong>Teléfono:</strong> {{ sellerData.telephone }}</p>
-        <p><strong>DNI:</strong> {{ sellerData.dni }}</p>
       </div>
     </div>
+
+    <h3>Métodos de Pago del Vendedor</h3>
+    <ul>
+      <li *ngFor="let method of sellerPaymentMethods">
+        <strong>{{ method.type }}</strong>: {{ method.details }}
+      </li>
+    </ul>
+
+
     <h3>Información de Pago</h3>
     <label for="accountNumber">Número de Cuenta</label>
     <input type="text" id="accountNumber" [(ngModel)]="paymentMethods.accountNumber" placeholder="Ej. 1234567890">
@@ -55,11 +63,12 @@
     </div>
   </div>
 
+
   <div *ngIf="currentStep === 3 && !isLoading" class="step-content slide-in">
     <h2>Resumen de Pago</h2>
     <div class="confirmation-info">
-      <p><strong>Nombre del Comprador:</strong> {{ buyerData.name }}</p>
-      <p><strong>Correo Electrónico:</strong> {{ buyerData.email }}</p>
+      <p><strong>Nombre del Comprador:</strong> {{ userData.name }}</p>
+      <p><strong>Correo Electrónico:</strong> {{ userData.email }}</p>
       <p><strong>Número de Cuenta:</strong> {{ paymentMethods.accountNumber }}</p>
       <p><strong>Número de Transacción:</strong> {{ paymentMethods.transactionNumber }}</p>
       <p>El pago ha sido procesado exitosamente. Confirme su compra.</p>
