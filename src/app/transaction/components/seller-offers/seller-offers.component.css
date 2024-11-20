@@ -17,7 +17,7 @@
 .transaction-card {
   display: flex;
   flex-direction: column;
-  max-width: 1000px;
+  max-width: 1100px;
   width: 100%;
   background-color: #ffffff;
   border-radius: 8px;
@@ -39,9 +39,57 @@
   flex: 1;
 }
 
+.icon-wrapper {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.icon-circle {
+  background-color: #f4c23d;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.icon-circle i {
+  font-size: 28px;
+  color: #000;
+}
+
+.text-content h2 {
+  font-size: 22px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #1e1e1e;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.text-content span {
+  display: block;
+  color: #888;
+  font-size: 14px;
+  text-align: center;
+}
+
+.header-underline {
+  width: 50px;
+  height: 4px;
+  background-color: #2959ad;
+  margin: 15px auto;
+  transition: width 0.3s ease-in-out;
+}
+
+.car-header:hover .header-underline {
+  width: 70px;
+}
 .vehicle-image {
-  width: 250px;
-  height: 300px;
+  width: 270px;
+  height: auto;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -116,38 +164,93 @@ h4 {
   width: 300px;
 }
 
+/* Responsive Styles */
+
+/* Tablet-specific adjustments */
 @media (max-width: 768px) {
+  .loader-container {
+    padding: 20px;
+    height: auto; /* Allow the container to adapt */
+    margin: 0 auto;
+  }
+
   .transaction-container {
     flex-direction: column !important;
-    align-items: center !important;
+    gap: 12px !important;
+    margin: 0 auto;
+
   }
 
   .horizontal-card {
     flex-direction: column !important;
-    width: 90% !important;
+    gap: 8px !important;
+    margin: 0 auto;
   }
 
   .vehicle-image {
-    width: 100% !important;
-    height: auto !important;
+    width: 95% !important;
+    height: 300px !important;
+  }
+  .horizontal-card-content {
+    flex-direction: column; /* Cambiar de fila a columna */
+    align-items: center; /* Centrar los cuadros */
   }
 
   .transaction-details,
   .buyer-details,
   .seller-details {
-    flex: none !important;
+    width: 90%; /* Reducir el ancho para centrar mejor */
+    margin-bottom: 16px; /* Espaciado entre los cuadros */
+  }
+  h4 {
+    font-size: 0.9rem !important;
+  }
+
+  .actions button {
     width: 100% !important;
-    margin-top: 16px !important;
+    margin-top: 8px !important;
+  }
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 480px) {
+  .transaction-card {
+    max-width: 90%; /* Ensure card fits smaller screens */
+    margin: 0 auto;
+  }
+
+  .filter-dropdown {
+    width: 100% !important;
+    margin: 0 8px;
+  }
+
+  p {
+    font-size: 0.8rem !important;
+    margin: 4px 0 !important;
   }
 
   h4 {
-    font-size: 1rem !important;
+    font-size: 0.85rem !important;
   }
 }
 
-@media (max-width: 480px) {
-  .filter-dropdown {
-    width: 100% !important;
-  }
+/* General Accessibility Enhancements */
+.loader-container p,
+.no-transactions p {
+  font-size: 1.1rem;
+  text-align: center;
 }
 
+.filter-container select {
+  font-size: 1rem;
+  padding: 8px;
+}
+
+.actions button {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+}
+
+.vehicle-image {
+  border: 2px solid #ddd; /* Better visibility */
+}

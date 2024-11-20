@@ -2,7 +2,31 @@
   <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
   <p>Cargando transacciones...</p>
 </div>
+<div *ngIf="userRole === 'ROLE_SELLER' && filteredTransactions.length > 0"  class="car-header">
+  <div class="icon-wrapper">
+    <div class="icon-circle">
+      <i class="fa fa-star"></i>
+    </div>
+    <div class="header-underline"></div>
+  </div>
+  <div class="text-content">
+    <h2>MIS OFERTAS</h2>
+    <span>Ofertas recibidas para tus vehículos</span>
+  </div>
+</div>
 
+  <div *ngIf="userRole === 'ROLE_BUYER' && filteredTransactions.length > 0"  class="car-header">
+    <div class="icon-wrapper">
+      <div class="icon-circle">
+        <i class="fa fa-star"></i>
+      </div>
+      <div class="header-underline"></div>
+    </div>
+    <div class="text-content">
+      <h2>{{ 'MY_FAVORITES' | translate }}</h2>
+      <span>{{ 'YOUR_FAVORITE_CARS' | translate }}</span>
+    </div>
+  </div>
 <div *ngIf="!isLoading">
   <!-- Filtro por Estado -->
   <div class="filter-container">
@@ -17,28 +41,31 @@
     </mat-form-field>
   </div>
 
+  <!-- Ofertas Recibidas (Rol: Vendedor) -->
   <div *ngIf="userRole === 'ROLE_SELLER' && filteredTransactions.length > 0">
-    <h3>Mis Ofertas Recibidas</h3>
     <div class="transaction-container">
-      <mat-card *ngFor="let transaction of filteredTransactions" class="transaction-card horizontal-card">
+      <mat-card *ngFor="let transaction of filteredTransactions" class="transaction-card">
         <div class="horizontal-card-content">
+          <!-- Imagen del Vehículo -->
           <img
+            routerLink="/car-details/{{ transaction.vehicle.id }}"
             mat-card-image
             [src]="transaction.vehicle.images[0]"
             alt="Imagen del vehículo"
             class="vehicle-image"
           />
 
+          <!-- Detalles de la Transacción -->
           <div class="transaction-details">
             <mat-card-content>
               <h4>Detalles de la Transacción</h4>
-              <p><strong>ID Transacción:</strong> {{ transaction.transactionId }}</p>
               <p><strong>Estado:</strong> {{ transaction.paymentStatus }}</p>
               <p><strong>Monto:</strong> ${{ transaction.amount }}</p>
               <p><strong>Fecha:</strong> {{ transaction.createdAt | date }}</p>
             </mat-card-content>
           </div>
 
+          <!-- Datos del Comprador -->
           <div class="buyer-details">
             <mat-card-content>
               <h4>Datos del Comprador</h4>
@@ -64,7 +91,7 @@
                 Cancelar
               </button>
               <p *ngIf="transaction.paymentStatus === 'COMPLETED'" class="completed-status">
-                 Has completado esta transacción.
+                Has completado esta transacción.
               </p>
               <p *ngIf="transaction.paymentStatus === 'CANCELLED'" class="cancelled-status">
                 Has cancelado esta transacción.
@@ -76,29 +103,32 @@
     </div>
   </div>
 
-
+  <!-- Compras (Rol: Comprador) -->
   <div *ngIf="userRole === 'ROLE_BUYER' && filteredTransactions.length > 0">
-    <h3>Mis Compras</h3>
     <div class="transaction-container">
-      <mat-card *ngFor="let transaction of filteredTransactions" class="transaction-card horizontal-card">
+      <mat-card *ngFor="let transaction of filteredTransactions" class="transaction-card">
         <div class="horizontal-card-content">
+          <!-- Imagen del Vehículo -->
           <img
+            routerLink="/car-details/{{ transaction.vehicle.id }}"
             mat-card-image
             [src]="transaction.vehicle.images[0]"
             alt="Imagen del vehículo"
             class="vehicle-image"
           />
 
+          <!-- Detalles de la Transacción -->
           <div class="transaction-details">
             <mat-card-content>
               <h4>Detalles de la Transacción</h4>
               <p><strong>Vehículo:</strong> {{ transaction.vehicle.brand }} {{ transaction.vehicle.model }}</p>
               <p><strong>Precio:</strong> ${{ transaction.vehicle.price }}</p>
-              <p><strong>ID Transacción:</strong> {{ transaction.transactionId }}</p>
+              <p><strong>ID Transacción:</strong> {{ transaction.createdAt | date }}</p>
               <p><strong>Estado:</strong> {{ transaction.paymentStatus }}</p>
             </mat-card-content>
           </div>
 
+          <!-- Datos del Vendedor -->
           <div class="seller-details">
             <mat-card-content>
               <h4>Datos del Vendedor</h4>
@@ -106,13 +136,26 @@
               <p><strong>Email:</strong> {{ transaction.seller.email }}</p>
               <p><strong>Teléfono:</strong> {{ transaction.seller.phone }}</p>
             </mat-card-content>
+            <mat-card-actions>
+              <!-- Mensajes personalizables para cada estado -->
+              <p *ngIf="transaction.paymentStatus === 'PENDING'" class="pending-status">
+                El vendedor pronto se pondrá en contacto contigo.
+              </p>
+              <p *ngIf="transaction.paymentStatus === 'COMPLETED'" class="completed-status">
+                ¡Felicidades! El vendedor aceptó tu oferta. Por favor, ponte en contacto con él para finalizar el proceso.
+              </p>
+              <p *ngIf="transaction.paymentStatus === 'CANCELLED'" class="cancelled-status">
+                Lamentamos que esta transacción haya sido cancelada. ¡Sigue buscando, hay muchos vehículos esperándote!
+              </p>
+            </mat-card-actions>
           </div>
         </div>
       </mat-card>
     </div>
   </div>
 
-  <!-- SIN TRANSACCIONES -->
+
+  <!-- Sin Transacciones -->
   <div *ngIf="filteredTransactions.length === 0" class="no-transactions">
     <mat-icon color="warn">info</mat-icon>
     <p>No hay transacciones disponibles para este estado.</p>
