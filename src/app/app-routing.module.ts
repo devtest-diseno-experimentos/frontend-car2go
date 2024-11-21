@@ -40,12 +40,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'favorites', component: FavoritesComponent },
   { path: 'pay', component: PayComponent },
- // { path: 'send-data', component: SendDataComponent },
   { path: 'technical-review', component: TechnicalReviewComponent },
   { path: 'send-data/:vehicleId', component: VehiclePaymentStepperComponent },
-
-
-  {path: 'seller-offers', component: SellerOffersComponent},
+  {path: 'offers', component: SellerOffersComponent},
   { path: '**', component: PageNotFoundComponent }
 ];
 

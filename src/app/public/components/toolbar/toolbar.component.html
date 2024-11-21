@@ -14,6 +14,7 @@
         </li>
         <li><a routerLink="/car-listing-form" (click)="closeMenu()">{{ 'SELL_CARS' | translate }}</a></li>
         <li><a routerLink="/my-cars" (click)="closeMenu()">{{ 'MY_CARS' | translate }}</a></li>
+        <li><a routerLink="/offers" (click)="closeMenu()">{{ 'OFFERS' | translate }}</a></li>
         <li *ngIf="isMenuOpen">
           <a routerLink="/profile" (click)="closeMenu()">
             {{ 'PROFILE' | translate }}
@@ -80,6 +81,7 @@
         <li><a routerLink="/home" (click)="closeMenu()">{{ 'HOME' | translate }}</a></li>
         <li><a routerLink="/favorites" (click)="closeMenu()">{{ 'MY_FAVORITES' | translate }}</a></li>
         <li><a routerLink="/car-listing" (click)="closeMenu()">{{ 'CAR_LISTING' | translate }}</a></li>
+        <li><a routerLink="/offers" (click)="closeMenu()">{{ 'OFFERS' | translate }}</a></li>
         <li *ngIf="isMenuOpen">
           <a routerLink="/profile" (click)="closeMenu()">
             {{ 'PROFILE' | translate }}

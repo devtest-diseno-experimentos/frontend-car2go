@@ -193,5 +193,27 @@
   "VIEW_SUMMARY": "Ver Resumen",
   "YOUR_PRODUCTS": "Tu Elección",
   "TOTAL_PAY": "Total a pagar",
-  "MAKE_PAYMENT": "Realizar Pago"
+  "MAKE_PAYMENT": "Realizar Pago",
+  "OFFERS": "Mis Ofertas",
+  "CONFIRM_DETAILS": "Confirmar Datos",
+  "SELECT_CONTACT_METHOD": "Seleccionar Método de Contacto",
+  "TRANSACTION_CONFIRMATION": "Confirmación de Transacción",
+  "LOADING_OFFER": "Enviando su oferta...",
+  "APPLICANT_INFORMATION": "Información del Solicitante",
+  "CONFIRM_INFORMATION": "Confirme su Información",
+  "REVIEW_BEFORE_CONTINUING": "Revise sus datos antes de continuar con la solicitud de oferta.",
+  "NEXT": "Siguiente",
+  "PREVIOUS": "Anterior",
+  "VEHICLE_DETAILS": "Detalles del Vehículo",
+  "PRICE_2": "Precio",
+  "SELLER": "Vendedor",
+  "SELECT_CONTACT_METHOD_PROMPT": "Seleccione un Método de Contacto",
+  "CONTACT_METHOD_SELECTED": "Método seleccionado",
+  "OFFER_SUMMARY": "Resumen de la Oferta",
+  "PAYMENT_METHOD": "Método de Pago",
+  "DETAILS": "Detalles",
+  "SENT_OFFER": "Oferta Enviada",
+  "THANK_YOU_MESSAGE": "¡Gracias! Su solicitud de oferta ha sido enviada al vendedor.",
+  "FINISH": "Finalizar"
+
 }

@@ -1,80 +1,76 @@
 <div class="stepper-container">
+  <!-- Indicador de pasos -->
   <div class="steps-indicator">
     <div class="progress-bar" [style.width]="getProgressWidth()"></div>
-    <div class="step" [class.active]="currentStep === 1">1. <i class="material-icons">person</i> Confirmar Datos</div>
-    <div class="step" [class.active]="currentStep === 2">2. <i class="material-icons">shopping_cart</i> Información de Compra</div>
-    <div class="step" [class.active]="currentStep === 3">3. <i class="material-icons">check_circle</i> Confirmación</div>
+    <div class="step" [class.active]="currentStep === 1">
+      <i class="material-icons">person</i> {{ 'CONFIRM_DETAILS' | translate }}
+    </div>
+    <div class="step" [class.active]="currentStep === 2">
+      <i class="material-icons">edit_note</i> {{ 'SELECT_CONTACT_METHOD' | translate }}
+    </div>
+    <div class="step" [class.active]="currentStep === 3">
+      <i class="material-icons">check_circle</i> {{ 'TRANSACTION_CONFIRMATION' | translate }}
+    </div>
   </div>
 
+  <!-- Loader de carga -->
   <div *ngIf="isLoading" class="loader-container">
     <div class="loader"></div>
-    <p>Procesando pago...</p>
+    <p>{{ 'LOADING_OFFER' | translate }}</p>
   </div>
 
-  <div *ngIf="currentStep === 1 && !isLoading" class="step-content slide-in">
-    <h2>Datos del Usuario</h2>
-    <div class="user-info-card">
-      <p><strong>Nombre:</strong> {{ userData.name }}</p>
-      <p><strong>Email:</strong> {{ userData.email }}</p>
+  <!-- Paso 1: Confirmar Datos -->
+  <div *ngIf="currentStep === 1 && !isLoading" class="step-content">
+    <div class="summary">
+      <h3>{{ 'APPLICANT_INFORMATION' | translate }}</h3>
+      <p><strong>{{ 'NAME' | translate }}:</strong> {{ userData.name }}</p>
+      <p><strong>{{ 'EMAIL' | translate }}:</strong> {{ userData.email }}</p>
+      <p><strong>{{ 'PHONE' | translate }}:</strong> {{ userData.telephone }}</p>
+      <p><strong>{{ 'DNI' | translate }}:</strong> {{ userData.dni }}</p>
     </div>
-    <label for="telephone">Teléfono</label>
-    <input type="text" id="telephone" [(ngModel)]="userData.telephone" placeholder="Ej. +51 123 456 789">
-    <label for="dni">DNI</label>
-    <input type="text" id="dni" [(ngModel)]="userData.dni" placeholder="Ej. 12345678">
-    <div class="button-container">
-      <button type="button" (click)="nextStep()">Siguiente</button>
+    <div class="main-content">
+      <h2>{{ 'CONFIRM_INFORMATION' | translate }}</h2>
+      <p>{{ 'REVIEW_BEFORE_CONTINUING' | translate }}</p>
+      <button class="btn-next" (click)="nextStep()">{{ 'NEXT' | translate }}</button>
     </div>
   </div>
 
-  <div *ngIf="currentStep === 2 && !isLoading" class="step-content slide-in">
-    <h2>Datos del Comprador y Vendedor</h2>
-    <div class="data-container">
-      <div class="info-card wide">
-        <h3>Datos - Comprador</h3>
-        <p><strong>Nombre:</strong> {{ userData.name }}</p>
-        <p><strong>Email:</strong> {{ userData.email }}</p>
-        <p><strong>Teléfono:</strong> {{ userData.telephone }}</p>
-        <p><strong>DNI:</strong> {{ userData.dni }}</p>
-      </div>
-      <div class="info-card wide">
-        <h3>Datos - Vendedor</h3>
-        <p><strong>Nombre:</strong> {{ sellerData.name }}</p>
-        <p><strong>Email:</strong> {{ sellerData.email }}</p>
-        <p><strong>Teléfono:</strong> {{ sellerData.telephone }}</p>
-      </div>
+  <!-- Paso 2: Seleccionar Método de Contacto -->
+  <div *ngIf="currentStep === 2 && !isLoading" class="step-content">
+    <div class="summary">
+      <h3>{{ 'VEHICLE_DETAILS' | translate }}</h3>
+      <p><strong>{{ 'MODEL' | translate }}:</strong> {{ vehicleData.model }}</p>
+      <p><strong>{{ 'PRICE_2' | translate }}:</strong> {{ vehicleData.price | currency }}</p>
+      <p><strong>{{ 'SELLER' | translate }}:</strong> {{ sellerData.name }}</p>
     </div>
-
-    <h3>Métodos de Pago del Vendedor</h3>
-    <ul>
-      <li *ngFor="let method of sellerPaymentMethods">
+    <div class="main-content">
+      <h2>{{ 'SELECT_CONTACT_METHOD_PROMPT' | translate }}</h2>
+      <div *ngFor="let method of sellerPaymentMethods" class="payment-method" [class.selected]="selectedPaymentMethod === method" (click)="selectedPaymentMethod = method">
         <strong>{{ method.type }}</strong>: {{ method.details }}
-      </li>
-    </ul>
-
-
-    <h3>Información de Pago</h3>
-    <label for="accountNumber">Número de Cuenta</label>
-    <input type="text" id="accountNumber" [(ngModel)]="paymentMethods.accountNumber" placeholder="Ej. 1234567890">
-    <label for="transactionNumber">Número de Transacción</label>
-    <input type="text" id="transactionNumber" [(ngModel)]="paymentMethods.transactionNumber" placeholder="Ej. 0987654321">
-    <div class="button-container">
-      <button type="button" (click)="prevStep()">Anterior</button>
-      <button type="button" (click)="nextStep()">Siguiente</button>
+        <div *ngIf="selectedPaymentMethod === method" class="selected-indicator">
+          <i class="material-icons">check_circle</i> {{ 'CONTACT_METHOD_SELECTED' | translate }}
+        </div>
+      </div>
+      <div class="button-container">
+        <button (click)="prevStep()">{{ 'PREVIOUS' | translate }}</button>
+        <button [disabled]="!selectedPaymentMethod" (click)="nextStep()">{{ 'NEXT' | translate }}</button>
+      </div>
     </div>
   </div>
 
-
-  <div *ngIf="currentStep === 3 && !isLoading" class="step-content slide-in">
-    <h2>Resumen de Pago</h2>
-    <div class="confirmation-info">
-      <p><strong>Nombre del Comprador:</strong> {{ userData.name }}</p>
-      <p><strong>Correo Electrónico:</strong> {{ userData.email }}</p>
-      <p><strong>Número de Cuenta:</strong> {{ paymentMethods.accountNumber }}</p>
-      <p><strong>Número de Transacción:</strong> {{ paymentMethods.transactionNumber }}</p>
-      <p>El pago ha sido procesado exitosamente. Confirme su compra.</p>
+  <!-- Paso 3: Confirmación -->
+  <div *ngIf="currentStep === 3 && !isLoading" class="step-content">
+    <div class="summary">
+      <h3>{{ 'OFFER_SUMMARY' | translate }}</h3>
+      <p><strong>{{ 'NAME' | translate }}:</strong> {{ userData.name }}</p>
+      <p><strong>{{ 'VEHICLE_DETAILS' | translate }}:</strong> {{ vehicleData.model }}</p>
+      <p><strong>{{ 'PAYMENT_METHOD' | translate }}:</strong> {{ selectedPaymentMethod?.type }}</p>
+      <p><strong>{{ 'DETAILS' | translate }}:</strong> {{ selectedPaymentMethod?.details }}</p>
     </div>
-    <div class="button-container">
-      <button type="button" (click)="confirmPayment()">Confirmar Pago</button>
+    <div class="main-content">
+      <h2>{{ 'SENT_OFFER' | translate }}</h2>
+      <p>{{ 'THANK_YOU_MESSAGE' | translate }}</p>
+      <button class="btn-next" (click)="confirmOffer()">{{ 'FINISH' | translate }}</button>
     </div>
   </div>
 </div>
