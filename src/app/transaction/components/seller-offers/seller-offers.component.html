@@ -10,8 +10,8 @@
     <div class="header-underline"></div>
   </div>
   <div class="text-content">
-    <h2>MIS OFERTAS</h2>
-    <span>Ofertas recibidas para tus vehículos</span>
+    <h2>{{ 'OFFERS' | translate}}</h2>
+    <span>{{ 'RECEIVED_OFFERS' | translate }}</span>
   </div>
 </div>
 
@@ -31,12 +31,12 @@
   <!-- Filtro por Estado -->
   <div class="filter-container">
     <mat-form-field appearance="fill" class="filter-dropdown">
-      <mat-label>Filtrar por Estado</mat-label>
+      <mat-label>{{ 'FILTER_BY_STATUS' | translate }}</mat-label>
       <mat-select [(value)]="selectedStatus" (selectionChange)="applyFilter()">
-        <mat-option value="ALL">Todos</mat-option>
-        <mat-option value="PENDING">Pendiente</mat-option>
-        <mat-option value="COMPLETED">Completado</mat-option>
-        <mat-option value="CANCELLED">Cancelado</mat-option>
+        <mat-option [value]="'ALL'">{{ 'ALL' | translate }}</mat-option>
+        <mat-option [value]="'PENDING'">{{ 'PENDING' | translate }}</mat-option>
+        <mat-option [value]="'COMPLETED'">{{ 'COMPLETED' | translate }}</mat-option>
+        <mat-option [value]="'CANCELLED'">{{ 'CANCELLED' | translate }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -58,20 +58,20 @@
           <!-- Detalles de la Transacción -->
           <div class="transaction-details">
             <mat-card-content>
-              <h4>Detalles de la Transacción</h4>
-              <p><strong>Estado:</strong> {{ transaction.paymentStatus }}</p>
-              <p><strong>Monto:</strong> ${{ transaction.amount }}</p>
-              <p><strong>Fecha:</strong> {{ transaction.createdAt | date }}</p>
+              <h4>{{ 'TRANSACTION_DETAILS' | translate }}</h4>
+              <p><strong>{{ 'STATUS' | translate }}:</strong> {{ transaction.paymentStatus }}</p>
+              <p><strong>{{ 'AMOUNT' | translate }}:</strong> ${{ transaction.amount }}</p>
+              <p><strong>{{ 'DATE' | translate }}:</strong> {{ transaction.createdAt | date }}</p>
             </mat-card-content>
           </div>
 
           <!-- Datos del Comprador -->
           <div class="buyer-details">
             <mat-card-content>
-              <h4>Datos del Comprador</h4>
-              <p><strong>Nombre:</strong> {{ transaction.buyer.name.fullName }}</p>
-              <p><strong>Email:</strong> {{ transaction.buyer.email }}</p>
-              <p><strong>Teléfono:</strong> {{ transaction.buyer.phone }}</p>
+              <h4>{{ 'BUYER_INFORMATION' | translate }}</h4>
+              <p><strong>{{ 'NAME' | translate }}:</strong> {{ transaction.buyer.name.fullName }}</p>
+              <p><strong>{{ 'EMAIL' | translate }}:</strong> {{ transaction.buyer.email }}</p>
+              <p><strong>{{ 'PHONE' | translate }}</strong> {{ transaction.buyer.phone }}</p>
             </mat-card-content>
             <mat-card-actions>
               <button
@@ -80,7 +80,7 @@
                 *ngIf="transaction.paymentStatus === 'PENDING'"
                 (click)="updateTransactionStatus(transaction.transactionId, 'COMPLETED')"
               >
-                Aceptar
+              {{ 'ACCEPT' | translate }}
               </button>
               <button
                 mat-raised-button
@@ -88,13 +88,13 @@
                 *ngIf="transaction.paymentStatus === 'PENDING'"
                 (click)="updateTransactionStatus(transaction.transactionId, 'CANCELLED')"
               >
-                Cancelar
+              {{ 'CANCEL' | translate }}
               </button>
               <p *ngIf="transaction.paymentStatus === 'COMPLETED'" class="completed-status">
-                Has completado esta transacción.
+                {{ 'TRANSACTION_COMPLETED' | translate }}
               </p>
               <p *ngIf="transaction.paymentStatus === 'CANCELLED'" class="cancelled-status">
-                Has cancelado esta transacción.
+                {{ 'TRANSACTION_CANCELLED' | translate }}
               </p>
             </mat-card-actions>
           </div>
@@ -120,32 +120,32 @@
           <!-- Detalles de la Transacción -->
           <div class="transaction-details">
             <mat-card-content>
-              <h4>Detalles de la Transacción</h4>
-              <p><strong>Vehículo:</strong> {{ transaction.vehicle.brand }} {{ transaction.vehicle.model }}</p>
-              <p><strong>Precio:</strong> ${{ transaction.vehicle.price }}</p>
-              <p><strong>ID Transacción:</strong> {{ transaction.createdAt | date }}</p>
-              <p><strong>Estado:</strong> {{ transaction.paymentStatus }}</p>
+              <h4>{{ 'TRANSACTION_DETAILS' | translate }}</h4>
+              <p><strong>{{ 'VEHICLE' | translate }}:</strong> {{ transaction.vehicle.brand }} {{ transaction.vehicle.model }}</p>
+              <p><strong>{{ 'PRICE' | translate }}:</strong> ${{ transaction.vehicle.price }}</p>
+              <p><strong>{{ 'TRANSACTION_ID' | translate }}:</strong> {{ transaction.createdAt | date }}</p>
+              <p><strong>{{ 'STATUS' | translate }}:</strong> {{ transaction.paymentStatus }}</p>
             </mat-card-content>
           </div>
 
           <!-- Datos del Vendedor -->
           <div class="seller-details">
             <mat-card-content>
-              <h4>Datos del Vendedor</h4>
-              <p><strong>Nombre:</strong> {{ transaction.seller.name.fullName }}</p>
-              <p><strong>Email:</strong> {{ transaction.seller.email }}</p>
-              <p><strong>Teléfono:</strong> {{ transaction.seller.phone }}</p>
+              <h4>{{ 'SELLER_INFORMATION' | translate }}</h4>
+              <p><strong>{{ 'NAME' | translate }}:</strong> {{ transaction.seller.name.fullName }}</p>
+              <p><strong>{{ 'EMAIL' | translate }}:</strong> {{ transaction.seller.email }}</p>
+              <p><strong>{{ 'PHONE' | translate }}:</strong> {{ transaction.seller.phone }}</p>
             </mat-card-content>
             <mat-card-actions>
               <!-- Mensajes personalizables para cada estado -->
               <p *ngIf="transaction.paymentStatus === 'PENDING'" class="pending-status">
-                El vendedor pronto se pondrá en contacto contigo.
+                {{ 'PENDING_MESSAGE' | translate }}
               </p>
               <p *ngIf="transaction.paymentStatus === 'COMPLETED'" class="completed-status">
-                ¡Felicidades! El vendedor aceptó tu oferta. Por favor, ponte en contacto con él para finalizar el proceso.
+                {{ 'COMPLETED_MESSAGE' | translate }}
               </p>
               <p *ngIf="transaction.paymentStatus === 'CANCELLED'" class="cancelled-status">
-                Lamentamos que esta transacción haya sido cancelada. ¡Sigue buscando, hay muchos vehículos esperándote!
+                {{ 'CANCELLED_MESSAGE' | translate }}
               </p>
             </mat-card-actions>
           </div>
@@ -158,6 +158,6 @@
   <!-- Sin Transacciones -->
   <div *ngIf="filteredTransactions.length === 0" class="no-transactions">
     <mat-icon color="warn">info</mat-icon>
-    <p>No hay transacciones disponibles para este estado.</p>
+    <p>{{ 'NO_TRANSACTIONS_AVAILABLE' | translate }}</p>
   </div>
 </div>
