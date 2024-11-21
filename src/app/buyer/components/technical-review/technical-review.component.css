@@ -6,8 +6,8 @@
 
 .header {
   display: flex;
-  justify-content: space-between; /* Alinea el título a la izquierda y el botón a la derecha */
-  align-items: center; /* Centra verticalmente el botón con el título */
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -15,26 +15,26 @@ h1.title {
   font-size: 32px;
   font-weight: bold;
   display: flex;
-  gap: 8px; /* Espacio entre las palabras */
+  gap: 8px;
 }
 
 .black-text {
-  color: #000; /* Color negro para "Technical" */
+  color: #000;
 }
 
 .yellow-text {
-  color: #ffcc00; /* Color amarillo para "Review" */
+  color: #ffcc00;
 }
 
 .underline {
-  width: 170px; /* Ajusta el ancho según lo que prefieras */
+  width: 170px;
   height: 7px;
-  background-color: #3366cc; /* Color azul */
-  margin-top: 4px; /* Espacio entre el texto y la línea */
+  background-color: #3366cc;
+  margin-top: 4px;
 }
 
 .button-container {
-  margin-left: auto; /* Asegura que el botón quede a la derecha */
+  margin-left: auto;
 }
 
 .redirect-button {

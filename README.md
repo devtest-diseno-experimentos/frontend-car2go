@@ -1,27 +1,66 @@
-# FrontendCar2go
+# Car2go
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0.
+## Summary
+Car2Go is an innovative platform designed to streamline the buying and selling of used cars, efficiently connecting buyers and sellers. The platform offers a smooth and hassle-free experience, allowing users to browse vehicles, manage their listings, and communicate effectively. Car2Go provides real-time tracking tools for transactions and customization options to ensure an optimal and secure experience.
 
-## Development server
+## Link:
+https://car2go-c60fa.web.app/
+# Car2go
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Summary
+Car2Go is an innovative platform designed to streamline the buying and selling of used cars, efficiently connecting buyers and sellers. The platform offers a smooth and hassle-free experience, allowing users to browse vehicles, manage their listings, and communicate effectively. Car2Go provides real-time tracking tools for transactions and customization options to ensure an optimal and secure experience.
 
-## Code scaffolding
+## Link:
+https://car2go-c60fa.web.app/
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Features
 
-## Build
+Project features include:
+- Material Design based components
+- Integration with Car2go Backend
+- Internationalization (i18n)
+- User authentication
+- Routing
+- Domain-Driven Design approach
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Frameworks and Libraries
 
-## Running unit tests
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Dependencies:
+- Angular Material UI (https://github.com/angular/components)
+- ngx-translate (https://github.com/ngx-translate/core).
+- ngx-translate/http-loader (https://github.com/ngx-translate/http-loader).
 
-## Running end-to-end tests
+## Authors
+- Barrionuevo Reto, Jean Franco Joel - U202219284
+- Carranza Tesen, Joaquin Enrique - U20191B935
+- Mayta López, Harold - U202114851
+- Medina Chocce, Karito Dianeth - U20221C769
+- Serrano Uchuya, Gerald Patricio - U202122876
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Features
 
-## Further help
+Project features include:
+- Material Design based components
+- Integration with Car2go Backend
+- Internationalization (i18n)
+- User authentication
+- Routing
+- Domain-Driven Design approach
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Frameworks and Libraries
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.0
+
+Dependencies:
+- Angular Material UI (https://github.com/angular/components)
+- ngx-translate (https://github.com/ngx-translate/core).
+- ngx-translate/http-loader (https://github.com/ngx-translate/http-loader).
+
+## Authors
+- Barrionuevo Reto, Jean Franco Joel - U202219284
+- Carranza Tesen, Joaquin Enrique - U20191B935
+- Mayta López, Harold - U202114851
+- Medina Chocce, Karito Dianeth - U20221C769
+- Serrano Uchuya, Gerald Patricio - U202122876

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {PlanService} from "../../service/plan.service";
-
+import { PlanService } from "../../service/plan.service";
 
 @Component({
   selector: 'app-plan',
@@ -11,42 +10,42 @@ import {PlanService} from "../../service/plan.service";
 export class PlanComponent {
   plans = [
     {
-      name: 'Basic Plan',
+      name: 'BASIC_PLAN',
       price: 179,
       features: [
-        '✔ Access to all listings',
-        '✔ Customer support',
-        '✔ Increased visibility in ads',
-        '❌ 24/7 customer support',
-        '❌ Discounts on featured listings',
-        '❌ Advanced technical review',
-        '❌ Commission discount'
+        'ACCESS_LISTINGS',
+        'CUSTOMER_SUPPORT',
+        'VISIBILITY_ADS',
+        'NO_24_7_SUPPORT',
+        'NO_DISCOUNTS_FEATURED',
+        'NO_ADV_TECH_REVIEW',
+        'NO_COMMISSION_DISCOUNT'
       ]
     },
     {
-      name: 'Standard Plan',
+      name: 'STANDARD_PLAN',
       price: 229,
       features: [
-        '✔ Access to all listings',
-        '✔ Customer support',
-        '✔ Increased visibility in ads',
-        '✔ Discounts on featured listings',
-        '✔ Advanced technical review',
-        '❌ 24/7 customer support',
-        '❌ Commission discount'
+        'ACCESS_LISTINGS',
+        'CUSTOMER_SUPPORT',
+        'VISIBILITY_ADS',
+        'DISCOUNTS_FEATURED',
+        'ADV_TECH_REVIEW',
+        'NO_24_7_SUPPORT',
+        'NO_COMMISSION_DISCOUNT'
       ]
     },
     {
-      name: 'Premium Plan',
+      name: 'PREMIUM_PLAN',
       price: 259,
       features: [
-        '✔ Access to all listings',
-        '✔ Customer support',
-        '✔ 24/7 customer support',
-        '✔ Increased visibility in ads',
-        '✔ Discounts on featured listings',
-        '✔ Advanced technical review',
-        '✔ Commission discount'
+        'ACCESS_LISTINGS',
+        'CUSTOMER_SUPPORT',
+        'SUPPORT_24_7',
+        'VISIBILITY_ADS',
+        'DISCOUNTS_FEATURED',
+        'ADV_TECH_REVIEW',
+        'COMMISSION_DISCOUNT'
       ]
     }
   ];

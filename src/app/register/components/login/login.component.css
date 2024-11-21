@@ -56,7 +56,6 @@ body, html {
 }
 
 .btn-signin:hover {
-
   transform: scale(1.02);
 }
 
@@ -74,7 +73,6 @@ body, html {
   text-decoration: underline;
 }
 
-/* Social Login */
 .social-login {
   text-align: center;
   margin-top: 20px;
@@ -136,7 +134,6 @@ body, html {
   vertical-align: middle;
 }
 
-/* Footer */
 .login-footer {
   text-align: center;
   margin-top: 20px;
@@ -151,7 +148,6 @@ body, html {
   text-decoration: underline;
 }
 
-/* Image Container */
 .image-container {
   width: 50%;
   overflow: hidden;
@@ -169,7 +165,6 @@ body, html {
   align-self: center;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .login-container {
     flex-direction: column;

@@ -1,8 +1,7 @@
-// src/app/cars/components/favorites/favorites.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FavoriteService } from '../../services/favorite-service/favorite.service';
-import { CarService } from '../../services/car.service';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-favorites',
@@ -11,46 +10,32 @@ import {Router} from "@angular/router";
 })
 export class FavoritesComponent implements OnInit {
   favorites: any[] = [];
-  cars: any[] = [];
   paginatedCars: any[] = [];
   pageSize: number = 4;
   currentPage: number = 1;
 
-  constructor(private router: Router,private favoriteService: FavoriteService, private carService: CarService) {}
+  constructor(
+    private router: Router,
+    private favoriteService: FavoriteService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-    const userId = +localStorage.getItem('id')!;
-    this.favoriteService.getFavoritesByUserId(userId).subscribe(
+    this.favoriteService.getMyFavorites().subscribe(
       (favorites: any[]) => {
         this.favorites = favorites;
-        this.loadFavoriteCars();
+        this.updatePaginatedCars();
       },
       (error) => {
-        console.error('Error al obtener los favoritos:', error);
+        this.showSnackBar('Error fetching favorites');
       }
     );
   }
 
-  loadFavoriteCars(): void {
-    this.favorites.forEach(favorite => {
-      this.carService.getCarById(favorite.carId).subscribe(
-        (car: any) => {
-          this.cars.push(car);
-          this.updatePaginatedCars();
-          },
-        (error) => {
-          console.error('Error al obtener el carro:', error);
-        }
-      );
-    });
-  }
-
-
   updatePaginatedCars() {
     const startIndex = (this.currentPage - 1) * this.pageSize;
-    this.paginatedCars = this.cars.slice(startIndex, startIndex + this.pageSize);
+    this.paginatedCars = this.favorites.slice(startIndex, startIndex + this.pageSize);
   }
-
 
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
@@ -60,26 +45,29 @@ export class FavoritesComponent implements OnInit {
   }
 
   get totalPages(): number {
-    return Math.ceil(this.cars.length / this.pageSize);
+    return Math.ceil(this.favorites.length / this.pageSize);
   }
+
   viewCarDetails(carId: number) {
     this.router.navigate(['/car-details', carId]);
   }
-  removeFavorite(carId: number) {
-    this.favoriteService.deleteFavorite(carId).subscribe(
+
+  removeFavorite(vehicleId: number) {
+    this.favoriteService.deleteFavorite(vehicleId).subscribe(
       (response) => {
-        if (!response.error) {
-          this.favorites = this.favorites.filter(fav => fav.carId !== carId);
-          this.cars = this.cars.filter(car => car.id !== carId);
-          this.updatePaginatedCars();
-          console.log('Favorito eliminado:', response);
-        } else {
-          console.error('Error al eliminar el favorito:', response.error);
-        }
+        this.favorites = this.favorites.filter(fav => fav.vehicle.id !== vehicleId);
+        this.updatePaginatedCars();
+        this.showSnackBar('Favorite removed');
       },
       (error) => {
-        console.error('Error al eliminar el favorito:', error);
+        this.showSnackBar('Error removing favorite');
       }
     );
+  }
+
+  private showSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000
+    });
   }
 }

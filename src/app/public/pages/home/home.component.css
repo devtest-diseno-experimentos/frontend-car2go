@@ -109,7 +109,7 @@
 
 
 .down-content {
-  padding: 20px;
+  padding: 10px;
   text-align: left;
 }
 
@@ -210,7 +210,7 @@
   font-size: 16px;
   font-weight: 500;
   border-radius: 10px;
-
+  cursor: pointer;
   transition: background-color 0.3s ease;
   display: inline-block;
 }
@@ -218,6 +218,7 @@
 .cta-button-top:hover {
   background-color: #f4c23d;
 }
+
 .title-favorite-wrapper {
   display: flex;
   justify-content: space-between;
@@ -250,7 +251,6 @@
   color: #fff;
 }
 
-/* Modal */
 .modal-overlay {
   position: fixed;
   top: 40px;
@@ -276,15 +276,12 @@
   position: relative;
 }
 
-
-/* Contenedor principal */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Encabezado */
 .header {
   text-align: center;
   margin-bottom: 40px;
@@ -322,7 +319,6 @@ p {
   background-color: #F4C23D;
 }
 
-/* Sección de tarjetas de resumen */
 .summary-cards {
   display: flex;
   justify-content: space-between;
@@ -356,7 +352,6 @@ p {
   color: #333;
 }
 
-/* Sección de lista de vehículos */
 .vehicle-list {
   margin-top: 40px;
 }
@@ -367,7 +362,6 @@ p {
   margin-bottom: 20px;
 }
 
-/* Tabla de vehículos */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -393,7 +387,6 @@ td {
   color: #333;
 }
 
-/* Botones de acción en la tabla */
 .action-button {
   background-color: #2959AD;
   border: none;
@@ -411,7 +404,6 @@ td {
   background-color: #F4C23D;
 }
 
-/* Espaciado y ajustes para pantallas pequeñas */
 @media (max-width: 768px) {
   .summary-cards {
     flex-direction: column;
@@ -431,9 +423,9 @@ td {
     display: block;
     width: 100%;
   }
+
 }
 
-/* Responsividad */
 @media (min-width: 768px) {
   .modal-content {
     width: 50%;
@@ -448,7 +440,7 @@ td {
 
 @media (max-width: 600px) {
   .car-item {
-    width: 90%;
-    max-width: 300px;
+    width: 100%;
+    max-width: 400px;
   }
 }

@@ -1,29 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment} from "../../../../environments/environment";
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarService {
-  private apiUrl = 'https://car2go-fake-api.vercel.app/cars';
+  private apiUrl: string = `${environment.serverBasePath}/vehicle`;
 
   constructor(private http: HttpClient) {}
 
   getCars(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(`${this.apiUrl}/all`);
   }
 
   getCarById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`);
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
   }
 
-  getCarsByUserId(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}?userId=${userId}`);
+  getCarsByUserId(profileId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/all/vehicles/profile/${profileId}`);
   }
 
   addCar(newCar: any): Observable<any> {
-    const userId = +localStorage.getItem('id')!;
+    const userId = +localStorage.getItem('userId')!;
     newCar.userId = userId;
 
     return this.http.post<any>(this.apiUrl, newCar);

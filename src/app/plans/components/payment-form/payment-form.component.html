@@ -1,109 +1,103 @@
-<app-toolbar></app-toolbar>
+
 <div class="grid-container">
-  <!-- Left column: Payment details -->
   <div class="scrollable-content">
-    <h2>Card Details</h2>
+    <h2><app-language-switcher></app-language-switcher>{{ 'CARD_DETAILS' | translate }} </h2>
     <form>
-      <!-- Card details -->
       <div class="form-group">
-        <label for="card-number">Card Number</label>
-        <input type="text" id="card-number" placeholder="E.g: 9999 9999 9999 9999" required>
+        <label for="card-number">{{ 'CARD_NUMBER' | translate }}</label>
+        <input type="text" id="card-number" placeholder="{{ 'CARD_NUMBER_PLACEHOLDER' | translate }}" required>
       </div>
 
       <div class="form-group">
-        <label for="card-name">Cardholder's First Name</label>
-        <input type="text" id="card-name" placeholder="E.g: Emiliano" required>
+        <label for="card-name">{{ 'CARDHOLDER_FIRST_NAME' | translate }}</label>
+        <input type="text" id="card-name" placeholder="{{ 'FIRST_NAME_PLACEHOLDER' | translate }}" required>
       </div>
 
       <div class="form-group">
-        <label for="card-lastname">Cardholder's Last Name</label>
-        <input type="text" id="card-lastname" placeholder="E.g: Perez" required>
+        <label for="card-lastname">{{ 'CARDHOLDER_LAST_NAME' | translate }}</label>
+        <input type="text" id="card-lastname" placeholder="{{ 'LAST_NAME_PLACEHOLDER' | translate }}" required>
       </div>
 
-      <!-- Expiry date and security code grouping -->
       <div class="form-row">
         <div class="form-group half-width">
-          <label for="expiry-date">Expiry Date</label>
+          <label for="expiry-date">{{ 'EXPIRY_DATE' | translate }}</label>
           <input type="text" id="expiry-date" placeholder="MM/YY" required>
         </div>
         <div class="form-group half-width">
-          <label for="cvv">Security Code (CVV)</label>
-          <input type="text" id="cvv" placeholder="CVV" required>
+          <label for="cvv">{{ 'SECURITY_CODE' | translate }}</label>
+          <input type="text" id="cvv" placeholder="{{ 'CVV_PLACEHOLDER' | translate }}" required>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="installments">Select Installments</label>
+        <label for="installments">{{ 'INSTALLMENTS' | translate }}</label>
         <select id="installments" required>
-          <option value="">Select</option>
-          <option value="3">3 Installments</option>
-          <option value="6">6 Installments</option>
-          <option value="12">12 Installments</option>
+          <option value="">{{ 'SELECT' | translate }}</option>
+          <option value="3">{{ 'INSTALLMENTS_3' | translate }}</option>
+          <option value="6">{{ 'INSTALLMENTS_6' | translate }}</option>
+          <option value="12">{{ 'INSTALLMENTS_12' | translate }}</option>
         </select>
       </div>
 
       <hr>
 
-      <!-- Billing and user details -->
-      <h2>Billing and User Details</h2>
+      <h2>{{ 'BILLING_USER_DETAILS' | translate }}</h2>
       <div class="form-row">
         <div class="form-group half-width">
-          <label for="first-name">First Name</label>
-          <input type="text" id="first-name" placeholder="First Name" required>
+          <label for="first-name">{{ 'FIRST_NAME' | translate }}</label>
+          <input type="text" id="first-name" placeholder="{{ 'FIRST_NAME_PLACEHOLDER' | translate }}" required>
         </div>
         <div class="form-group half-width">
-          <label for="last-name">Last Name</label>
-          <input type="text" id="last-name" placeholder="Last Name" required>
+          <label for="last-name">{{ 'LAST_NAME' | translate }}</label>
+          <input type="text" id="last-name" placeholder="{{ 'LAST_NAME_PLACEHOLDER' | translate }}" required>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Email" required>
+        <label for="email">{{ 'EMAIL' | translate }}</label>
+        <input type="email" id="email" placeholder="{{ 'EMAIL_PLACEHOLDER' | translate }}" required>
       </div>
 
       <div class="form-group">
-        <label for="confirm-email">Confirm Email</label>
-        <input type="email" id="confirm-email" placeholder="Confirm Email" required>
+        <label for="confirm-email">{{ 'CONFIRM_EMAIL' | translate }}</label>
+        <input type="email" id="confirm-email" placeholder="{{ 'CONFIRM_EMAIL_PLACEHOLDER' | translate }}" required>
       </div>
 
       <div class="form-group">
-        <label for="phone">Phone</label>
-        <input type="tel" id="phone" placeholder="E.g: 155382299" required>
+        <label for="phone">{{ 'PHONE' | translate }}</label>
+        <input type="tel" id="phone" placeholder="{{ 'PHONE_PLACEHOLDER' | translate }}" required>
       </div>
 
       <div class="form-group">
-        <label for="document-number">Document Number</label>
-        <input type="text" id="document-number" placeholder="ID E.g: 47639410" required>
+        <label for="document-number">{{ 'DOCUMENT_NUMBER' | translate }}</label>
+        <input type="text" id="document-number" placeholder="{{ 'DOCUMENT_NUMBER_PLACEHOLDER' | translate }}" required>
       </div>
 
       <div class="form-group">
-        <label for="province">Province</label>
+        <label for="province">{{ 'PROVINCE' | translate }}</label>
         <select id="province" required>
-          <option value="">Select</option>
-          <option value="lima">Lima</option>
-          <option value="arequipa">Arequipa</option>
-          <option value="cusco">Cusco</option>
+          <option value="">{{ 'SELECT' | translate }}</option>
+          <option value="lima">{{ 'LIMA' | translate }}</option>
+          <option value="arequipa">{{ 'AREQUIPA' | translate }}</option>
+          <option value="cusco">{{ 'CUSCO' | translate }}</option>
         </select>
       </div>
     </form>
 
-    <!-- Toggle button for the summary in small screens -->
-    <div class="summary-toggle-button" (click)="toggleSummary()">View Summary</div>
+    <div class="summary-toggle-button" (click)="toggleSummary()">{{ 'VIEW_SUMMARY' | translate }}</div>
   </div>
 
-  <!-- Right column: Payment summary -->
   <div class="summary-column" *ngIf="selectedPlan">
-    <h2>Your Products</h2>
+    <h2>{{ 'YOUR_PRODUCTS' | translate }}</h2>
     <div class="product-summary">
-      <p><strong>{{ selectedPlan.name }}</strong></p>
+      <p><strong>{{ selectedPlan.name | translate }}</strong></p>
       <ul>
-        <li *ngFor="let feature of selectedPlan.features">{{ feature }}</li>
+        <li *ngFor="let feature of selectedPlan.features">{{ feature | translate }}</li>
       </ul>
       <hr>
-      <p><strong>Total to pay: S/.{{ selectedPlan.price }}</strong></p>
+      <p><strong>{{ 'TOTAL_PAY' | translate }}: S/.{{ selectedPlan.price }}</strong></p>
 
-      <button type="submit" (click)="onSubmit()">Make Payment</button>
+      <button type="submit" (click)="onSubmit()">{{ 'MAKE_PAYMENT' | translate }}</button>
     </div>
   </div>
 </div>

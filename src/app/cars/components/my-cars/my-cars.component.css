@@ -1,4 +1,3 @@
-/* contenedor principal */
 .car-wrapper {
   max-width: 1000px;
   margin: 0 auto;
@@ -10,7 +9,6 @@
   margin-bottom: 40px;
 }
 
-/* icono d*/
 .icon-wrapper {
   text-align: center;
   margin-bottom: 15px;
@@ -73,12 +71,13 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
+
 }
 
-/* flexbox para las cards */
 .car-item {
-  width: 300px; /* Fixed width for consistency */
-  flex: 0 0 auto; /* Prevent flex shrink */
+  cursor: pointer;
+  width: 300px;
+  flex: 0 0 auto;
   margin-bottom: 30px;
   border-radius: 12px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
@@ -94,10 +93,9 @@
   gap: 15px;
 }
 
-/* flexbox para las cards */
 .car-item {
-  width: 300px; /* Fixed width for consistency */
-  flex: 0 0 auto; /* Prevent flex shrink */
+  width: 300px;
+  flex: 0 0 auto;
   margin-bottom: 30px;
   border-radius: 12px;
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
@@ -123,11 +121,9 @@
   transition: transform 0.3s ease;
 }
 
-
 .car-item:hover .thumb-inner img {
   transform: scale(1.05);
 }
-
 
 .down-content {
   padding: 20px;
@@ -159,7 +155,6 @@
   margin-bottom: 20px;
 }
 
-
 .car-info {
   display: flex;
   justify-content: space-between;
@@ -167,8 +162,6 @@
   padding: 0;
   margin: 0;
 }
-
-
 
 .car-info li .item {
   background-color: #f7f7f7;
@@ -193,7 +186,6 @@
   color: #333;
 }
 
-/* Call to Action */
 .cta-section {
   text-align: center;
   margin-top: 30px;
@@ -269,7 +261,6 @@
   color: #fff;
 }
 
-/* Modal */
 .modal-overlay {
   position: fixed;
   top: 40px;
@@ -314,44 +305,63 @@
 }
 .no-cars-message {
   text-align: center;
-  margin-top: 20px;
-  margin-bottom: 123px;
-  font-size: 18px;
+  margin-top: 60px;
+  margin-bottom: 150px;
+  font-size: 20px;
   color: #333;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .no-cars-message .icon-wrapper {
-  font-size: 50px;
+  font-size: 80px;
   color: #ff6b6b;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  animation: pulse 1.5s infinite;
 }
 
 .no-cars-message p {
-  font-size: 16px;
+  font-size: 18px;
   color: #606060;
+  line-height: 1.8;
+  margin: 0 20px;
 }
 
 .no-cars-message a {
   color: #007bff;
   text-decoration: none;
+  font-weight: 600;
 }
 
 .no-cars-message a:hover {
   text-decoration: underline;
 }
+
 .delete-button i {
   color: #ccc;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .delete-button:hover {
   background-color: #f4c23d;
 }
 
-.delete-button:hover i {
-  color: #fff;
-}
 
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 @media (min-width: 768px) {
   .modal-content {
     width: 50%;
@@ -363,7 +373,7 @@
 
 @media (max-width: 991px) {
   .car-item {
-    width: 300px; /* Ensure width is maintained on smaller screens */
+    width: 300px;
   }
   .no-cars-message {
     margin-bottom: 323px;
@@ -372,8 +382,8 @@
 
 @media (max-width: 600px) {
   .car-item {
-    width: 90%; /* Adjust width for smaller screens */
-    max-width: 300px; /* Maintain maximum width */
+    width: 90%;
+    max-width: 300px;
   }
   .no-cars-message {
     margin-bottom: 299px;
