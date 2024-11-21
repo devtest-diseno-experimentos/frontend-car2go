@@ -234,5 +234,6 @@
   "PENDING_MESSAGE": "El vendedor pronto se pondrá en contacto contigo.",
   "COMPLETED_MESSAGE": "¡Felicidades! El vendedor aceptó tu oferta. Por favor, ponte en contacto con él para finalizar el proceso.",
   "CANCELLED_MESSAGE": "Lamentamos que esta transacción haya sido cancelada. ¡Sigue buscando, hay muchos vehículos esperándote!",
-  "NO_TRANSACTIONS_AVAILABLE": "No hay transacciones disponibles para este estado."
+  "NO_TRANSACTIONS_AVAILABLE": "No hay transacciones disponibles para este estado.",
+  "LOADER": "Cargando..."
 }

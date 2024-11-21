@@ -1,6 +1,6 @@
 <div *ngIf="isLoading" class="loader-container">
   <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
-  <p>Cargando transacciones...</p>
+  <p>{{ 'LOADER' | translate}}</p>
 </div>
 <div *ngIf="userRole === 'ROLE_SELLER' && filteredTransactions.length > 0"  class="car-header">
   <div class="icon-wrapper">
@@ -28,7 +28,6 @@
     </div>
   </div>
 <div *ngIf="!isLoading">
-  <!-- Filtro por Estado -->
   <div class="filter-container">
     <mat-form-field appearance="fill" class="filter-dropdown">
       <mat-label>{{ 'FILTER_BY_STATUS' | translate }}</mat-label>
@@ -41,12 +40,10 @@
     </mat-form-field>
   </div>
 
-  <!-- Ofertas Recibidas (Rol: Vendedor) -->
   <div *ngIf="userRole === 'ROLE_SELLER' && filteredTransactions.length > 0">
     <div class="transaction-container">
       <mat-card *ngFor="let transaction of filteredTransactions" class="transaction-card">
         <div class="horizontal-card-content">
-          <!-- Imagen del Vehículo -->
           <img
             routerLink="/car-details/{{ transaction.vehicle.id }}"
             mat-card-image
@@ -55,7 +52,6 @@
             class="vehicle-image"
           />
 
-          <!-- Detalles de la Transacción -->
           <div class="transaction-details">
             <mat-card-content>
               <h4>{{ 'TRANSACTION_DETAILS' | translate }}</h4>

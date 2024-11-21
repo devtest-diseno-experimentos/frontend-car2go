@@ -1,5 +1,4 @@
 <div class="stepper-container">
-  <!-- Indicador de pasos -->
   <div class="steps-indicator">
     <div class="progress-bar" [style.width]="getProgressWidth()"></div>
     <div class="step" [class.active]="currentStep === 1">
@@ -13,7 +12,6 @@
     </div>
   </div>
 
-  <!-- Loader de carga -->
   <div *ngIf="isLoading" class="loader-container">
     <div class="loader"></div>
     <p>{{ 'LOADING_OFFER' | translate }}</p>
@@ -35,7 +33,6 @@
     </div>
   </div>
 
-  <!-- Paso 2: Seleccionar Método de Contacto -->
   <div *ngIf="currentStep === 2 && !isLoading" class="step-content">
     <div class="summary">
       <h3>{{ 'VEHICLE_DETAILS' | translate }}</h3>
@@ -58,7 +55,6 @@
     </div>
   </div>
 
-  <!-- Paso 3: Confirmación -->
   <div *ngIf="currentStep === 3 && !isLoading" class="step-content">
     <div class="summary">
       <h3>{{ 'OFFER_SUMMARY' | translate }}</h3>
