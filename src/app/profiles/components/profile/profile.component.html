@@ -1,4 +1,12 @@
+
+<div *ngIf="loading" class="loader-container">
+  <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+  <p>{{ 'LOADER' | translate }}</p>
+</div>
+<div *ngIf="!loading">
 <section class="profile-background">
+
+
   <div class="profile-banner">
     <img src="assets/background-profile.png" alt="Background Banner" class="banner-image">
   </div>
@@ -158,3 +166,4 @@
     </ng-container>
   </div>
 </section>
+</div>

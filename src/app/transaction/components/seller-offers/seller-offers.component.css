@@ -12,6 +12,7 @@
   flex-wrap: wrap;
   gap: 16px;
   justify-content: center;
+  margin-bottom: 60px;
 }
 
 .transaction-card {
@@ -74,6 +75,7 @@
   color: #888;
   font-size: 14px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 .header-underline {
@@ -164,20 +166,13 @@ h4 {
   width: 300px;
 }
 
-/* Responsive Styles */
 
-/* Tablet-specific adjustments */
 @media (max-width: 768px) {
-  .loader-container {
-    padding: 20px;
-    height: auto; /* Allow the container to adapt */
-    margin: 0 auto;
-  }
-
   .transaction-container {
     flex-direction: column !important;
     gap: 12px !important;
     margin: 0 auto;
+    margin-bottom: 60px;
 
   }
 
@@ -192,15 +187,15 @@ h4 {
     height: 300px !important;
   }
   .horizontal-card-content {
-    flex-direction: column; /* Cambiar de fila a columna */
-    align-items: center; /* Centrar los cuadros */
+    flex-direction: column;
+    align-items: center;
   }
 
   .transaction-details,
   .buyer-details,
   .seller-details {
-    width: 90%; /* Reducir el ancho para centrar mejor */
-    margin-bottom: 16px; /* Espaciado entre los cuadros */
+    width: 90%;
+    margin-bottom: 16px;
   }
   h4 {
     font-size: 0.9rem !important;
@@ -210,12 +205,16 @@ h4 {
     width: 100% !important;
     margin-top: 8px !important;
   }
+  .transaction-card {
+    max-width: 60%;
+    margin: 0 auto;
+  }
 }
 
-/* Mobile-specific adjustments */
+
 @media (max-width: 480px) {
   .transaction-card {
-    max-width: 90%; /* Ensure card fits smaller screens */
+    max-width: 90%;
     margin: 0 auto;
   }
 
@@ -234,7 +233,6 @@ h4 {
   }
 }
 
-/* General Accessibility Enhancements */
 .loader-container p,
 .no-transactions p {
   font-size: 1.1rem;
@@ -252,5 +250,5 @@ h4 {
 }
 
 .vehicle-image {
-  border: 2px solid #ddd; /* Better visibility */
+  border: 2px solid #ddd;
 }

@@ -1,5 +1,5 @@
 <section *ngIf="userRole === 'ROLE_BUYER'">
-  <div class="car-wrapper">
+  <div class="car-wrapper" *ngIf="!loading; else buyerLoader">
     <div class="car-header">
       <div class="icon-wrapper">
         <div class="icon-circle">
@@ -76,6 +76,12 @@
       <a routerLink="/car-listing" class="cta-button">{{ 'EXPLORE_MORE_CARS' | translate }}</a>
     </div>
   </div>
+  <ng-template #buyerLoader>
+    <div class="loader-container">
+      <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+      <p>{{ 'LOADER' | translate }}</p>
+    </div>
+  </ng-template>
 </section>
 
 <section *ngIf="userRole === 'ROLE_MECHANIC'">

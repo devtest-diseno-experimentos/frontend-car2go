@@ -32,18 +32,20 @@
     };
     recentFavorites: any[] = [];
     tempUserData: any = {};
-    recentReviews: any[] = []; // Nueva variable para almacenar las reviews recientes
-    subscriptionData: any = null; // Nueva variable para almacenar los datos de suscripción
+    recentReviews: any[] = [];
+    subscriptionData: any = null;
 
     tempPaymentMethods: PaymentMethod[] = [];
     editMode: boolean = false;
     imagePreview: string | ArrayBuffer | null = null;
+    loading: boolean = true;
+
 
     constructor(
       private http: HttpClient,
       private snackBar: MatSnackBar,
       private router: Router,
-      private carService: CarService // Inyecta CarService aquí
+      private carService: CarService
 
     ) {}
 
@@ -56,6 +58,7 @@
     }
 
     loadProfileData() {
+      this.loading = true;
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');
       const headers = new HttpHeaders({
@@ -143,7 +146,10 @@
             return of([]);
           }
         })
-      ).subscribe();
+      ).subscribe({
+        next: () => (this.loading = false), // Desactiva el estado de carga al finalizar
+        error: () => (this.loading = false) // Desactiva también en caso de error
+      });
     }
 
 

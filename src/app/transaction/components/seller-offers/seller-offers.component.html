@@ -23,8 +23,8 @@
       <div class="header-underline"></div>
     </div>
     <div class="text-content">
-      <h2>{{ 'MY_FAVORITES' | translate }}</h2>
-      <span>{{ 'YOUR_FAVORITE_CARS' | translate }}</span>
+      <h2>{{ 'OFFERS' | translate}}</h2>
+      <span>{{ 'SENT_OFFERS' | translate }}</span>
     </div>
   </div>
 <div *ngIf="!isLoading">
@@ -99,12 +99,10 @@
     </div>
   </div>
 
-  <!-- Compras (Rol: Comprador) -->
   <div *ngIf="userRole === 'ROLE_BUYER' && filteredTransactions.length > 0">
     <div class="transaction-container">
       <mat-card *ngFor="let transaction of filteredTransactions" class="transaction-card">
         <div class="horizontal-card-content">
-          <!-- Imagen del Vehículo -->
           <img
             routerLink="/car-details/{{ transaction.vehicle.id }}"
             mat-card-image
@@ -118,13 +116,12 @@
             <mat-card-content>
               <h4>{{ 'TRANSACTION_DETAILS' | translate }}</h4>
               <p><strong>{{ 'VEHICLE' | translate }}:</strong> {{ transaction.vehicle.brand }} {{ transaction.vehicle.model }}</p>
-              <p><strong>{{ 'PRICE' | translate }}:</strong> ${{ transaction.vehicle.price }}</p>
-              <p><strong>{{ 'TRANSACTION_ID' | translate }}:</strong> {{ transaction.createdAt | date }}</p>
+              <p><strong>{{ 'AMOUNT' | translate }}:</strong> ${{ transaction.amount }}</p>
+              <p><strong>{{ 'DATE' | translate }}:</strong> {{ transaction.createdAt | date }}</p>
               <p><strong>{{ 'STATUS' | translate }}:</strong> {{ transaction.paymentStatus }}</p>
             </mat-card-content>
           </div>
 
-          <!-- Datos del Vendedor -->
           <div class="seller-details">
             <mat-card-content>
               <h4>{{ 'SELLER_INFORMATION' | translate }}</h4>
@@ -133,7 +130,6 @@
               <p><strong>{{ 'PHONE' | translate }}:</strong> {{ transaction.seller.phone }}</p>
             </mat-card-content>
             <mat-card-actions>
-              <!-- Mensajes personalizables para cada estado -->
               <p *ngIf="transaction.paymentStatus === 'PENDING'" class="pending-status">
                 {{ 'PENDING_MESSAGE' | translate }}
               </p>
@@ -151,7 +147,6 @@
   </div>
 
 
-  <!-- Sin Transacciones -->
   <div *ngIf="filteredTransactions.length === 0" class="no-transactions">
     <mat-icon color="warn">info</mat-icon>
     <p>{{ 'NO_TRANSACTIONS_AVAILABLE' | translate }}</p>

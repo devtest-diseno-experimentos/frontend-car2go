@@ -1,4 +1,9 @@
 <div  class="car-wrapper">
+  <div *ngIf="loading" class="loader-container">
+    <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+    <p>{{ 'LOADER' | translate }}</p>
+  </div>
+  <div *ngIf="!loading">
   <div *ngIf="cars.length > 0" class="car-header">
     <div class="icon-wrapper">
       <div class="icon-circle">
@@ -68,5 +73,6 @@
         </ul>
       </div>
     </div>
+  </div>
   </div>
 </div>

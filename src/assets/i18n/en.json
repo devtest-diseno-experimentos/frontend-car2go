@@ -235,5 +235,6 @@
   "COMPLETED_MESSAGE": "Congratulations! The seller accepted your offer. Please get in touch with them to finalize the process.",
   "CANCELLED_MESSAGE": "We're sorry this transaction was cancelled. Keep searching, there are plenty of vehicles waiting for you!",
   "NO_TRANSACTIONS_AVAILABLE": "There are no transactions available for this status.",
+  "SENT_OFFERS": "Offers you have sent",
   "LOADER": "Loading..."
 }

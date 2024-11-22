@@ -1,5 +1,9 @@
 <section *ngIf="userRole === 'ROLE_BUYER'">
-  <div class="car-wrapper">
+  <div *ngIf="loading" class="loader-container">
+    <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+    <p>{{ 'LOADER' | translate }}</p>
+  </div>
+  <div *ngIf="!loading" class="car-wrapper">
     <div class="car-header">
       <div class="icon-wrapper">
         <div class="icon-circle">

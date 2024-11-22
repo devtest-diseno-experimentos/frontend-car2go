@@ -16,6 +16,7 @@ export class CarListingComponent implements OnInit {
   defaultImage: string = 'assets/default_image.jpg';
   pageSize: number = 4;
   currentPage: number = 1;
+  loading: boolean = true;
 
   constructor(
     private router: Router,
@@ -26,6 +27,7 @@ export class CarListingComponent implements OnInit {
 
   ngOnInit() {
     this.userRole = localStorage.getItem('userRole') || '';
+    this.loading = true;
 
     this.carService.getCars().subscribe(
       (data: any[]) => {
@@ -39,14 +41,16 @@ export class CarListingComponent implements OnInit {
           }
           return car;
         });
-
         this.updatePaginatedCars();
+        this.loading = false;
       },
       (error) => {
         this.showSnackBar('Error fetching cars');
+        this.loading = false;
       }
     );
   }
+
 
   filteredCars() {
     return this.paginatedCars.filter(car => car.status === 'REVIEWED');
