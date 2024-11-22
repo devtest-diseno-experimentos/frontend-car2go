@@ -215,7 +215,7 @@
   "PAYMENT_METHOD": "Payment Method",
   "DETAILS": "Details",
   "SENT_OFFER": "Offer Sent",
-  "THANK_YOU_MESSAGE": "Thank you! Your offer request has been sent to the seller.",
+  "THANK_YOU_MESSAGE": "Thank you! Press finish to complete the transaction.",
   "FINISH": "Finish",
   "AMOUNT": "Amount",
   "DATE": "Date",
@@ -235,5 +235,11 @@
   "COMPLETED_MESSAGE": "Congratulations! The seller accepted your offer. Please get in touch with them to finalize the process.",
   "CANCELLED_MESSAGE": "We're sorry this transaction was cancelled. Keep searching, there are plenty of vehicles waiting for you!",
   "NO_TRANSACTIONS_AVAILABLE": "There are no transactions available for this status.",
-  "LOADER": "Loading..."
+  "LOADER": "Loading...",
+  "SENT_OFFERS": "Offers you have sent",
+  "NO_CARS_REVIEWED_YET": "No cars have been reviewed yet.",
+  "EMAIL_INFO": "Email",
+  "REVIEW_INFORMATION": "Review Information",
+  "REVIEW_DATE": "Review Date",
+  "NO_REVIEWS_AVAILABLE": "No reviews available"
 }

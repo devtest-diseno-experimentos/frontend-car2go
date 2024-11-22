@@ -32,18 +32,20 @@
     };
     recentFavorites: any[] = [];
     tempUserData: any = {};
-    recentReviews: any[] = []; // Nueva variable para almacenar las reviews recientes
-    subscriptionData: any = null; // Nueva variable para almacenar los datos de suscripción
+    recentReviews: any[] = [];
+    subscriptionData: any = null;
 
     tempPaymentMethods: PaymentMethod[] = [];
     editMode: boolean = false;
     imagePreview: string | ArrayBuffer | null = null;
+    loading: boolean = true;
+
 
     constructor(
       private http: HttpClient,
       private snackBar: MatSnackBar,
       private router: Router,
-      private carService: CarService // Inyecta CarService aquí
+      private carService: CarService
 
     ) {}
 
@@ -56,6 +58,7 @@
     }
 
     loadProfileData() {
+      this.loading = true; // Activa el loader al inicio
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');
       const headers = new HttpHeaders({
@@ -66,9 +69,10 @@
       const userProfile$ = this.http.get<any>(`${environment.serverBasePath}/users/${userId}`, { headers }).pipe(
         tap(userProfile => {
           this.userData = userProfile;
-          this.currentRole = this.getRoleFromUser(userProfile);
+          this.currentRole = this.getRoleFromUser(userProfile); // Determina el rol del usuario
         }),
         catchError(error => {
+          this.snackBar.open('Error fetching user profile', 'Close', { duration: 3000 });
           return of(null);
         })
       );
@@ -79,72 +83,82 @@
           this.imagePreview = profileData.image;
         }),
         catchError(error => {
+          this.snackBar.open('Error fetching profile data', 'Close', { duration: 3000 });
           return of(null);
         })
       );
 
-      const subscriptionData$ =
-        this.http.get<any>(`${environment.serverBasePath}/subscription/me`, { headers }).pipe(
-          tap(subscription => {
-            this.subscriptionData = subscription;
-          }),
-          catchError(error => {
-            return of(null);
+      const subscriptionData$ = this.http.get<any>(`${environment.serverBasePath}/subscription/me`, { headers }).pipe(
+        tap(subscription => {
+          this.subscriptionData = subscription;
+        }),
+        catchError(error => {
+          return of(null);
+        })
+      );
+
+      userProfile$
+        .pipe(
+          switchMap(() => profileData$),
+          switchMap(() => subscriptionData$),
+          switchMap(() => {
+            if (this.currentRole === 'ROLE_MECHANIC') {
+              return this.http.get<any[]>(`${environment.serverBasePath}/reviews/me`, { headers }).pipe(
+                switchMap(reviews => {
+                  if (!reviews || reviews.length === 0) {
+                    this.recentReviews = [];
+                    return of([]);
+                  }
+
+                  this.recentReviews = reviews.slice(-3).reverse().map(review => ({
+                    ...review,
+                    vehicleImage: ''
+                  }));
+
+                  const vehicleImageRequests = this.recentReviews.map((review, index) =>
+                    this.carService.getCarById(review.vehicle.id).pipe(
+                      tap(vehicleData => {
+                        this.recentReviews[index].vehicleImage = Array.isArray(vehicleData.image)
+                          ? vehicleData.image[0] || ''
+                          : vehicleData.image || '';
+                      }),
+                      catchError(() => of(null))
+                    )
+                  );
+
+                  return forkJoin(vehicleImageRequests);
+                }),
+                catchError(() => of([]))
+              );
+            } else if (this.currentRole === 'ROLE_BUYER') {
+              return this.http.get<any[]>(`${environment.serverBasePath}/favorites/my-favorites`, { headers }).pipe(
+                tap(favorites => {
+                  if (favorites && favorites.length > 0) {
+                    this.recentFavorites = favorites.slice(-3).reverse();
+                  }
+                }),
+                catchError(() => {
+                  this.snackBar.open('Error fetching favorites', 'Close', { duration: 3000 });
+                  return of([]);
+                })
+              );
+            } else {
+              return of([]);
+            }
           })
         )
-
-
-      userProfile$.pipe(
-        switchMap(() => profileData$),
-        switchMap(() => subscriptionData$),
-        switchMap(() => {
-          if (this.currentRole === 'ROLE_MECHANIC') {
-            return this.http.get<any[]>(`${environment.serverBasePath}/reviews/me`, { headers }).pipe(
-              switchMap(reviews => {
-                this.recentReviews = reviews.slice(-3).reverse().map(review => ({
-                  ...review,
-                  vehicleImage: ''
-                }));
-
-                const vehicleImageRequests = this.recentReviews.map((review, index) =>
-                  this.carService.getCarById(review.vehicle.id).pipe(
-                    tap(vehicleData => {
-                      if (typeof vehicleData.image === 'string') {
-                        this.recentReviews[index].vehicleImage = vehicleData.image.split(',')[0] || '';
-                      } else if (Array.isArray(vehicleData.image)) {
-                        this.recentReviews[index].vehicleImage = vehicleData.image[0] || '';
-                      }
-                    }),
-                    catchError(error => {
-                      return of(null);
-                    })
-                  )
-                );
-
-                return forkJoin(vehicleImageRequests);
-              }),
-              catchError(error => {
-                return of([]);
-              })
-            );
-          } else if (this.currentRole === 'ROLE_BUYER') {
-            return this.http.get<any[]>(`${environment.serverBasePath}/favorites/my-favorites`, { headers }).pipe(
-              tap(favorites => {
-                if (favorites && favorites.length > 0) {
-                  this.recentFavorites = favorites.slice(-3).reverse();
-                }
-              }),
-              catchError(error => {
-                this.snackBar.open('Error fetching favorites', 'Close', { duration: 3000 });
-                return of([]);
-              })
-            );
-          } else {
-            return of([]);
+        .subscribe({
+          next: () => {
+            this.loading = false;
+          },
+          error: () => {
+            this.loading = false;
+            this.snackBar.open('Error loading profile data', 'Close', { duration: 3000 });
           }
-        })
-      ).subscribe();
+        });
     }
+
+
 
 
     getRoleFromUser(user: any): string {

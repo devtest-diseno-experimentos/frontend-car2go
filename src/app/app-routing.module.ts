@@ -16,7 +16,6 @@ import { MyCarsComponent } from "./cars/components/my-cars/my-cars.component";
 import { ProfileComponent } from "./profiles/components/profile/profile.component";
 import { FavoritesComponent } from "./cars/components/favorites/favorites.component";
 import { PayComponent } from "./buyer/components/pay/pay.component";
-import { SendDataComponent } from "./buyer/components/send-data/send-data.component";
 import { TechnicalReviewComponent } from "./buyer/components/technical-review/technical-review.component";
 import { ProfileFormComponent } from "./profiles/components/profile-form/profile-form.component";
 import {VehiclePaymentStepperComponent} from "./transaction/components/vehicle-payment-stepper/vehicle-payment-stepper.component";

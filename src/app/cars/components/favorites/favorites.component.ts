@@ -13,6 +13,7 @@ export class FavoritesComponent implements OnInit {
   paginatedCars: any[] = [];
   pageSize: number = 4;
   currentPage: number = 1;
+  loading: boolean = true;
 
   constructor(
     private router: Router,
@@ -25,9 +26,11 @@ export class FavoritesComponent implements OnInit {
       (favorites: any[]) => {
         this.favorites = favorites;
         this.updatePaginatedCars();
+        this.loading = false;
       },
       (error) => {
         this.showSnackBar('Error fetching favorites');
+        this.loading = false;
       }
     );
   }

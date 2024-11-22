@@ -22,4 +22,8 @@ export class ReviewService {
   createReview(review: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}`, review);
   }
+  getReviewsByCurrentUser(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/me`);
+  }
+
 }

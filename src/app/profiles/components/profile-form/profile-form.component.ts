@@ -138,7 +138,6 @@ export class ProfileFormComponent {
       this.photoPreview
     );
 
-    // Verifica los métodos de pago si el usuario es vendedor
     const isPaymentMethodsValid = this.profile.paymentMethods.every(
       method =>
         method.type &&

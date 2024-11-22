@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarService } from "../../services/car/car.service";
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-my-cars',
@@ -11,11 +11,17 @@ import {Router} from "@angular/router";
 export class MyCarsComponent implements OnInit {
   cars: any[] = [];
   defaultImage: string = 'assets/default_image.jpg';
+  loading: boolean = true;
 
-  constructor(private carService: CarService, private snackBar: MatSnackBar, private router: Router) {}
+  constructor(
+    private carService: CarService,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     const userId = +localStorage.getItem('userId')!;
+    this.loading = true;
 
     this.carService.getCarsByUserId(userId).subscribe(
       (data: any[]) => {
@@ -29,15 +35,16 @@ export class MyCarsComponent implements OnInit {
           }
           return car;
         });
+        this.loading = false;
       },
       (error) => {
         this.snackBar.open('Error fetching cars. Please try again.', 'Close', { duration: 3000 });
+        this.loading = false;
       }
     );
   }
 
   deleteCar(carId: number) {
-    // Encuentra el vehículo con el ID dado
     const carToDelete = this.cars.find(car => car.id === carId);
 
     if (carToDelete && carToDelete.status === 'REVIEWED') {
@@ -59,7 +66,7 @@ export class MyCarsComponent implements OnInit {
     );
   }
 
-  navigateToCarDetails (carId: number) {
-  this.router.navigate(['/car-details', carId]);
-}
+  navigateToCarDetails(carId: number) {
+    this.router.navigate(['/car-details', carId]);
+  }
 }

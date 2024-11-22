@@ -1,4 +1,9 @@
-<div class="container">
+<div *ngIf="loading" class="loader-container">
+  <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+  <p>{{ 'LOADER' | translate }}</p>
+</div>
+
+<div class="container" *ngIf="!loading">
   <div *ngIf="pendingCars.length === 0">
     <p>{{ 'NO_CARS_PENDING_REVIEW' | translate }}</p>
   </div>

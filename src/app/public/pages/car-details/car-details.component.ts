@@ -26,6 +26,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   startX: number = 0;
   scrollLeft: number = 0;
   mouseDown: boolean = false;
+  loading: boolean = true;
 
   @ViewChild('thumbnailsContainer') thumbnailsContainer!: ElementRef;
 
@@ -74,6 +75,11 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
           this.updateImages();
           this.populateForm();
           this.startAutoScroll();
+          this.loading = false;
+        },
+        (error) => {
+          this.snackBar.open('Error fetching car details.', 'Close', { duration: 3000 });
+          this.loading = false;
         }
       );
     });
