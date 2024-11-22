@@ -106,9 +106,8 @@
               return this.http.get<any[]>(`${environment.serverBasePath}/reviews/me`, { headers }).pipe(
                 switchMap(reviews => {
                   if (!reviews || reviews.length === 0) {
-                    // Caso sin revisiones
                     this.recentReviews = [];
-                    return of([]); // Detiene el flujo adicional
+                    return of([]);
                   }
 
                   this.recentReviews = reviews.slice(-3).reverse().map(review => ({
@@ -123,13 +122,13 @@
                           ? vehicleData.image[0] || ''
                           : vehicleData.image || '';
                       }),
-                      catchError(() => of(null)) // Maneja errores individuales
+                      catchError(() => of(null))
                     )
                   );
 
                   return forkJoin(vehicleImageRequests);
                 }),
-                catchError(() => of([])) // Maneja errores en las revisiones
+                catchError(() => of([]))
               );
             } else if (this.currentRole === 'ROLE_BUYER') {
               return this.http.get<any[]>(`${environment.serverBasePath}/favorites/my-favorites`, { headers }).pipe(
@@ -140,20 +139,20 @@
                 }),
                 catchError(() => {
                   this.snackBar.open('Error fetching favorites', 'Close', { duration: 3000 });
-                  return of([]); // Devuelve un array vacío en caso de error
+                  return of([]);
                 })
               );
             } else {
-              return of([]); // Si no hay un rol específico
+              return of([]);
             }
           })
         )
         .subscribe({
           next: () => {
-            this.loading = false; // Desactiva el loader cuando todas las llamadas finalicen correctamente
+            this.loading = false;
           },
           error: () => {
-            this.loading = false; // Asegura que se desactiva incluso si hay un error
+            this.loading = false;
             this.snackBar.open('Error loading profile data', 'Close', { duration: 3000 });
           }
         });

@@ -21,7 +21,7 @@ export class MyCarsComponent implements OnInit {
 
   ngOnInit() {
     const userId = +localStorage.getItem('userId')!;
-    this.loading = true; // Comienza la carga
+    this.loading = true;
 
     this.carService.getCarsByUserId(userId).subscribe(
       (data: any[]) => {

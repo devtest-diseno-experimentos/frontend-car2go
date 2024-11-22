@@ -15,15 +15,6 @@ export class ProfileService {
     return this.http.get<any>(`${this.apiUrl}/${profileId}`);
   }
 
-
-  updateUserProfile(id: number, userData: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, userData);
-  }
-
-  createUserProfile(userData: any): Observable<any> {
-    return this.http.post(this.apiUrl, userData);
-  }
-
   getCurrentProfile(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/me`);
   }

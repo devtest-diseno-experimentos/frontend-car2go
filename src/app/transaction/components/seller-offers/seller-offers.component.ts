@@ -25,7 +25,7 @@ export class SellerOffersComponent implements OnInit {
     if (this.userRole === 'ROLE_SELLER' || this.userRole === 'ROLE_BUYER') {
       this.loadUserTransactions();
     } else {
-      this.snackBar.open('Acceso denegado: No tienes permisos para ver esta sección.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('Access denied: You do not have permissions to view this section.', 'Close', { duration: 3000 });
     }
   }
 
@@ -40,7 +40,7 @@ export class SellerOffersComponent implements OnInit {
         this.isLoading = false;
       },
       (error) => {
-        this.snackBar.open('Error al cargar transacciones.', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Error loading transactions.', 'Close', { duration: 3000 });
         console.error(error);
         this.isLoading = false;
       }
@@ -61,16 +61,16 @@ export class SellerOffersComponent implements OnInit {
     this.transactionService.updateTransaction(transactionId, { status }).subscribe(
       () => {
         this.snackBar.open(
-          status === 'COMPLETED' ? 'Transacción aceptada.' : 'Transacción cancelada.',
-          'Cerrar',
+          status === 'COMPLETED' ? 'Transaction accepted.' : 'Transaction canceled.',
+          'Close',
           { duration: 3000 }
         );
         this.loadUserTransactions();
       },
       (error) => {
         this.snackBar.open(
-          status === 'COMPLETED' ? 'Error al aceptar la transacción.' : 'Error al cancelar la transacción.',
-          'Cerrar',
+          status === 'COMPLETED' ? 'Error accepting the transaction.' : 'Error canceling the transaction.',
+          'Close',
           { duration: 3000 }
         );
         console.error(error);

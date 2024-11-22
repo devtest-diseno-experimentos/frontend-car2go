@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private http: HttpClient,
     private subscriptionService: SubscriptionService,
-    private snackBar: MatSnackBar // Inject MatSnackBar
+    private snackBar: MatSnackBar
   ) {
     this.authenticationService.isSignedIn.subscribe((isSignedIn) => {
       this.isSignedIn = isSignedIn;
@@ -91,7 +91,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // Check if the user has a profile
   private checkUserProfile() {
     return this.http.get<any>(`${this.baseURL}/profiles/me`, this.httpOptions).pipe(
       catchError(error => {

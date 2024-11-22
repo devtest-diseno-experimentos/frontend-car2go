@@ -4,6 +4,7 @@ import { ProfileService } from '../../../profiles/services/profile.service';
 import { TransactionService } from '../../services/transaction.service';
 import { ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-vehicle-payment-stepper',
@@ -25,7 +26,9 @@ export class VehiclePaymentStepperComponent implements OnInit {
     private profileService: ProfileService,
     private transactionService: TransactionService,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
+
   ) {}
 
   ngOnInit() {
@@ -44,7 +47,7 @@ export class VehiclePaymentStepperComponent implements OnInit {
         };
       },
       (error) => {
-        this.snackBar.open('Error al cargar el perfil del solicitante.', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Error loading user profile.', 'Close', { duration: 3000 });
         console.error(error);
       }
     );
@@ -53,7 +56,7 @@ export class VehiclePaymentStepperComponent implements OnInit {
   loadVehicleData() {
     const vehicleId = Number(this.route.snapshot.paramMap.get('vehicleId'));
     if (!vehicleId) {
-      this.snackBar.open('No se encontró el ID del vehículo.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('Vehicle ID not found.', 'Close', { duration: 3000 });
       return;
     }
 
@@ -65,11 +68,11 @@ export class VehiclePaymentStepperComponent implements OnInit {
         if (sellerProfileId) {
           this.loadSellerProfile(sellerProfileId);
         } else {
-          this.snackBar.open('No se encontró el vendedor para este vehículo.', 'Cerrar', { duration: 3000 });
+          this.snackBar.open('Seller not found for this vehicle.', 'Close', { duration: 3000 });
         }
       },
       (error) => {
-        this.snackBar.open('Error al cargar los datos del vehículo.', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Error loading vehicle data.', 'Close', { duration: 3000 });
         console.error(error);
       }
     );
@@ -88,11 +91,11 @@ export class VehiclePaymentStepperComponent implements OnInit {
         if (profile.paymentMethods && profile.paymentMethods.length > 0) {
           this.sellerPaymentMethods = profile.paymentMethods;
         } else {
-          this.snackBar.open('El vendedor no tiene métodos de contacto configurados.', 'Cerrar', { duration: 3000 });
+          this.snackBar.open('Seller has no contact methods configured.', 'Close', { duration: 3000 });
         }
       },
       (error) => {
-        this.snackBar.open('Error al cargar el perfil del vendedor.', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Error loading seller profile.', 'Close', { duration: 3000 });
         console.error(error);
       }
     );
@@ -100,7 +103,7 @@ export class VehiclePaymentStepperComponent implements OnInit {
 
   nextStep() {
     if (this.currentStep === 2 && !this.selectedPaymentMethod) {
-      this.snackBar.open('Por favor, seleccione un método de contacto.', 'Cerrar', { duration: 3000 });
+      this.snackBar.open('Please select a contact method.', 'Close', { duration: 3000 });
       return;
     }
 
@@ -147,11 +150,13 @@ export class VehiclePaymentStepperComponent implements OnInit {
     this.transactionService.createTransaction(offerData).subscribe(
       (response) => {
         this.isLoading = false;
-        this.snackBar.open('Oferta enviada con éxito.', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Offer sent successfully.', 'Close', { duration: 3000 });
+        this.router.navigate(['/offers']);
+
       },
       (error) => {
         this.isLoading = false;
-        this.snackBar.open('Error al enviar la oferta.', 'Cerrar', { duration: 3000 });
+        this.snackBar.open('Error sending the offer.', 'Close', { duration: 3000 });
         console.error(error);
       }
     );
