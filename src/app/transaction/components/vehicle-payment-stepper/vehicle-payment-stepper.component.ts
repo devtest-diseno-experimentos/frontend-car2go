@@ -11,14 +11,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./vehicle-payment-stepper.component.css'],
 })
 export class VehiclePaymentStepperComponent implements OnInit {
-  currentStep = 1; // Controla el paso actual
-  isLoading = false; // Controla el loader durante el envío de la oferta
+  currentStep = 1;
+  isLoading = false;
 
-  userData: any = {}; // Información del solicitante
-  sellerData: any = {}; // Información del vendedor
-  vehicleData: any = {}; // Información del vehículo
-  sellerPaymentMethods: any[] = []; // Métodos de contacto del vendedor
-  selectedPaymentMethod: any = null; // Método de contacto seleccionado
+  userData: any = {};
+  sellerData: any = {};
+  vehicleData: any = {};
+  sellerPaymentMethods: any[] = [];
+  selectedPaymentMethod: any = null;
 
   constructor(
     private carService: CarService,
@@ -33,7 +33,6 @@ export class VehiclePaymentStepperComponent implements OnInit {
     this.loadVehicleData();
   }
 
-  // Cargar datos del perfil del solicitante
   loadUserProfile() {
     this.profileService.getCurrentProfile().subscribe(
       (profile) => {
@@ -51,7 +50,6 @@ export class VehiclePaymentStepperComponent implements OnInit {
     );
   }
 
-  // Cargar datos del vehículo
   loadVehicleData() {
     const vehicleId = Number(this.route.snapshot.paramMap.get('vehicleId'));
     if (!vehicleId) {
@@ -77,7 +75,6 @@ export class VehiclePaymentStepperComponent implements OnInit {
     );
   }
 
-  // Cargar datos del vendedor
   loadSellerProfile(profileId: number) {
     this.profileService.getProfileById(profileId).subscribe(
       (profile) => {
@@ -101,7 +98,6 @@ export class VehiclePaymentStepperComponent implements OnInit {
     );
   }
 
-  // Avanzar al siguiente paso
   nextStep() {
     if (this.currentStep === 2 && !this.selectedPaymentMethod) {
       this.snackBar.open('Por favor, seleccione un método de contacto.', 'Cerrar', { duration: 3000 });
@@ -109,29 +105,26 @@ export class VehiclePaymentStepperComponent implements OnInit {
     }
 
     if (this.currentStep === 2) {
-      this.simulateProcessing(); // Simula el envío de la oferta
+      this.simulateProcessing();
     } else if (this.currentStep < 3) {
       this.currentStep++;
     }
   }
 
-  // Retroceder al paso anterior
   prevStep() {
     if (this.currentStep > 1 && !this.isLoading) {
       this.currentStep--;
     }
   }
 
-  // Simulación de envío de oferta
   simulateProcessing() {
-    this.isLoading = true; // Activa el loader
+    this.isLoading = true;
     setTimeout(() => {
-      this.isLoading = false; // Desactiva el loader
-      this.currentStep++; // Avanza al paso de confirmación
-    }, 3000); // Simula un retraso de 3 segundos
+      this.isLoading = false;
+      this.currentStep++;
+    }, 3000);
   }
 
-  // Confirmar y enviar la oferta
   confirmOffer() {
     const offerData = {
       vehicleId: this.vehicleData.id,
@@ -147,25 +140,24 @@ export class VehiclePaymentStepperComponent implements OnInit {
       },
       contactMethod: this.selectedPaymentMethod?.type,
       contactDetails: this.selectedPaymentMethod?.details,
-      offerStatus: 'PENDING', // Estado inicial de la oferta
+      offerStatus: 'PENDING',
     };
 
-    this.isLoading = true; // Activa el loader durante la solicitud
+    this.isLoading = true;
     this.transactionService.createTransaction(offerData).subscribe(
       (response) => {
-        this.isLoading = false; // Desactiva el loader al finalizar
+        this.isLoading = false;
         this.snackBar.open('Oferta enviada con éxito.', 'Cerrar', { duration: 3000 });
       },
       (error) => {
-        this.isLoading = false; // Maneja errores y desactiva el loader
+        this.isLoading = false;
         this.snackBar.open('Error al enviar la oferta.', 'Cerrar', { duration: 3000 });
         console.error(error);
       }
     );
   }
 
-  // Obtener el ancho de la barra de progreso
   getProgressWidth() {
-    return `${((this.currentStep - 1) / 2) * 100}%`; // Ajusta el ancho en función de los pasos
+    return `${((this.currentStep - 1) / 2) * 100}%`;
   }
 }

@@ -22,7 +22,6 @@ export class TransactionService {
     });
   }
 
-
   getTransactionsByUser() {
     return this.http.get(`${this.apiUrl}/me`);
   }

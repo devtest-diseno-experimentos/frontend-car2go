@@ -146,16 +146,12 @@
           <th mat-header-cell *matHeaderCellDef> {{ 'NOTES' | translate }} </th>
           <td mat-cell *matCellDef="let review"> {{ review.notes }} </td>
         </ng-container>
-        <ng-container matColumnDef="reviewedBy">
-          <th mat-header-cell *matHeaderCellDef> {{ 'REVIEWED_BY' | translate }} </th>
-          <td mat-cell *matCellDef="let review"> {{ review.reviewedBy }} </td>
-        </ng-container>
         <ng-container matColumnDef="vehicle">
-          <th mat-header-cell *matHeaderCellDef> {{ 'VEHICLE' | translate }} </th>
+          <th mat-header-cell *matHeaderCellDef> {{ 'STATUS' | translate }} </th>
           <td mat-cell *matCellDef="let review"> {{ review.vehicle?.status }}</td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="['id', 'notes', 'reviewedBy', 'vehicle']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['id', 'notes', 'reviewedBy', 'vehicle'];"></tr>
+        <tr mat-header-row *matHeaderRowDef="['id', 'notes', 'vehicle']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['id', 'notes', 'vehicle'];"></tr>
       </table>
     </section>
 

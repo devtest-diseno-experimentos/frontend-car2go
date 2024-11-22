@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ReviewService } from '../../services/review.service';
 import { CarService } from '../../../cars/services/car/car.service';
 import { AuthService } from '../../../register/service/auth.service';
-import { forkJoin, map, switchMap } from 'rxjs';
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { forkJoin, map, switchMap, catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-mechanic-check',
@@ -12,16 +13,18 @@ import { forkJoin, map, switchMap } from 'rxjs';
 export class MechanicCheckComponent implements OnInit {
   reviewedCars: any[] = [];
   user: any;
+  loading: boolean = true;
 
   constructor(
     private reviewService: ReviewService,
     private carService: CarService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.loadReviewedCars();
     this.loadUserData();
+    this.loadReviewedCars();
   }
 
   loadUserData(): void {
@@ -31,26 +34,53 @@ export class MechanicCheckComponent implements OnInit {
         this.user = data;
       },
       (error) => {
-        console.error('Error al obtener la información del usuario:', error);
+        this.snackBar.open('Error fetching user information', 'Close', { duration: 3000 });
       }
     );
   }
 
   loadReviewedCars(): void {
-    this.reviewService.getAllReviews().subscribe(
-      (reviews) => {
+    this.reviewService.getReviewsByCurrentUser().pipe(
+      switchMap(reviews => {
+        if (!reviews || reviews.length === 0) {
+          this.reviewedCars = [];
+          this.loading = false;
+          return of([]);
+        }
+
         const groupedCars = this.groupReviewsByCar(reviews);
-        this.getCarsDetails(groupedCars);
+
+        const carDetailsRequests = groupedCars.map(carGroup => {
+          return this.carService.getCarById(carGroup.carId).pipe(
+            map(carDetails => ({
+              ...carDetails,
+              image: Array.isArray(carDetails.image) ? carDetails.image[0] : carDetails.image,
+              reviews: carGroup.reviews
+            })),
+            catchError(error => {
+              this.snackBar.open('Error fetching car details', 'Close', { duration: 3000 });
+              return of(null);
+            })
+          );
+        });
+
+        return forkJoin(carDetailsRequests);
+      })
+    ).subscribe({
+      next: (carsWithDetails) => {
+        this.reviewedCars = carsWithDetails.filter(car => car !== null);
+        this.loading = false;
       },
-      (error) => {
-        console.error('Error fetching reviewed cars:', error);
+      error: (error) => {
+        this.snackBar.open('Error fetching reviewed cars', 'Close', { duration: 3000 });
+        this.loading = false;
       }
-    );
+    });
   }
 
   groupReviewsByCar(reviews: any[]): any[] {
     const grouped = reviews.reduce((acc, review) => {
-      const carId = review.carId;
+      const carId = review.vehicle.id;
       if (!acc[carId]) {
         acc[carId] = {
           carId: carId,
@@ -62,37 +92,5 @@ export class MechanicCheckComponent implements OnInit {
     }, {});
 
     return Object.values(grouped);
-  }
-
-  getCarsDetails(carsGroupedByReview: any[]): void {
-    const carDetailsRequests = carsGroupedByReview.map(carGroup => {
-      return this.carService.getCarById(carGroup.carId).pipe(
-        switchMap(carDetails => {
-          const reviewUserRequests = carGroup.reviews.map((review: any) => {
-            return this.authService.getUserInfo(+review.reviewedBy).pipe(
-              map(userInfo => ({
-                ...review,
-                reviewerInfo: userInfo
-              }))
-            );
-          });
-          return forkJoin(reviewUserRequests).pipe(
-            map(reviewsWithUserInfo => ({
-              ...carDetails,
-              reviews: reviewsWithUserInfo
-            }))
-          );
-        })
-      );
-    });
-
-    forkJoin(carDetailsRequests).subscribe(
-      (carsWithDetails) => {
-        this.reviewedCars = carsWithDetails;
-      },
-      (error) => {
-        console.error('Error fetching car details:', error);
-      }
-    );
   }
 }

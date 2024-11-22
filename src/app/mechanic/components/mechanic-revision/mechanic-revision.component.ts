@@ -11,6 +11,7 @@ import { CarService } from '../../../cars/services/car/car.service';
 export class MechanicRevisionComponent implements OnInit {
   pendingCars: any[] = [];
   defaultImage: string = 'assets/default_image.jpg';
+  loading: boolean = true; // Nueva propiedad para el loader
 
   review = {
     isApproved: false
@@ -27,6 +28,7 @@ export class MechanicRevisionComponent implements OnInit {
   }
 
   loadPendingCars(): void {
+    this.loading = true; // Activa el loader
     this.carService.getCars().subscribe(
       (cars) => {
         this.pendingCars = cars
@@ -36,10 +38,12 @@ export class MechanicRevisionComponent implements OnInit {
             car.image = car.mainImage;
             return car;
           });
+        this.loading = false; // Desactiva el loader
       },
       (error) => {
         console.error('Error fetching cars:', error);
         this.snackBar.open('Error fetching pending cars', 'Close', { duration: 3000 });
+        this.loading = false; // Desactiva el loader incluso si hay un error
       }
     );
   }

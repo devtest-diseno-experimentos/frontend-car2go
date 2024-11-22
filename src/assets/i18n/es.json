@@ -216,7 +216,7 @@
   "PAYMENT_METHOD": "Método de Pago",
   "DETAILS": "Detalles",
   "SENT_OFFER": "Oferta Enviada",
-  "THANK_YOU_MESSAGE": "¡Gracias! Su solicitud de oferta ha sido enviada al vendedor.",
+  "THANK_YOU_MESSAGE": "¡Gracias! Presione en finalizar para enviar su finalizar su oferta.",
   "FINISH": "Finalizar",
   "AMOUNT": "Monto",
   "DATE": "Fecha",
@@ -235,6 +235,12 @@
   "PENDING_MESSAGE": "El vendedor pronto se pondrá en contacto contigo.",
   "COMPLETED_MESSAGE": "¡Felicidades! El vendedor aceptó tu oferta. Por favor, ponte en contacto con él para finalizar el proceso.",
   "CANCELLED_MESSAGE": "Lamentamos que esta transacción haya sido cancelada. ¡Sigue buscando, hay muchos vehículos esperándote!",
+  "LOADER": "Cargando...",
   "NO_TRANSACTIONS_AVAILABLE": "No hay transacciones disponibles para este estado.",
-  "LOADER": "Cargando..."
+  "NO_CARS_REVIEWED_YET": "Aún no se han revisado autos.",
+  "EMAIL_INFO": "Correo",
+  "REVIEW_INFORMATION": "Información de la Reseña",
+  "REVIEW_DATE": "Fecha de la Reseña",
+
+  "NO_REVIEWS_AVAILABLE": "No hay reseñas disponibles"
 }

@@ -1,9 +1,11 @@
-<app-toolbar></app-toolbar>
+<div *ngIf="loading" class="loader-container">
+  <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+  <p>{{ 'LOADER' | translate }}</p>
+</div>
 
-<div class="container">
-
+<div class="container" *ngIf="!loading">
   <div *ngIf="reviewedCars.length === 0" class="no-review">
-    <p>No cars have been reviewed yet.</p>
+    <p>{{ 'NO_CARS_REVIEWED_YET' | translate }}</p>
   </div>
 
   <div *ngFor="let car of reviewedCars" class="card">
@@ -14,21 +16,41 @@
 
       <div class="info-container">
         <div class="owner-details">
-          <h4>Owner Information</h4>
-          <p><i class="material-icons">person</i><strong>Name:</strong> {{ car.name }}</p>
-          <p><i class="material-icons">phone</i><strong>Phone:</strong> {{ car.phone }}</p>
-          <p><i class="material-icons">email</i><strong>Email:</strong> {{ car.email }}</p>
+          <h4>{{ 'OWNER_INFORMATION' | translate }}</h4>
+          <p>
+            <i class="material-icons">person</i>
+            <strong>{{ 'NAME' | translate }}:</strong> {{ car.name }}
+          </p>
+          <p>
+            <i class="material-icons">phone</i>
+            <strong>{{ 'PHONE' | translate }}:</strong> {{ car.phone }}
+          </p>
+          <p>
+            <i class="material-icons">email</i>
+            <strong>{{ 'EMAIL_INFO' | translate }}:</strong> {{ car.email }}
+          </p>
         </div>
 
         <div *ngIf="car.reviews && car.reviews.length > 0" class="review-details">
-          <h4>Review Information</h4>
-          <p><i class="material-icons">person</i><strong>Reviewed By:</strong> {{ car.reviews[car.reviews.length - 1].reviewerInfo.name}}</p>
-          <p><i class="material-icons">event</i><strong>Review Date:</strong> {{ car.reviews[car.reviews.length - 1].reviewDate | date }}</p>
-          <p><i class="material-icons">note</i><strong>Notes:</strong> {{ car.reviews[car.reviews.length - 1].notes }}</p>
+          <h4>{{ 'REVIEW_INFORMATION' | translate }}</h4>
+          <p>
+            <i class="material-icons">event</i>
+            <strong>{{ 'REVIEW_DATE' | translate }}:</strong>
+            {{ car.reviews[car.reviews.length - 1].reviewDate | date }}
+          </p>
+          <p>
+            <i class="material-icons">note</i>
+            <strong>{{ 'NOTES' | translate }}:</strong>
+            {{ car.reviews[car.reviews.length - 1].notes }}
+          </p>
+          <p>
+            <i class="material-icons">check_circle </i>
+            <strong>{{ 'STATUS' | translate }}:</strong> {{ car.status }}
+          </p>
         </div>
 
         <div class="no-review" *ngIf="!car.reviews || car.reviews.length === 0">
-          <p><strong>No reviews available</strong></p>
+          <p><strong>{{ 'NO_REVIEWS_AVAILABLE' | translate }}</strong></p>
         </div>
       </div>
     </div>
