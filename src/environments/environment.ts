@@ -1,4 +1,3 @@
 export const environment = {
-  serverBasePath: 'https://car2go-platform-hpdzhtb8ekceg9gd.canadacentral-01.azurewebsites.net/api/v1'
-
+  serverBasePath: 'https://car2go-webservice-c6h8hqd2c0eehsd3.canadacentral-01.azurewebsites.net/api/v1'
 };
