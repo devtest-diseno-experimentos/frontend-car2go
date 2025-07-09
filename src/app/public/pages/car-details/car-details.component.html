@@ -14,10 +14,9 @@
                (mousedown)="onMouseDown($event)"
                (mousemove)="onMouseMove($event)"
                (mouseup)="onMouseUp($event)">
-            <img class="image"[src]="mainImage" alt="Car image" (dragstart)="stopDragging()" />
+            <img class="image" [src]="mainImage" alt="Car image" (dragstart)="stopDragging()" />
           </div>
           <button (mousedown)="nextImage()" class="carousel-nav next">&#10095;</button>
-
           <div class="thumbnails"
                #thumbnailsContainer
                (mousedown)="startDragging($event)"
@@ -64,20 +63,60 @@
           </div>
         </div>
 
-        <div *ngIf="car?.status === 'PENDING'" class="pending-message">
-          <p>{{ 'CAR_PENDING_REVIEW' | translate }}</p>
+        <div class="review-item">
+          <!-- Mostrar estado de la revisión primero -->
+          <div class="review-status">
+            <p *ngIf="car?.status === 'REQUIRES_REPAIR'">{{ 'CAR_REQUIRES_REPAIR' | translate }}</p>
+            <p *ngIf="car?.status === 'REPAIR_REQUESTED'">{{ 'CAR_REPAIR_REQUESTED' | translate }}</p>
+            <p *ngIf="car?.status === 'PENDING'">{{ 'CAR_PENDING_REVIEW' | translate }}</p>
+            <p *ngIf="car?.status === 'REVIEWED'">{{ 'CAR_REVIEWED' | translate }}</p>
+            <p *ngIf="car?.status === 'APPROVED_AFTER_REPAIR'">{{ 'APPROVED_AFTER_REPAIR' | translate }}</p>
+            <p *ngIf="car?.status === 'REJECT'">{{ 'CAR_REJECTED' | translate }}</p>
+          </div>
+
+
+          <!-- Mostrar el botón "Solicitar reparación" y "Ver detalles" en la misma fila -->
+          <div class="button-container" *ngIf="car?.status === 'REPAIR_REQUESTED' || (car?.status !== 'REQUIRES_REPAIR' && carReview?.notes)">
+            <!-- Botón "Solicitar reparación" si el estado es 'REPAIR_REQUESTED' -->
+            <div *ngIf="car?.status === 'REPAIR_REQUESTED'" class="repair-message">
+              <button (click)="openRejectConfirmation()" class="repair-button">
+                {{ 'REQUEST_REPAIR' | translate }}
+              </button>
+            </div>
+
+            <!-- Botón "Ver detalles" si el estado no es 'REQUIRES_REPAIR' y existen notas -->
+            <div *ngIf="car?.status !== 'REQUIRES_REPAIR' && carReview?.notes">
+              <button (click)="openNotesModal()" class="view-detail-button">
+                {{ 'VIEW_REVIEW_DETAILS' | translate }}
+              </button>
+            </div>
+          </div>
+
+          <div *ngIf="car?.status === 'REQUIRES_REPAIR'" class="repair-message">
+            <div class="button-container">
+              <button (click)="openRepairModal()" class="repair-button">
+                {{ 'REQUEST_REPAIR' | translate }}
+              </button>
+              <button (click)="openNotesModal()" class="view-detail-button">
+                {{ 'VIEW_REVIEW_DETAILS' | translate }}
+              </button>
+            </div>
+          </div>
+
+
+          <app-notes-modal *ngIf="isNotesModalOpen"
+                           [notes]="carReview?.notes"
+                           [reviewDate]="carReview?.reviewDate"
+                           (close)="closeNotesModal()">
+          </app-notes-modal>
         </div>
-        <div *ngIf="car?.status === 'REVIEWED'" class="reviewed-message">
-          <p>{{ 'CAR_REVIEWED' | translate }}</p>
-        </div>
-        <div *ngIf="car?.status === 'REJECT'" class="pending-message">
-          <p>{{ 'CAR_REJECTED' | translate }}</p>
-        </div>
+
+
       </div>
     </mat-card>
   </section>
 
-  <section class="car-details" *ngIf="userRole === 'ROLE_BUYER' && car?.status === 'REVIEWED'">
+  <section class="car-details" *ngIf="userRole === 'ROLE_BUYER' && (car?.status === 'REVIEWED' || car?.status === 'APPROVED_AFTER_REPAIR')">
     <mat-card class="card">
       <div class="car-gallery">
         <div class="car-images">

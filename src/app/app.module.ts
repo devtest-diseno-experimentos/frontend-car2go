@@ -60,6 +60,11 @@ import { LanguageSwitcherComponent } from './public/components/language-switcher
 import { VehiclePaymentStepperComponent } from './transaction/components/vehicle-payment-stepper/vehicle-payment-stepper.component';
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from "@angular/material/stepper";
 import { SellerOffersComponent } from './transaction/components/seller-offers/seller-offers.component';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import {MatDialogActions, MatDialogContent, MatDialogTitle} from "@angular/material/dialog";
+import {MatTooltip} from "@angular/material/tooltip";
+import { NotesDialogComponent } from './shared/notes-dialog/notes-dialog.component';
+import { NotesModalComponent } from './shared/notes-modal/notes-modal.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -92,52 +97,59 @@ export function HttpLoaderFactory(http: HttpClient) {
     AuthenticationSectionComponent,
     LanguageSwitcherComponent,
     VehiclePaymentStepperComponent,
-    SellerOffersComponent
+    SellerOffersComponent,
+    ConfirmationDialogComponent,
+    NotesDialogComponent,
+    NotesModalComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }),
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    MatSnackBarModule,
-    MatSidenavModule,
-    MatButtonToggleModule,
-    MatListModule,
-    MatGridListModule,
-    MatMenuModule,
-    MatCheckboxModule,
-    MatExpansionModule,
-    NgOptimizedImage,
-    CdkDropList,
-    CdkDrag,
-    MatProgressSpinnerModule,
-    MatStep,
-    MatStepLabel,
-    MatStepper,
-    MatStepperNext,
-    MatStepperPrevious
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        }),
+        FormsModule,
+        CommonModule,
+        ReactiveFormsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatInputModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatSnackBarModule,
+        MatSidenavModule,
+        MatButtonToggleModule,
+        MatListModule,
+        MatGridListModule,
+        MatMenuModule,
+        MatCheckboxModule,
+        MatExpansionModule,
+        NgOptimizedImage,
+        CdkDropList,
+        CdkDrag,
+        MatProgressSpinnerModule,
+        MatStep,
+        MatStepLabel,
+        MatStepper,
+        MatStepperNext,
+        MatStepperPrevious,
+        MatDialogContent,
+        MatDialogTitle,
+        MatDialogActions,
+        MatTooltip
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

@@ -2,7 +2,10 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/co
 import { ActivatedRoute } from '@angular/router';
 import { CarService } from '../../../cars/services/car/car.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {MatSnackBar} from "@angular/material/snack-bar";
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ReviewService } from '../../../mechanic/services/review.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../../shared/confirmation-dialog/confirmation-dialog.component'; // Asumiendo que tienes un componente de confirmación
 
 @Component({
   selector: 'app-car-details',
@@ -27,6 +30,19 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   scrollLeft: number = 0;
   mouseDown: boolean = false;
   loading: boolean = true;
+  carReview: any = null;
+  reviewScore: number = 0;
+  hasReview: boolean = false;
+  isNotesModalOpen = false; // Controla la visibilidad del modal
+
+  openNotesModal() {
+    this.isNotesModalOpen = true; // Abre el modal
+  }
+
+  closeNotesModal() {
+    this.isNotesModalOpen = false; // Cierra el modal
+  }
+
 
   @ViewChild('thumbnailsContainer') thumbnailsContainer!: ElementRef;
 
@@ -34,7 +50,9 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private carService: CarService,
     private fb: FormBuilder,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private reviewService: ReviewService,
+    private dialog: MatDialog
   ) {
     this.carForm = this.fb.group({
       name: [{ value: '', disabled: true }, Validators.required],
@@ -59,7 +77,6 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
       userId: [''],
       status: ['', Validators.required]
     });
-
   }
 
   ngOnDestroy() {
@@ -76,6 +93,8 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
           this.populateForm();
           this.startAutoScroll();
           this.loading = false;
+
+          this.getCarReview(carId);
         },
         (error) => {
           this.snackBar.open('Error fetching car details.', 'Close', { duration: 3000 });
@@ -85,6 +104,24 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.userRole = localStorage.getItem('userRole') || '';
+  }
+
+  getCarReview(carId: number): void {
+    this.reviewService.getReviewsByCarId(carId).subscribe(
+      (review) => {
+        if (review) {
+          this.carReview = review;
+          this.reviewScore = 5;
+          this.hasReview = true;
+        } else {
+          this.hasReview = false;
+        }
+      },
+      (error) => {
+        console.error('Error obteniendo la revisión del coche:', error);
+        this.hasReview = false;
+      }
+    );
   }
 
   updateImages() {
@@ -228,7 +265,6 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-
   startDragging(event: MouseEvent) {
     this.isDragging = true;
     this.startX = event.clientX;
@@ -326,6 +362,61 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
       this.carForm.get('phone')?.disable();
       this.carForm.get('email')?.disable();
     }
+  }
+  openRepairModal(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirmación de Reparación',
+        message: '¿Quieres proceder a solicitar reparación para este vehículo?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirmed' && this.carReview?.id) {
+        this.updateReviewStatus(this.carReview.id, 'REPAIR_REQUESTED', true);
+      } else if (result === 'rejected') {
+        this.openRejectConfirmation();
+      }
+    });
+  }
+
+  openRejectConfirmation(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirmación de rechazo',
+        message: '¿Está seguro de que desea rechazar la reparación?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirmed' && this.carReview?.id) {
+        this.updateReviewStatus(this.carReview.id, 'REJECT', false);
+        this.car.status = 'REJECT';
+      }
+    });
+  }
+
+  updateReviewStatus(reviewId: number, status: string, refresh: boolean): void {
+    this.reviewService.updateReviewStatus(reviewId, status).subscribe(
+      (response) => {
+        this.snackBar.open(`Estado actualizado a ${status}.`, 'Cerrar', { duration: 3000 });
+
+        if (refresh) {
+          this.car.status = status;
+        }
+      },
+      (error) => {
+        let errorMessage = 'Error al actualizar el estado del vehículo.';
+
+        if (error.error) {
+          errorMessage = error.error.message || errorMessage;
+        }
+
+        this.snackBar.open(errorMessage, 'Cerrar', { duration: 3000 });
+      }
+    );
   }
 
 }

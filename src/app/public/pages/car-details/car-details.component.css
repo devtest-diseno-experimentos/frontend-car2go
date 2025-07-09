@@ -10,6 +10,52 @@
   display: flex;
   flex-direction: column;
 }
+/* Estilos para los botones en una misma fila */
+.button-container {
+  display: flex;
+  justify-content: flex-start; /* Alinea los botones al principio del contenedor */
+  gap: 10px;  /* Espacio entre los botones (reducido) */
+  margin-top: 10px;
+}
+
+.view-detail-button, .repair-button {
+  background-color: #014ee1; /* Color de fondo del botón */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+  flex: 0 1 auto; /* Ajusta el tamaño de los botones a su contenido */
+  min-width: 120px; /* Asegura que los botones no sean demasiado pequeños */
+}
+
+.view-detail-button:hover, .repair-button:hover {
+  background-color: #0056b3; /* Color de fondo cuando el botón es hover */
+}
+
+/* Estilo para los mensajes de los estados */
+.review-status p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
+  margin: 10px 0;
+}
+
+/* Botón de cerrar en la parte inferior */
+button.close-modal {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.close-modal:hover {
+  background-color: #0056b3;
+}
+
 
 h2 {
   width: 70%;
