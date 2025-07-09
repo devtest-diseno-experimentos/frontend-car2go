@@ -1,0 +1,10 @@
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-modal-btn" (click)="closeModal()">X</button>
+    <h3>{{ 'NOTES' | translate }}</h3>
+    <p><strong>{{ 'REVIEW_DATE' | translate }}:</strong> {{ reviewDate | date:'shortDate' }}</p>
+    <div class="scrollable-notes">
+      <p>{{ notes }}</p>
+    </div>
+  </div>
+</div>
