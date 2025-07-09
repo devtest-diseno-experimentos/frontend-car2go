@@ -42,7 +42,16 @@
             <i class="fa fa-trash"></i>
           </button>
         </div>
-        <p>{{ car.status }}</p>
+        <!-- Mostrar el estado con traducción -->
+        <p>
+          <span *ngIf="car?.status === 'REQUIRES_REPAIR'">{{ 'REQUIRES_REPAIR' | translate }}</span>
+          <span *ngIf="car?.status === 'REPAIR_REQUESTED'">{{ 'REPAIR_REQUESTED' | translate }}</span>
+          <span *ngIf="car?.status === 'PENDING'">{{ 'PENDING' | translate }}</span>
+          <span *ngIf="car?.status === 'REVIEWED'">{{ 'REVIEWED' | translate }}</span>
+          <span *ngIf="car?.status === 'REJECT'">{{ 'REJECTED' | translate }}</span>
+          <span *ngIf="car?.status === 'APPROVED_AFTER_REPAIR'">{{ 'APPROVED_AFTER_REPAIR' | translate }}</span>
+        </p>
+
         <span>{{ car.price | currency }}</span>
         <p>{{ car.description }}</p>
         <ul class="car-info">

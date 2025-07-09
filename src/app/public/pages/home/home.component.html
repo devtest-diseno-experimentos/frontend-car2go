@@ -17,7 +17,7 @@
       <ng-container *ngFor="let car of cars | slice:0:6">
         <div
           class="car-item"
-          *ngIf="car.status === 'REVIEWED'"
+          *ngIf="car.status === 'REVIEWED' || car.status === 'APPROVED_AFTER_REPAIR'"
           (click)="viewCarDetails(car.id)"
         >
           <div class="thumb-content">
@@ -124,7 +124,17 @@
         </ng-container>
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef> {{ 'STATUS' | translate }} </th>
-          <td mat-cell *matCellDef="let car"> {{ car.status }}</td>
+          <td mat-cell *matCellDef="let car">
+            <span [ngSwitch]="car.status">
+              <span *ngSwitchCase="'PENDING'">{{ 'STATUS_PENDING' | translate }}</span>
+              <span *ngSwitchCase="'REJECT'">{{ 'STATUS_REJECT' | translate }}</span>
+              <span *ngSwitchCase="'REVIEWED'">{{ 'STATUS_REVIEWED' | translate }}</span>
+              <span *ngSwitchCase="'REQUIRES_REPAIR'">{{ 'STATUS_REQUIRES_REPAIR' | translate }}</span>
+              <span *ngSwitchCase="'REPAIR_REQUESTED'">{{ 'STATUS_REPAIR_REQUESTED' | translate }}</span>
+              <span *ngSwitchCase="'APPROVED_AFTER_REPAIR'">{{ 'STATUS_APPROVED_AFTER_REPAIR' | translate }}</span>
+              <span *ngSwitchDefault>{{ car.status }}</span>
+            </span>
+          </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="['id', 'brand', 'year', 'status']"></tr>
         <tr mat-row *matRowDef="let row; columns: ['id','brand', 'year', 'status'];"></tr>
@@ -144,14 +154,51 @@
         </ng-container>
         <ng-container matColumnDef="notes">
           <th mat-header-cell *matHeaderCellDef> {{ 'NOTES' | translate }} </th>
-          <td mat-cell *matCellDef="let review"> {{ review.notes }} </td>
+          <td mat-cell *matCellDef="let review" class="notes-cell">
+            <div class="notes-wrapper">
+              <div class="truncated-text" [matTooltip]="review.notes" matTooltipClass="notes-tooltip">
+                {{ (review.notes?.length > 250) ? (review.notes | slice:0:250) + '...' : review.notes }}
+              </div>
+              <button mat-icon-button class="visibility-button" *ngIf="review.notes?.length > 50"
+                      matTooltip="{{ 'VIEW_NOTES_DETAILS' | translate }}"
+                      matTooltipPosition="above"
+                      (click)="openNotesDialog(review.notes); $event.stopPropagation()">
+                <i class="material-icons">visibility</i>
+              </button>
+            </div>
+          </td>
         </ng-container>
         <ng-container matColumnDef="vehicle">
           <th mat-header-cell *matHeaderCellDef> {{ 'STATUS' | translate }} </th>
-          <td mat-cell *matCellDef="let review"> {{ review.vehicle?.status }}</td>
+          <td mat-cell *matCellDef="let review" [class.status-changed]="review.vehicle?.status === 'REPAIR_REQUESTED'">
+            <div class="status-container">
+              <span [ngSwitch]="review.vehicle?.status">
+                <span *ngSwitchCase="'PENDING'">{{ 'STATUS_PENDING' | translate }}</span>
+                <span *ngSwitchCase="'REJECT'">{{ 'STATUS_REJECT' | translate }}</span>
+                <span *ngSwitchCase="'REVIEWED'">{{ 'STATUS_REVIEWED' | translate }}</span>
+                <span *ngSwitchCase="'REQUIRES_REPAIR'">{{ 'STATUS_REQUIRES_REPAIR' | translate }}</span>
+                <span *ngSwitchCase="'REPAIR_REQUESTED'" class="highlight-status">{{ 'STATUS_REPAIR_REQUESTED' | translate }}</span>
+                <span *ngSwitchCase="'APPROVED_AFTER_REPAIR'">{{ 'STATUS_APPROVED_AFTER_REPAIR' | translate }}</span>
+                <span *ngSwitchDefault>{{ review.vehicle?.status }}</span>
+              </span>
+            </div>
+          </td>
         </ng-container>
-        <tr mat-header-row *matHeaderRowDef="['id', 'notes', 'vehicle']"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['id', 'notes', 'vehicle'];"></tr>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> {{ 'ACTIONS' | translate }} </th>
+          <td mat-cell *matCellDef="let review">
+            <button mat-icon-button *ngIf="review.vehicle?.status === 'REPAIR_REQUESTED'"
+                    matTooltip="{{ 'VIEW_REPAIR_DETAILS' | translate }}"
+                    matTooltipPosition="above"
+                    (click)="startInspection()">
+              <i class="material-icons">build</i>
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['id', 'notes', 'vehicle', 'actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['id', 'notes', 'vehicle', 'actions'];"
+            [ngClass]="{'highlighted-row': row.vehicle?.status === 'REPAIR_REQUESTED'}"></tr>
       </table>
     </section>
 

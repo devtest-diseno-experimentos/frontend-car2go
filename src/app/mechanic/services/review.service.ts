@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {environment} from "../../../environments/environment";
 
@@ -24,6 +24,24 @@ export class ReviewService {
   }
   getReviewsByCurrentUser(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/me`);
+  }
+
+  updateReviewStatus(reviewId: number, status: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${reviewId}/status`, status, {
+      headers: new HttpHeaders({
+        'Content-Type': 'text/plain'
+      }),
+      responseType: 'text'
+    });
+  }
+
+  updateReviewNotes(reviewId: number, notes: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/${reviewId}/notes`, notes, {
+      headers: new HttpHeaders({
+        'Content-Type': 'text/plain'
+      }),
+      responseType: 'text'
+    });
   }
 
 }

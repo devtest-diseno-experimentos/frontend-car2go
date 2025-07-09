@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { MatSnackBar } from '@angular/material/snack-bar';  // Importa MatSnackBar
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CarService } from "../../../cars/services/car/car.service";
 import { FavoriteService } from "../../../cars/services/favorite-service/favorite.service";
 import { AuthService } from "../../../register/service/auth.service";
 import { ReviewService } from "../../../mechanic/services/review.service";
+import { NotesDialogComponent } from '../../../shared/notes-dialog/notes-dialog.component';
 import { forkJoin, map } from 'rxjs';
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-home',
@@ -28,7 +30,8 @@ export class HomeComponent implements OnInit {
     private favoriteService: FavoriteService,
     private authService: AuthService,
     private reviewService: ReviewService,
-    private snackBar: MatSnackBar  // Inyecta MatSnackBar aquí
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -84,7 +87,7 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.carService.getCars().subscribe(
       (cars: any[]) => {
-        this.pendingCars = this.processCars(cars.filter(car => car.status === 'PENDING'));
+        this.pendingCars = this.processCars(cars.filter(car => car.status === 'PENDING' || car.status === 'REPAIR_REQUESTED'));
         this.certifiedCars = this.processCars(cars.filter(car => car.status === 'REVIEWED'));
         this.loadReviewsForCertifiedCars(this.certifiedCars);
         this.loading = false;
@@ -143,8 +146,10 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/car-listing-form']);
   }
 
-  startInspection() {
-    this.router.navigate(['/mechanic-revision']);
+  startInspection(): void {
+    this.router.navigate(['/mechanic-revision']).then(() => {
+      window.scrollTo(0, 0);
+    });
   }
 
   addToFavorites(carId: number): void {
@@ -156,6 +161,13 @@ export class HomeComponent implements OnInit {
         this.showSnackBar('Error adding car to favorites');
       }
     );
+  }
+
+  openNotesDialog(notes: string): void {
+    this.dialog.open(NotesDialogComponent, {
+      width: '500px',
+      data: { notes: notes }
+    });
   }
 
   trackByCarId(index: number, car: any): number {

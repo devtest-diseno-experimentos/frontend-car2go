@@ -397,8 +397,7 @@ td {
 .action-button {
   background-color: #2959AD;
   border: none;
-  padding: 10px 20px;
-  font-size: 14px;
+  font-size: 4px;
   font-weight: bold;
   color: white;
   border-radius: 5px;
@@ -409,6 +408,33 @@ td {
 
 .action-button:hover {
   background-color: #F4C23D;
+}
+
+.status-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+
+}
+
+.notes-cell {
+  max-width: 450px;
+  padding-right: 8px;
+}
+.notes-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.truncated-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(100% - 32px);
+  flex-grow: 1;
 }
 
 @media (max-width: 768px) {
