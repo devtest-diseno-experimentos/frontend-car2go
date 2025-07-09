@@ -41,12 +41,20 @@
           <p>
             <i class="material-icons">note</i>
             <strong>{{ 'NOTES' | translate }}:</strong>
-            {{ car.reviews[car.reviews.length - 1].notes }}
+            <span class="notes-text">{{ car.reviews[car.reviews.length - 1].notes }}</span>
           </p>
+
           <p>
-            <i class="material-icons">check_circle </i>
-            <strong>{{ 'STATUS' | translate }}:</strong> {{ car.status }}
+            <i class="material-icons">check_circle</i>
+            <strong>{{ 'STATUS' | translate }}:</strong>
+            <span *ngIf="car.status === 'REQUIRES_REPAIR'">{{ 'REQUIRES_REPAIR' | translate }}</span>
+            <span *ngIf="car.status === 'REPAIR_REQUESTED'">{{ 'REPAIR_REQUESTED' | translate }}</span>
+            <span *ngIf="car.status === 'PENDING'">{{ 'PENDING' | translate }}</span>
+            <span *ngIf="car.status === 'REVIEWED'">{{ 'REVIEWED' | translate }}</span>
+            <span *ngIf="car.status === 'REJECT'">{{ 'REJECTED' | translate }}</span>
+            <span *ngIf="car.status === 'APPROVED_AFTER_REPAIR'">{{ 'APPROVED_AFTER_REPAIR' | translate }}</span>
           </p>
+
         </div>
 
         <div class="no-review" *ngIf="!car.reviews || car.reviews.length === 0">

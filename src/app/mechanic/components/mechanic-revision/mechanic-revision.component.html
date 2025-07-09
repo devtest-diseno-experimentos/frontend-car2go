@@ -41,12 +41,43 @@
             <p><strong>{{ 'OWNER_PHONE' | translate }}:</strong> {{ car.phone }}</p>
             <p><strong>{{ 'OWNER_EMAIL' | translate }}:</strong> {{ car.email }}</p>
           </div>
-          <div class="checkbox-container">
-            <label class="checkbox-label">
-              <input type="checkbox" [(ngModel)]="review.isApproved" class="styled-checkbox"/>
-              <span class="custom-checkbox"></span>
-              {{ 'APPROVED' | translate }}
-            </label>
+
+          <div class="review-status-container">
+            <div class="status-options">
+              <div class="status-option">
+                <input type="radio" id="status-reviewed-{{car.id}}"
+                       name="reviewStatus-{{car.id}}"
+                       [(ngModel)]="reviewStatus"
+                       [value]="car.status === 'REPAIR_REQUESTED' ? 'APPROVED_AFTER_REPAIR' : 'REVIEWED'"
+                       class="styled-radio" />
+                <label for="status-reviewed-{{car.id}}">
+                  <span class="status-icon approved"><i class="material-symbols-outlined">check_circle</i></span>
+                  <div class="status-text">
+                    <span class="status-title">{{ car.status === 'REPAIR_REQUESTED' ? ('STATUS_APPROVED_AFTER_REPAIR' | translate) : ('STATUS_REVIEWED' | translate) }}</span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="status-option" *ngIf="car.status === 'PENDING'">
+                <input type="radio" id="status-repair-{{car.id}}" name="reviewStatus-{{car.id}}" [(ngModel)]="reviewStatus" value="REQUIRES_REPAIR" class="styled-radio" />
+                <label for="status-repair-{{car.id}}">
+                  <span class="status-icon repair"><i class="material-symbols-outlined">build</i></span>
+                  <div class="status-text">
+                    <span class="status-title">{{ 'STATUS_REQUIRES_REPAIR' | translate }}</span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="status-option">
+                <input type="radio" id="status-reject-{{car.id}}" name="reviewStatus-{{car.id}}" [(ngModel)]="reviewStatus" value="REJECT" class="styled-radio" />
+                <label for="status-reject-{{car.id}}">
+                  <span class="status-icon rejected"><i class="material-symbols-outlined">cancel</i></span>
+                  <div class="status-text">
+                    <span class="status-title">{{ 'STATUS_REJECT' | translate }}</span>
+                  </div>
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -57,7 +88,9 @@
           <textarea [(ngModel)]="car.reviewNotes" placeholder="{{ 'REVIEW_NOTES_PLACEHOLDER' | translate }}"></textarea>
         </div>
 
-        <button (click)="createCarReview(car, car.reviewNotes)">{{ 'CREATE_REVIEW' | translate }}</button>
+        <button (click)="handleReview(car, car.reviewNotes)">
+          {{ car.status === 'REPAIR_REQUESTED' ? ('UPDATE_REVIEW' | translate) : ('CREATE_REVIEW' | translate) }}
+        </button>
       </div>
     </mat-card>
   </div>

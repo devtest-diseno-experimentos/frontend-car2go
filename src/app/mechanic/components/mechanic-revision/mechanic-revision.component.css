@@ -105,7 +105,7 @@ li span {
   padding: 15px;
   border-radius: 8px;
   margin-top: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 17px;
   border-left: 5px solid #367a9b;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -113,7 +113,7 @@ li span {
 }
 
 .owner-info:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.15);
   border-left-color: #2b5c7a;
 }
 
@@ -193,66 +193,76 @@ button:hover {
   transform: scale(1.01);
 }
 
-.approval-section {
+/* Status checkbox */
+.review-status-container {
+  margin: 15px 0;
+}
+
+.status-options {
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 8px;
   margin-top: 10px;
 }
 
-.checkbox-label {
+.status-option {
+  flex: 1;
+  min-width: 120px;
+  margin-bottom: 8px;
+}
+
+.status-option label {
   display: flex;
   align-items: center;
-  font-size: 16px;
-  color: #333;
   cursor: pointer;
-  position: relative;
-  padding-left: 30px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  border: 1px solid transparent;
 }
 
-.styled-checkbox {
+.status-option input[type="radio"]:checked + label {
+  background-color: rgba(0, 123, 255, 0.1);
+  border: 1px solid #007bff;
+}
+.status-option input[type="radio"] {
+  position: absolute;
   opacity: 0;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
+  width: 0;
+  height: 0;
+}
+.status-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.custom-checkbox {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #FFD700;
-  border-radius: 4px;
-  display: inline-block;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: background-color 0.2s ease;
+.status-text {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  line-height: 1;
+  flex: 1;
+
 }
 
-.styled-checkbox:checked + .custom-checkbox {
-  background-color: #FFD700;
-  border-color: #FFD700;
+
+@media (max-width: 600px) {
+  .status-options {
+    flex-wrap: wrap;
+  }
+
+  .status-option {
+    min-width: 100%;
+  }
 }
 
-.custom-checkbox:after {
-  content: '';
-  position: absolute;
-  left: 5px;
-  top: 1px;
-  width: 8px;
-  height: 14px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
-  opacity: 0;
-  transform: rotate(45deg);
-  transition: opacity 0.2s ease;
-}
-
-.styled-checkbox:checked + .custom-checkbox:after {
-  opacity: 1;
-}
 
 
 @media (max-width: 768px) {
