@@ -86,7 +86,7 @@ export class MechanicRevisionComponent implements OnInit {
       () => {
         this.reviewService.updateReviewStatus(car.reviewId, this.reviewStatus).subscribe(
           () => {
-            this.snackBar.open(`Review for ${car.brand} ${car.model} updated with status: ${this.reviewStatus}`, 'Close', { duration: 3000 });
+            this.snackBar.open(`Review for ${car.brand} ${car.model} updated`, 'Close', { duration: 3000 });
             this.pendingCars = this.pendingCars.filter(pendingCar => pendingCar.id !== car.id);
           },
           (error) => {
@@ -109,7 +109,7 @@ export class MechanicRevisionComponent implements OnInit {
 
     this.reviewService.createReview(review).subscribe(
       (reviewResponse) => {
-        this.snackBar.open(`Review for ${car.brand} ${car.model} created with status: ${this.reviewStatus}`, 'Close', { duration: 3000 });
+        this.snackBar.open(`Review for ${car.brand} ${car.model} created`, 'Close', { duration: 3000 });
         this.pendingCars = this.pendingCars.filter(pendingCar => pendingCar.id !== car.id);
       },
       (error) => {
