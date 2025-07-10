@@ -401,7 +401,7 @@ export class CarDetailsComponent implements OnInit, OnDestroy {
   updateReviewStatus(reviewId: number, status: string, refresh: boolean): void {
     this.reviewService.updateReviewStatus(reviewId, status).subscribe(
       (response) => {
-        this.snackBar.open(`Estado actualizado a ${status}.`, 'Cerrar', { duration: 3000 });
+        this.snackBar.open(`Estado actualizado`, 'Cerrar', { duration: 3000 });
 
         if (refresh) {
           this.car.status = status;
